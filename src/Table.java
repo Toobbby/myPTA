@@ -26,7 +26,7 @@ public class Table {
     public Tuple getInsertSpace(){  //assign location for next insert value, needs to call Page.nextSpace() to get next available offset
         if(!freeSpace.isEmpty()) nextInsert = freeSpace.remove();
         else{
-            nextInsert = new Tuple(pages.size() - 1, pages.get(pages.size() - 1).nextSpace());
+            nextInsert = new Tuple(pages.size() - 1, pages.get(pages.size() - 1).getNextOffset());
         }
        return nextInsert;
     }
