@@ -7,7 +7,12 @@ public class Record {
     String Phone;
     String tableName;
 
-    public Record(){}
+    public Record(int ID, String clientName, String phone, String tableName) {
+        this.ID = ID;
+        ClientName = clientName;
+        Phone = phone;
+        this.tableName = tableName;
+    }
 
     @Override
     public String toString(){
