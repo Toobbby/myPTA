@@ -10,7 +10,7 @@ public class ReadTxt {
     }
 
     public static void readFile() {
-        String pathname = "/home/phy/page/test.txt"; 
+        String pathname = "./test.txt"; 
         try (FileReader reader = new FileReader(pathname);
              BufferedReader br = new BufferedReader(reader) 
         ) {
@@ -25,7 +25,7 @@ public class ReadTxt {
 
     public static void writeFile() {
         try {
-            File writeName = new File("/home/phy/page/test.txt"); 
+            File writeName = new File("./test.txt"); 
             writeName.createNewFile(); 
             try (FileWriter writer = new FileWriter(writeName);
                  BufferedWriter out = new BufferedWriter(writer)
