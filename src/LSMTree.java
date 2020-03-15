@@ -37,7 +37,7 @@ public class LSMTree {
 
         if (memTable.size()>=maxSize){
             //need flush to level0
-           if ( level0==null){
+           if (level0.size()==0){
                //create first sstable
                level0=new ArrayList<>();
                levels=0;
@@ -51,7 +51,7 @@ public class LSMTree {
                String loc=fileBaseDir+"/level0/"+filename;
                level0.add(new SSTable(loc,memTable.flush()));
            }
-           if (level0.size()>=5){
+           if (level0.size()>=4){
                compaction();
            }
         }
@@ -132,6 +132,13 @@ public class LSMTree {
             level_size.add(chosen.size);
         }else {
             //find overlap and merge
+            SSTable tempBegin=new SSTable();tempBegin.begin=chosen.begin;
+            SSTable tempEnd=new SSTable();tempEnd.begin=chosen.end;
+            SortedSet<SSTable> overlapped=SStables.get(level).subSet(tempBegin,tempEnd);
+            ArrayList<SSTable> toMerge=new ArrayList<>();
+            toMerge.add(chosen);
+            toMerge.addAll(overlapped);
+            mergeAndWrite(toMerge,level+1);
         }
     }
 
@@ -144,31 +151,32 @@ public class LSMTree {
         for (int i=2;i>=0;--i){
             SSTable s=level0.get(i);
             if (chosen.overlap(s)){
-                toCompact.add(chosen);level0.remove(chosen);
+                toCompact.add(s);level0.remove(s);
             }
         }
 
         if (SStables.size()!=0){
             int max=Integer.MIN_VALUE,min=Integer.MAX_VALUE;
-            for (SSTable s:toCompact){
-                max=Math.max(max,s.end);
-                min=Math.min(min,s.begin);
-                SSTable start=new SSTable();start.begin=min;
-                SSTable end=new SSTable();end.end=max;
-                TreeSet<SSTable> level1=SStables.get(0);
-                SortedSet<SSTable> overlaped=level1.subSet(start,end);
-                for(SSTable toMerge:overlaped){
-                    level1.remove(toMerge);
-                    level_size.set(0,level_size.get(0)-toMerge.size);
-                }
-                toCompact.addAll(overlaped);
-                mergeAndWrite(toCompact,1);
+            for (SSTable s:toCompact) {
+                max = Math.max(max, s.end);
+                min = Math.min(min, s.begin);
             }
-        }else {
+            SSTable start=new SSTable();start.begin=min;
+            SSTable end=new SSTable();end.begin=max;
+            TreeSet<SSTable> level1=SStables.get(0);
+            SortedSet<SSTable> overlaped=level1.subSet(start,end);
+            for(SSTable toMerge:overlaped){
+                level1.remove(toMerge);
+                level_size.set(0,level_size.get(0)-toMerge.size);
+            }
+            toCompact.addAll(overlaped);
+            mergeAndWrite(toCompact,1);
+
+        } else {
             //add first level One
             File f=new File(fileBaseDir+"/level1");
             f.mkdirs();
-            SStables.set(0,new TreeSet<>(new Comparator<SSTable>() {
+            SStables.add(new TreeSet<>(new Comparator<SSTable>() {
                 @Override
                 public int compare(SSTable o1, SSTable o2) {
                     return o1.begin-o2.begin;
@@ -177,6 +185,14 @@ public class LSMTree {
             level_size.add(0);
             last_chosen.add(0);
             mergeAndWrite(toCompact,1);
+        }
+        //finish merge and discard old sstables
+        for (SSTable s:toCompact){
+            File f=new File(s.loc);
+            if(!f.delete())
+            {
+                System.out.println("Failed to delete the file");
+            }
         }
     }
 
@@ -195,14 +211,14 @@ public class LSMTree {
         for (Integer k:keys){
             buffer.add(mergedTuples.get(k));
             if (buffer.size()==maxSize){
-                String loc=fileBaseDir+level+randomFileName();
+                String loc=fileBaseDir+"/level"+level+"/"+randomFileName();
                 SStables.get(level-1).add(new SSTable(loc,buffer));
                 level_size.set(level-1,level_size.get(level-1)+maxSize);
                 buffer=new ArrayList<>();
             }
         }
         if (!buffer.isEmpty()){
-            String loc=fileBaseDir+level+randomFileName();
+            String loc=fileBaseDir+"/level"+level+"/"+randomFileName();
             SStables.get(level-1).add(new SSTable(loc,buffer));
             level_size.set(level-1,level_size.get(level-1)+buffer.size());
         }
@@ -222,7 +238,7 @@ public class LSMTree {
             try {
                 BufferedWriter w=new BufferedWriter(new FileWriter(loc));
                 for (Record r:tuples) {
-                    w.write(tuples.toString());
+                    w.write(r.toString());
                     w.write("\n");
                 }
                 w.close();
