@@ -59,17 +59,32 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
         // first check if this page has already been in the buffer
         // if it is in buffer, find the record directly
         if (this.containsKey(table_pageNo)) {
-            return this.get(table_pageNo).findRecord(val); //TODO: Page.findRecord(val)
+            return findRecord(this.get(table_pageNo), val);
         }
-        else{
+        else{   // load page, then find the record
             loadPage(table_pageNo);
-            return this.get(table_pageNo).findRecord(val);
+            return findRecord(this.get(table_pageNo), val);
         }
     }
 
-    public void loadPage(String table_pageNo){
+    private Record findRecord(Page p, int val){     // find record with ID=val in a particular page
+        Record[] records = p.getRecords();
+        if(records == null){
+            return null;
+        }
+
+        for(Record r: records){
+            if(r.getID() == val){
+                return r;
+            }
+        }
+        return null;
+    }
+
+    private void loadPage(String table_pageNo){
         String tableName = table_pageNo.substring(0, 1);
         int pageNo = Integer.parseInt(table_pageNo.substring(1));
-        this.put(table_pageNo, myPTA.tables.get(tableName).getPage(pageNo));
+        Page p = Page.readFile(tableName, pageNo);
+        this.put(table_pageNo, p);
     }
 }

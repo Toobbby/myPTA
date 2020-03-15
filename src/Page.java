@@ -2,9 +2,18 @@ import java.io.*;
 
 public class Page{
 	static int size;
-	Page(int size){ Page.size = size; }
-	
-	public static Record[] readFile(String tablename, int page_No){    // read a particular page from file(table)
+	Record[] records;
+	Page(){}
+
+	Page(Record[] _records){
+		records = _records;
+	}
+
+	public Record[] getRecords() {
+		return records;
+	}
+
+	public static Page readFile(String tablename, int page_No){    // read a particular page from file(table)
 		Record[] results = new Record[size];
 		try {
 			FileInputStream inputStream = new FileInputStream("./" + tablename + ".txt");
@@ -16,7 +25,7 @@ public class Page{
 			while ((line = bufferedReader.readLine())!= null){
 				line_No++;
 				if(line_No <= page_No * size){      // before the page
-					continue;
+					// do nothing
 				}
 				else if(line_No > (page_No + 1)* size){     // out of the page
 					break;
@@ -29,7 +38,7 @@ public class Page{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return results;
+		return new Page(results);
 	}
 }
 
