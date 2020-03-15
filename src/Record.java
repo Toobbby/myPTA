@@ -7,10 +7,11 @@ public class Record {
     String Phone;
     String tableName;
 
-    public Record(int ID, String clientName, String phone, String tableName) {
+    public Record(int ID, String clientName, String phone, String tableName) throws Exception {
+        if(ClientName.length() > 16 || Phone.length() > 12) throw new Exception("String Length Exceeded!");
         this.ID = ID;
-        ClientName = clientName;
-        Phone = phone;
+        this.ClientName = clientName;
+        this.Phone = phone;
         this.tableName = tableName;
     }
 
