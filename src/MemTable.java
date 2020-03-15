@@ -7,14 +7,16 @@ public class MemTable {
     HashMap<Integer,Record> tuples;
 
     public MemTable(){
-
+        tuples=new HashMap<>();
     }
     public MemTable(BufferedReader r)  {
+        tuples=new HashMap<>();
         String line = null;
         try {
             while ((line = r.readLine()) != null) {
                 write(new Record(line));
             }
+            r.close();
         }catch (IOException e){
             e.getStackTrace();
         }

@@ -47,6 +47,15 @@ public class Record {
         this.tableName = tableName;
     }
 
+
+    //need discuss
+    public Record(String stringRecord){
+        String[] parts=stringRecord.split(",");
+        ID=Integer.parseInt(parts[0].substring(1));
+        ClientName=parts[1];
+        Phone=parts[2].substring(0,parts[2].length()-1);
+    }
+
     @Override
     public String toString(){
         return "(" + ID + "," + ClientName + "," + Phone + ")";
