@@ -55,6 +55,15 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
         return null;
     }
 
+    public ArrayList<Record> readRecordWithAreaCode(Table t, String tableName, int areaCode) {
+        ArrayList<Record> results = new ArrayList<Record>();
+        ArrayList<Page> pages = t.pages;
+        for (int i = 0; i < pages.size(); i++) {
+            results.addAll(checkRecordInPageWithAreaCode(tableName + i, areaCode));
+        }
+        return results;
+    }
+
     public Record checkRecordInPage(String table_pageNo, int val){
         // first check if this page has already been in the buffer
         // if it is in buffer, find the record directly
@@ -67,7 +76,14 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
         }
     }
 
-    private Record findRecord(Page p, int val){     // find record with ID=val in a particular page
+    public ArrayList<Record> checkRecordInPageWithAreaCode(String table_pageNo, int areaCode){
+        // load page, then find the record ONE BY ONE
+        loadPage(table_pageNo);
+        return findRecordWithAreaCode(this.get(table_pageNo), areaCode);
+        }
+
+
+    public Record findRecord(Page p, int val){     // find record with ID=val in a particular page
         Record[] records = p.getRecords();
         if(records == null){
             return null;
@@ -79,6 +95,25 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
             }
         }
         return null;
+    }
+
+    public ArrayList<Record> findRecordWithAreaCode(Page p, int areaCode){     // find record with areacode in a particular page
+        ArrayList<Record> results = new ArrayList<Record>();
+        Record[] records = p.getRecords();
+        if(records == null){
+            return null;
+        }
+
+        for(Record r: records){
+            if(Integer.parseInt(r.getPhone().substring(0,3))== areaCode){
+                results.add(r);
+            }
+        }
+        return results;
+    }
+
+    public void writeRecordInTable(Table t, Record r){
+
     }
 
     private void loadPage(String table_pageNo){
