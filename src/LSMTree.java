@@ -1,5 +1,6 @@
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -95,7 +96,7 @@ public class LSMTree {
         compactLevel0();
         int level=1;
         //check if we need to continue compaction
-        while (level_size.get(level-1)>maxSize*Math.pow(10,level)){
+        while (level_size.get(level-1)>=maxSize*Math.pow(10,level)){
             compactLevel(level);
             ++level;
         }
@@ -111,14 +112,14 @@ public class LSMTree {
         last_chosen.set(level-1,chosen.end);
         SStables.get(level-1).remove(chosen);
         level_size.set(level-1,level_size.get(level-1)-chosen.size);
-
+        ArrayList<SSTable> toMerge=new ArrayList<>();
         if (SStables.size()==level){
             //Cloud be Improved
 
             //no SStable in next level create first one
-            File f=new File(fileBaseDir+"/level"+level);
+            File f=new File(fileBaseDir+"/level"+(level+1));
             f.mkdirs();
-            SStables.set(level,new TreeSet<>(new Comparator<SSTable>() {
+            SStables.add(new TreeSet<>(new Comparator<SSTable>() {
                 @Override
                 public int compare(SSTable o1, SSTable o2) {
                     return o1.begin-o2.begin;
@@ -127,19 +128,23 @@ public class LSMTree {
             last_chosen.add(0);
             MemTable buffer=new MemTable(chosen.read());
             String filename = randomFileName();
-            String loc=fileBaseDir+"/level/"+level+filename;
+            String loc=fileBaseDir+"/level"+(level+1)+"/"+filename;
             SStables.get(level).add(new SSTable(loc,buffer.flush()));
             level_size.add(chosen.size);
+            f=new File(chosen.loc);
+            if (!f.delete()){
+                System.out.println("File deletion failed");
+            }
         }else {
             //find overlap and merge
             SSTable tempBegin=new SSTable();tempBegin.begin=chosen.begin;
             SSTable tempEnd=new SSTable();tempEnd.begin=chosen.end;
             SortedSet<SSTable> overlapped=SStables.get(level).subSet(tempBegin,tempEnd);
-            ArrayList<SSTable> toMerge=new ArrayList<>();
             toMerge.add(chosen);
             toMerge.addAll(overlapped);
             mergeAndWrite(toMerge,level+1);
         }
+        delete(toMerge);
     }
 
 
@@ -165,11 +170,13 @@ public class LSMTree {
             SSTable end=new SSTable();end.begin=max;
             TreeSet<SSTable> level1=SStables.get(0);
             SortedSet<SSTable> overlaped=level1.subSet(start,end);
-            for(SSTable toMerge:overlaped){
-                level1.remove(toMerge);
-                level_size.set(0,level_size.get(0)-toMerge.size);
-            }
             toCompact.addAll(overlaped);
+            ArrayList<SSTable> temp=new ArrayList<>();
+            for(SSTable toMerge:overlaped){
+                level_size.set(0,level_size.get(0)-toMerge.size);
+                temp.add(toMerge);
+            }
+            level1.removeAll(temp);
             mergeAndWrite(toCompact,1);
 
         } else {
@@ -187,6 +194,10 @@ public class LSMTree {
             mergeAndWrite(toCompact,1);
         }
         //finish merge and discard old sstables
+        delete(toCompact);
+    }
+
+    public void delete(ArrayList<SSTable> toCompact){
         for (SSTable s:toCompact){
             File f=new File(s.loc);
             if(!f.delete())
