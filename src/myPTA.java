@@ -4,7 +4,7 @@ import java.util.HashMap;
 public class myPTA {
     // TODO: read arguments to assign these parameters
     static int page_size = 2048;
-    static int buffersize = 3;
+    static int bufferSize = 3;
     static HashMap<String, Table> tables;
     static Buffer buffer;
     public static void main(String[] args) {
@@ -13,20 +13,20 @@ public class myPTA {
         tables.put("X", new Table());
         tables.put("Y", new Table());
         // A global Buffer
-        buffer = new Buffer(buffersize);
+        buffer = new Buffer(bufferSize);
 
         // TODO: read the script
         // R table val    read
-        String tablename = "X";
+        String tableName = "X";
         int val = 1;
-        if(!tables.containsKey(tablename)){
+        if(!tables.containsKey(tableName)){
             System.out.println("The table does not exist, the read is aborted.");
         }
         else{
-            Table t = tables.get(tablename);
-            Record r = read(t, tablename, val);
+            Table t = tables.get(tableName);
+            Record r = read(t, tableName, val);
             if(r == null){
-                System.out.println("The table " + tablename + " doesn't have record with ID = " + val);
+                System.out.println("The table " + tableName + " doesn't have record with ID = " + val);
             }
             else{
                 System.out.println("Read: " + r.toString());
@@ -38,13 +38,9 @@ public class myPTA {
     }
 
     // Retrieve the record with ID=val in table. If table does not exist, the read is aborted.
-    private static Record read(Table t, String tablename, int val) {
-        ArrayList<Page> pages = t.pages;
-        for (int i = 0; i < pages.size(); i++) {
-            Page p = buffer.readPage(tablename + i, val);
-        }
+    private static Record read(Table t, String tableName, int val) {
+        return buffer.readRecord(t, tableName, val);
 
-        return null;
     }
 
 }

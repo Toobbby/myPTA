@@ -240,7 +240,15 @@ public class Page<E> implements Serializable {
 	public int getPrePage() {
 		return pageNo - 1;
 	}
+
+
+
+	public Record findRecord(int val){
+
+		return null;
+	}
 }
+
 
 
 /*
