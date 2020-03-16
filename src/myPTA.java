@@ -31,27 +31,33 @@ public class myPTA {
             String line;
             while((line = br.readLine()) != null){
                 String[] keywords = operationAnalyzer(line);
-                if(keywords[0] == "R") read(keywords[1], Integer.parseInt(keywords[2]));
-                else if(keywords[0] == "W") write(keywords[1], keywords[2]);
-                else if(keywords[0] == "M") showUserWithAreaCode(keywords[1], Integer.parseInt(keywords[2]));
-                else delete(keywords[1]);
+                switch (keywords[0]) {
+                    case "R":
+                        read(keywords[1], Integer.parseInt(keywords[2]));
+                        break;
+                    case "W":
+                        write(keywords[1], keywords[2]);
+                        break;
+                    case "M":
+                        showUserWithAreaCode(keywords[1], Integer.parseInt(keywords[2]));
+                        break;
+                    default:
+                        delete(keywords[1]);
+                        break;
+                }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static String[] operationAnalyzer(String line){
-        String[] keywords = line.split(" ", 3);
-        return keywords;
+        return line.split(" ", 3);
     }
 
     public static Record recordGenerator(String tableName, String recordString) throws Exception {
         String[] attributes = recordString.substring(1,recordString.length() - 1).split(", ",3);
-        Record r = new Record(Integer.parseInt(attributes[0]), attributes[1], attributes[2], tableName);
-        return r;
+        return new Record(Integer.parseInt(attributes[0]), attributes[1], attributes[2], tableName);
     }
 
     // Retrieve the record with ID=val in table. If table does not exist, the read is aborted.
@@ -75,15 +81,13 @@ public class myPTA {
 
     private static void write(String tableName, String recordValue) throws Exception {
         if(!tables.containsKey(tableName)){
-            System.out.println("The table does not exist, the write is aborted.");
+            tables.put(tableName, new Table());
+            System.out.println("The table " + tableName + " does not exist, it is created.");
         }
-        else{
-            Table t = tables.get(tableName);
-            Record r = recordGenerator(tableName, recordValue);
-            buffer.writeRecordInTable(t, r);
-            System.out.println("Write: " + r.toString() + "successfully!");
-        }
-
+        Table t = tables.get(tableName);
+        Record r = recordGenerator(tableName, recordValue);
+        buffer.writeRecordInTable(t, r);
+        System.out.println("Write: " + r.toString() + "successfully!");
     }
 
     private static void showUserWithAreaCode(String tableName, int areaCode) {
@@ -95,8 +99,8 @@ public class myPTA {
             if (matchedRecords == null) {
                 System.out.println("The table " + tableName + " doesn't have record with area code = " + areaCode);
             } else {
-                for (int i = 0; i < matchedRecords.size(); i++) {
-                    System.out.println("Matched: " + matchedRecords.get(i).toString());
+                for (Record matchedRecord : matchedRecords) {
+                    System.out.println("MRead: " + matchedRecord.toString());
                 }
             }
         }
