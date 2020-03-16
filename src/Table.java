@@ -35,10 +35,6 @@ public class Table {
        return nextInsert;
     }
 
-    public Page getPage(int pageNo){
-        return null;
-    }
-
     public void refreshPage(int PageNo, Page p){
 
     }
