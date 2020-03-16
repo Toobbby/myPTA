@@ -45,4 +45,8 @@ public class MemTable {
         tuples=new HashMap<>();
         return res;
     }
+
+    public Iterator<Record> iterate(){
+        return tuples.values().iterator();
+    }
 }

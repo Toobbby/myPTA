@@ -59,7 +59,7 @@ public class LSMTree {
     }
 
 
-    public Record read(int id) throws Exception {
+    public Record readID(int id) throws Exception {
         Record res=memTable.read(id);
         if (res==null){
             //loop in level 0
@@ -80,6 +80,48 @@ public class LSMTree {
                 MemTable table=new MemTable(file.read());
                 res = table.read(id);
                 if (res != null) return res;
+            }
+        }
+        return res;
+    }
+
+    //naive implementation
+    //other way is to build a index using area code
+    public ArrayList<Record> readAreaCode(String areaCode){
+        ArrayList<Record> res=new ArrayList<>();
+        Iterator<Record> i=memTable.iterate();
+        Record tempRecord;
+        MemTable tempMentable;
+        while (i.hasNext()){
+            tempRecord=i.next();
+            if (tempRecord.getPhone().startsWith(areaCode)){
+                res.add(tempRecord);
+            }
+        }
+        //loop in level 0
+        for(SSTable s: level0){
+                //could be optimized
+                tempMentable = new MemTable(s.read());
+                i=tempMentable.iterate();
+                while (i.hasNext()){
+                    tempRecord=i.next();
+                    if (tempRecord.getPhone().startsWith(areaCode)){
+                        res.add(tempRecord);
+                    }
+                }
+        }
+        //from level1
+        for (TreeSet<SSTable> level: SStables){
+            for(SSTable s: level){
+                //could be optimized
+                tempMentable = new MemTable(s.read());
+                i=tempMentable.iterate();
+                while (i.hasNext()){
+                    tempRecord=i.next();
+                    if (tempRecord.getPhone().startsWith(areaCode)){
+                        res.add(tempRecord);
+                    }
+                }
             }
         }
         return res;
