@@ -173,10 +173,7 @@ public class LSMTree {
             String loc=fileBaseDir+"/level"+(level+1)+"/"+filename;
             SStables.get(level).add(new SSTable(loc,buffer.flush()));
             level_size.add(chosen.size);
-            f=new File(chosen.loc);
-            if (!f.delete()){
-                System.out.println("File deletion failed");
-            }
+            chosen.delete();
         }else {
             //find overlap and merge
             SSTable tempBegin=new SSTable();tempBegin.begin=chosen.begin;
@@ -189,7 +186,18 @@ public class LSMTree {
         delete(toMerge);
     }
 
-
+    public void deleteTable(){
+        for(SSTable s: level0){
+            //could be optimized
+            s.delete();
+        }
+        //from level1
+        for (TreeSet<SSTable> level: SStables){
+            for(SSTable s: level){
+               s.delete();
+            }
+        }
+    }
     public void compactLevel0(){
         ArrayList<SSTable> toCompact=new ArrayList<>();
         SSTable chosen=level0.get(3);
@@ -241,11 +249,7 @@ public class LSMTree {
 
     public void delete(ArrayList<SSTable> toCompact){
         for (SSTable s:toCompact){
-            File f=new File(s.loc);
-            if(!f.delete())
-            {
-                System.out.println("Failed to delete the file");
-            }
+            s.delete();
         }
     }
 
@@ -300,7 +304,10 @@ public class LSMTree {
             }
         }
         public SSTable(){ }
-
+        public void delete(){
+            File f=new File(loc);
+            f.delete();
+        }
         public  BufferedReader read()  {
             try {
                 return new BufferedReader(new FileReader(loc));
