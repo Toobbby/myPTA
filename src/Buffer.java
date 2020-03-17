@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.*;
@@ -80,7 +81,7 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
         // load page, then find the record ONE BY ONE
         loadPage(table_pageNo);
         return findRecordWithAreaCode(this.get(table_pageNo), areaCode);
-        }
+    }
 
 
     public Record findRecord(Page p, int val){     // find record with ID=val in a particular page
@@ -113,7 +114,23 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
     }
 
     public void writeRecordInTable(Table t, Record r){
-
+        ArrayList<Page> pages = t.pages;
+        int page_nums = pages.size();
+        int ID = r.getID();
+        String filename = "src/" + t.tableName + ".txt";
+        for (int i = 0; i < page_nums; i++) {
+            Page p = Page.readFile(t.tableName, i);
+            Record[] records = p.getRecords();
+            for(Record record: records){    // check if it is an update
+                if(record.getID() == ID){
+                    update(filename, ID, r.toString());
+                    System.out.println("Update record: " + record.toString() + " to be: " + r.toString());
+                    return;
+                }
+            }
+        }
+        // when it goes here, it means the operation will be an insert
+        addLast(filename, r);
     }
 
     private void loadPage(String table_pageNo){
@@ -121,5 +138,76 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
         int pageNo = Integer.parseInt(table_pageNo.substring(1));
         Page p = Page.readFile(tableName, pageNo);
         this.put(table_pageNo, p);
+    }
+
+    private static void update(String fileName, int id, String record) {
+        File f = new File(fileName);
+        BufferedReader br = null;
+
+        PrintWriter pw = null;
+
+        StringBuffer buff = new StringBuffer();
+
+        String line = System.getProperty("line.separator");
+
+        try {
+
+            br = new BufferedReader(new FileReader(f));
+
+            for (String str = br.readLine(); str != null; str = br.readLine()) {
+
+                if (str.charAt(0) == id)
+                    str = record;
+                buff.append(str).append(line);
+            }
+
+            pw = new PrintWriter(new FileWriter(fileName), true);
+
+            pw.println(buff);
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            if (br != null)
+
+                try {
+
+                    br.close();
+
+                } catch (IOException e) {
+
+                    e.printStackTrace();
+
+                }
+
+            if (pw != null)
+
+                pw.close();
+
+        }
+
+    }
+
+    static void addLast(String fileName, Record r){
+        FileWriter output = null;
+        try {
+            output = new FileWriter(fileName, true);
+            output.write("\n" + r.toString());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if(output == null){
+                try {
+                    output.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
