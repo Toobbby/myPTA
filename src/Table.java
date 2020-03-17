@@ -4,10 +4,12 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class Table {
+    String tableName;
     ArrayList<Page> pages;
     Queue<Tuple> freeSpace;
     Tuple nextInsert;
-    public Table(){
+    public Table(String tableName){
+        this.tableName = tableName;
         Page emptyPage = new Page();
         pages.add(emptyPage);
         Comparator<Tuple> comparator = new Comparator<Tuple>(){
@@ -23,16 +25,14 @@ public class Table {
        freeSpace.add(currentDelete);
     }
 
-//    public Tuple getInsertSpace(){  //assign location for next insert value, needs to call Page.nextSpace() to get next available offset
-//        if(!freeSpace.isEmpty()) nextInsert = freeSpace.remove();
-//        else{
-//            nextInsert = new Tuple(pages.size() - 1, pages.get(pages.size() - 1).getNextOffset());
-//        }
-//       return nextInsert;
-//    }
-
-    public Page getPage(int pageNo){
-        return null;
+    public Tuple getInsertSpace(){  //assign location for next insert value, needs to call Page.nextSpace() to get next available offset
+        if(!freeSpace.isEmpty()) nextInsert = freeSpace.remove();
+        else{
+            //nextInsert = new Tuple(pages.size() - 1, pages.get(pages.size() - 1).getNextOffset());  //generally speaking, pages cannot be called
+            Page finalPage = Page.readFile(tableName, pages.size() - 1);
+            nextInsert = new Tuple(pages.size() - 1, finalPage.getNextOffset());
+        }
+       return nextInsert;
     }
 
     public void refreshPage(int PageNo, Page p){

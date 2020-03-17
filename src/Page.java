@@ -40,24 +40,10 @@ public class Page{
 		}
 		return new Page(results);
 	}
-}
 
-/*
-public class Page {
-	int page_No;
-	int page_Size;
-//    HashMap<Integer,Integer> hashMap = new HashMap<>();
-    HashMap<Integer,Integer> pointer = new HashMap<>();
-
-	public Page(int page_No){
-        this.page_No = page_No;
-        this.page_Size = page_Size;
-    }
-
-//	map pointer (int primaryKey, int offset)
-
-	public size(){
-		return page_Size;
+	public int getNextOffset(){
+		return records.length * 32;  // sequentially next location to insert new record
 	}
 }
-*/
+
+

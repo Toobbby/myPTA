@@ -14,8 +14,8 @@ public class myPTA {
     public static void main(String[] args) throws Exception {
         // A hashMap to store tables
         tables = new HashMap<>();
-        tables.put("X", new Table());
-        tables.put("Y", new Table());
+        tables.put("X", new Table("X"));
+        tables.put("Y", new Table("Y"));
         // A global Buffer
         buffer = new Buffer(bufferSize);
 
@@ -81,7 +81,7 @@ public class myPTA {
 
     private static void write(String tableName, String recordValue) throws Exception {
         if(!tables.containsKey(tableName)){
-            tables.put(tableName, new Table());
+            tables.put(tableName, new Table(tableName));
             System.out.println("The table " + tableName + " does not exist, it is created.");
         }
         Table t = tables.get(tableName);
