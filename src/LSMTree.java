@@ -190,12 +190,17 @@ public class LSMTree {
         for(SSTable s: level0){
             //could be optimized
             s.delete();
+            File f=new File(fileBaseDir+"/level0");
+            f.delete();
         }
         //from level1
-        for (TreeSet<SSTable> level: SStables){
+        for (int i=0;i< SStables.size();++i){
+            TreeSet<SSTable> level=SStables.get(i);
             for(SSTable s: level){
                s.delete();
             }
+            File f=new File(fileBaseDir+"/level"+(i+1));
+            f.delete();
         }
     }
     public void compactLevel0(){
@@ -306,7 +311,9 @@ public class LSMTree {
         public SSTable(){ }
         public void delete(){
             File f=new File(loc);
-            f.delete();
+            if (!f.delete()){
+                System.out.println("delete "+loc+" failed");
+            }
         }
         public  BufferedReader read()  {
             try {
