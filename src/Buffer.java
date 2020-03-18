@@ -13,35 +13,21 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
         this.buffer_size = _buffer_size;
     }
 
-//    Page readPage(String table_pageNo, int val) {
-//        // first check if this page has already been in the buffer
-//        // if it is, just return this page
-//        if (this.containsKey(table_pageNo)) {
-//            return this.get(table_pageNo);
-//        }
-//
-//        // if not exist, then need to load this page from disk to buffer
-//        String tableName = table_pageNo.substring(0, 1);
-//        int page_No = Integer.parseInt(table_pageNo.substring(1, 2));
-//        // TODO: use Page.readFile(String tableName, int page) to read from file.
-//        Page p = Page.readFile(tableName, page_No);
-//        return p;
-//    }
 
-
-    void writePage(String table_pageNo) { // write page in buffer back to the disk
+    void writePageBackToDisk(String table_pageNo) { // write page in buffer back to the disk
         String tableName = table_pageNo.substring(0, 1);
         int pageNo = Integer.parseInt(table_pageNo.substring(1));  //need to consider page number has more than one digit
         Page p = this.get(table_pageNo);
+        p.writeFile(tableName, pageNo);
         myPTA.tables.get(tableName).refreshPage(pageNo, p);
     }
 
     // LRU algorithm
     @Override
     protected boolean removeEldestEntry(Map.Entry<String, Page> eldest) {
-        if (size() >= buffer_size) {
+        if (size() > buffer_size) {
             // write eldest page in buffer back to the disk
-            writePage(eldest.getKey());
+            writePageBackToDisk(eldest.getKey());
             return true;
         }
         return false;
@@ -113,27 +99,52 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
         return results;
     }
 
-    public void writeRecordInTable(Table t, Record r){
+    public void writeRecordInPage(Table t, Record r){  //all operations in buffer is focusing on Page
         ArrayList<Page> pages = t.pages;
         int page_nums = pages.size();
         int ID = r.getID();
-        String filename = "src/" + t.tableName + ".txt";
+        //String filename = "src/" + t.tableName + ".txt";
         for (int i = 0; i < page_nums; i++) {
-            Page p = Page.readFile(t.tableName, i);
-            Record[] records = p.getRecords();
-            for(Record record: records){    // check if it is an update
-                if(record.getID() == ID){
-                    update(filename, ID, r.toString());
-                    System.out.println("Update record: " + record.toString() + " to be: " + r.toString());
-                    return;
+            if (this.containsKey(t.tableName + i)) {
+                Record[] recordArray = this.get(t.tableName + i).getRecords();
+                ArrayList<Record> records = new ArrayList<Record>(Arrays.asList(recordArray));
+                for(i = 0; i < records.size(); i++){    // find the record which needs to be modified
+                    if(records.get(i).getID() == ID){
+                        records.set(i, r);
+                        this.put(t.tableName + i, new Page(records.toArray(new Record[records.size()])));
+                        //System.out.println("Update record: " + record.toString() + " to be: " + r.toString());
+                        return;
+                    }
                 }
             }
+            else{   // load page, then find the record
+                loadPage(t.tableName + i);
+                Record[] recordArray = this.get(t.tableName + i).getRecords();
+                ArrayList<Record> records = new ArrayList<Record>(Arrays.asList(recordArray));
+                for(i = 0; i < records.size(); i++){    // find the record which needs to be modified
+                    if(records.get(i).getID() == ID){
+                        records.set(i, r);
+                        this.put(t.tableName + i, new Page(records.toArray(new Record[records.size()])));
+                        return;
+                    }
+                    if(i == page_nums){  //no record-->insert to the end
+                        if(records.size() == pages.get(0).size){  //if the last page is full, create a new page to store the record
+                            Record[] newRecord = new Record[1];
+                            newRecord[0] = r;
+                            this.put(t.tableName + i + 1, new Page(newRecord));
+                            return;
+                        }
+                        records.add(r);
+                        this.put(t.tableName + i, new Page(records.toArray(new Record[records.size()])));
+                        return;
+                    }
+                }
+
+            }
         }
-        // when it goes here, it means the operation will be an insert
-        addLast(filename, r);
     }
 
-    private void loadPage(String table_pageNo){
+    public void loadPage(String table_pageNo){
         String tableName = table_pageNo.substring(0, 1);
         int pageNo = Integer.parseInt(table_pageNo.substring(1));
         Page p = Page.readFile(tableName, pageNo);

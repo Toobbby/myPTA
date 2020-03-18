@@ -86,7 +86,7 @@ public class myPTA {
         }
         Table t = tables.get(tableName);
         Record r = recordGenerator(tableName, recordValue);
-        buffer.writeRecordInTable(t, r);
+        buffer.writeRecordInPage(t, r);
         System.out.println("Write: " + r.toString() + "successfully!");
     }
 
