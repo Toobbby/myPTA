@@ -2,25 +2,25 @@ public class Record {
     //ID: 4-byte integer (Primary Key)
     //ClientName: 16-byte long string
     //Phone: 12-byte long string
-    int ID;
-    String ClientName;
-    String Phone;
-    String tableName;
+    public int ID;
+    public String ClientName;
+    public String Phone;
+    public String tableName;
 
-    public Record(int ID, String clientName, String phone, String tableName) throws Exception {
-        if(ClientName.length() > 16 || Phone.length() > 12) throw new Exception("String Length Exceeded!");
-        this.ID = ID;
-        this.ClientName = clientName;
-        this.Phone = phone;
-        this.tableName = tableName;
+    public Record(int id, String clientName, String phone, String tableName) throws Exception {
+        if(clientName.length() > 16 || phone.length() > 12) throw new Exception("String Length Exceeded!");
+        ID = id;
+        ClientName = clientName;
+        Phone = phone;
+        tableName = tableName;
     }
 
     public int getID() {
         return ID;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setID(int id) {
+        ID = id;
     }
 
     public String getClientName() {
@@ -43,8 +43,8 @@ public class Record {
         return tableName;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
+    public void setTableName(String tablename) {
+        tableName = tablename;
     }
 
 

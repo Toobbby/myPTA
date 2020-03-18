@@ -25,7 +25,7 @@ public class myPTA {
     }
 
     public static void readScript() throws Exception {
-        String pathname = "script.txt";
+        String pathname = "/Users/fguo/Documents/Github/myPTA/src/script.txt";
         try(FileReader reader = new FileReader(pathname);
             BufferedReader br = new BufferedReader(reader)){
             String line;
@@ -108,7 +108,7 @@ public class myPTA {
 
     private static void delete(String tableName){
         tables.remove(tableName);
-        System.out.println("Table" + tableName + "has been dropped!");
+        System.out.println("Table " + tableName + " has been dropped!");
     }
 
 }

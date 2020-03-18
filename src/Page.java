@@ -1,7 +1,7 @@
 import java.io.*;
 
 public class Page{
-	static int size;
+	static int size = 10;
 	Record[] records;
 	Page(){}
 
@@ -44,7 +44,7 @@ public class Page{
 	public static Page readFile(String tablename, int page_No){    // read a particular page from file
 		Record[] results = new Record[size];
 		try {
-			FileInputStream inputStream = new FileInputStream("./" + tablename + "/" + "page" + page_No + ".txt");
+			FileInputStream inputStream = new FileInputStream("/Users/fguo/Documents/Github/myPTA/" + tablename + "/" + "page" + page_No + ".txt");
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 			String line;
 			int line_No = 0;
@@ -53,9 +53,12 @@ public class Page{
 			while ((line = bufferedReader.readLine())!= null){
 				line_No++;
 				// the accurate page to be loaded
-				String[] str = line.split(" ");
-				results[idx++] = new Record(Integer.valueOf(str[0]), str[1], str[2], tablename);
-
+				String[] str = line.split(", ");
+//				System.out.println(str[0]);
+//                System.out.println(str[1]);
+//                System.out.println(str[2]);
+				results[idx] = new Record(Integer.valueOf(str[0]), str[1], str[2], tablename);
+                idx++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

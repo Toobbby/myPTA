@@ -75,7 +75,7 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
         if(records == null){
             return null;
         }
-
+        System.out.println(records[0].toString());
         for(Record r: records){
             if(r.getID() == val){
                 return r;

@@ -5,7 +5,7 @@ import java.util.Queue;
 
 public class Table {
     String tableName;
-    ArrayList<Page> pages;
+    ArrayList<Page> pages = new ArrayList<Page>();
     Queue<Tuple> freeSpace;
     Tuple nextInsert;
     public Table(String tableName){
