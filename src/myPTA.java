@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -82,12 +79,14 @@ public class myPTA {
     private static void write(String tableName, String recordValue) throws Exception {
         if(!tables.containsKey(tableName)){
             tables.put(tableName, new Table(tableName));
+            File dir = new File("/Users/fguo/Documents/Github/myPTA/" + tableName);
+            dir.mkdirs();
             System.out.println("The table " + tableName + " does not exist, it is created.");
         }
         Table t = tables.get(tableName);
         Record r = recordGenerator(tableName, recordValue);
         buffer.writeRecordInPage(t, r);
-        System.out.println("Write: " + r.toString() + "successfully!");
+        System.out.println("Write: " + r.toString() +" to " + tableName + " successfully!");
     }
 
     private static void showUserWithAreaCode(String tableName, int areaCode) {
@@ -108,7 +107,17 @@ public class myPTA {
 
     private static void delete(String tableName){
         tables.remove(tableName);
+        deleteDir(new File("/Users/fguo/Documents/Github/myPTA/" + tableName));
         System.out.println("Table " + tableName + " has been dropped!");
     }
+
+    public static void deleteDir(File file) {
+        if (file.isDirectory()) {
+            for (File f : file.listFiles())
+                deleteDir(f);
+        }
+        file.delete();
+    }
+
 
 }

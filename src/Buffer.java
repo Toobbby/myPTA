@@ -18,6 +18,7 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
         String tableName = table_pageNo.substring(0, 1);
         int pageNo = Integer.parseInt(table_pageNo.substring(1));  //need to consider page number has more than one digit
         Page p = this.get(table_pageNo);
+        System.out.println(p.getRecords()[0].toString()); //print nothing,which means buffer never overflow.
         p.writeFile(tableName, pageNo);
         myPTA.tables.get(tableName).refreshPage(pageNo, p);
     }
@@ -75,8 +76,12 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
         if(records == null){
             return null;
         }
-        System.out.println(records[0].toString());
+//        System.out.println(records.length);
+//        System.out.println(records[0].toString());
+//        System.out.println(records[0].ID);
+//        System.out.println(val);
         for(Record r: records){
+            if(r == null) break;
             if(r.getID() == val){
                 return r;
             }
@@ -92,6 +97,7 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
         }
 
         for(Record r: records){
+            if(r == null) break;
             if(Integer.parseInt(r.getPhone().substring(0,3))== areaCode){
                 results.add(r);
             }
@@ -109,6 +115,7 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
                 Record[] recordArray = this.get(t.tableName + i).getRecords();
                 ArrayList<Record> records = new ArrayList<Record>(Arrays.asList(recordArray));
                 for(i = 0; i < records.size(); i++){    // find the record which needs to be modified
+                    if(records.get(i) == null) break;
                     if(records.get(i).getID() == ID){
                         records.set(i, r);
                         this.put(t.tableName + i, new Page(records.toArray(new Record[records.size()])));
@@ -122,6 +129,7 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
                 Record[] recordArray = this.get(t.tableName + i).getRecords();
                 ArrayList<Record> records = new ArrayList<Record>(Arrays.asList(recordArray));
                 for(i = 0; i < records.size(); i++){    // find the record which needs to be modified
+                    if(records.get(i) == null) break;
                     if(records.get(i).getID() == ID){
                         records.set(i, r);
                         this.put(t.tableName + i, new Page(records.toArray(new Record[records.size()])));

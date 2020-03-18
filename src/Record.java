@@ -8,7 +8,7 @@ public class Record {
     public String tableName;
 
     public Record(int id, String clientName, String phone, String tableName) throws Exception {
-        if(clientName.length() > 16 || phone.length() > 12) throw new Exception("String Length Exceeded!");
+        //if(clientName.length() > 16 || phone.length() > 12) throw new Exception("String Length Exceeded!");
         ID = id;
         ClientName = clientName;
         Phone = phone;

@@ -1,7 +1,7 @@
 import java.io.*;
 
 public class Page{
-	static int size = 10;
+	static int size = 1;
 	Record[] records;
 	Page(){}
 
@@ -67,7 +67,7 @@ public class Page{
 	}
 
 	public void writeFile(String tablename, int page_No){
-		String fileName = "./" + tablename + "/" + "page" + page_No + ".txt";
+		String fileName = "/Users/fguo/Documents/Github/myPTA/" + tablename + "/" + "page" + page_No + ".txt";
 		try
 		{
 			BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
