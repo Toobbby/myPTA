@@ -122,7 +122,7 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
                     if(records.get(i) == null) break;
                     if(records.get(i).getID() == ID){
                         records.set(i, r);
-                        this.put(t.tableName + j, new Page(records));
+                        this.put(t.tableName + j, new Page(records));  //refresh the page in buffer
                         //System.out.println("Update record: " + record.toString() + " to be: " + r.toString());
                         return;
                     }
@@ -132,6 +132,8 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
                         ArrayList<Record>  newRecord = new ArrayList<>();
                         newRecord.add(r);
                         this.put(t.tableName + (j + 1), new Page(newRecord));
+                        t.pages.add(new Page(newRecord));
+                        System.out.println("Creating");
                         return;
                     }
                     records.add(r);
@@ -156,7 +158,9 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
                         if(records.size() == Page.size){  //if the last page is full, create a new page to store the record
                             ArrayList<Record>  newRecord = new ArrayList<>();
                             newRecord.add(r);
-                            this.put(t.tableName + j + 1, new Page(newRecord));
+                            this.put(t.tableName + (j + 1), new Page(newRecord));
+                            t.pages.add(new Page(newRecord));
+                            System.out.println("Creating");
                             return;
                         }
                         records.add(r);

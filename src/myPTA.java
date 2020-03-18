@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class myPTA {
     // TODO: read arguments to assign these parameters
     static int page_size = 2;
-    static int bufferSize = 1;
+    static int bufferSize = 3;
     static HashMap<String, Table> tables;
     static Buffer buffer;
     public static void main(String[] args) throws Exception {
@@ -27,6 +27,7 @@ public class myPTA {
             BufferedReader br = new BufferedReader(reader)){
             String line;
             while((line = br.readLine()) != null){
+                System.out.println(buffer.keySet());
                 String[] keywords = operationAnalyzer(line);
                 switch (keywords[0]) {
                     case "R":
