@@ -58,6 +58,6 @@ public class Record {
 
     @Override
     public String toString(){
-        return "(" + ID + "," + ClientName + "," + Phone + ")";
+        return ID + ", " + ClientName + ", " + Phone;
     }
 }

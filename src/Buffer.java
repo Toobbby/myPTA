@@ -18,7 +18,8 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
         String tableName = table_pageNo.substring(0, 1);
         int pageNo = Integer.parseInt(table_pageNo.substring(1));  //need to consider page number has more than one digit
         Page p = this.get(table_pageNo);
-        System.out.println(p.getRecords()[0].toString()); //print nothing,which means buffer never overflow.
+        System.out.println("Records " + p.getRecords().toString());
+        System.out.println("Flush page " + table_pageNo + "back to disk"); //print nothing,which means buffer never overflow.
         p.writeFile(tableName, pageNo);
         myPTA.tables.get(tableName).refreshPage(pageNo, p);
     }
@@ -28,6 +29,7 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
     protected boolean removeEldestEntry(Map.Entry<String, Page> eldest) {
         if (size() > buffer_size) {
             // write eldest page in buffer back to the disk
+            System.out.println("overflow: " + eldest.getKey());
             writePageBackToDisk(eldest.getKey());
             return true;
         }
@@ -66,13 +68,15 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
 
     public ArrayList<Record> checkRecordInPageWithAreaCode(String table_pageNo, int areaCode){
         // load page, then find the record ONE BY ONE
-        loadPage(table_pageNo);
+        if(!this.containsKey(table_pageNo)){
+            loadPage(table_pageNo);
+        }
         return findRecordWithAreaCode(this.get(table_pageNo), areaCode);
     }
 
 
     public Record findRecord(Page p, int val){     // find record with ID=val in a particular page
-        Record[] records = p.getRecords();
+        ArrayList<Record> records = p.getRecords();
         if(records == null){
             return null;
         }
@@ -91,7 +95,7 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
 
     public ArrayList<Record> findRecordWithAreaCode(Page p, int areaCode){     // find record with areacode in a particular page
         ArrayList<Record> results = new ArrayList<Record>();
-        Record[] records = p.getRecords();
+        ArrayList<Record> records = p.getRecords();
         if(records == null){
             return null;
         }
@@ -108,42 +112,55 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
     public void writeRecordInPage(Table t, Record r){  //all operations in buffer is focusing on Page
         ArrayList<Page> pages = t.pages;
         int page_nums = pages.size();
+//        System.out.println("page_nums: " + page_nums);
         int ID = r.getID();
         //String filename = "src/" + t.tableName + ".txt";
-        for (int i = 0; i < page_nums; i++) {
-            if (this.containsKey(t.tableName + i)) {
-                Record[] recordArray = this.get(t.tableName + i).getRecords();
-                ArrayList<Record> records = new ArrayList<Record>(Arrays.asList(recordArray));
-                for(i = 0; i < records.size(); i++){    // find the record which needs to be modified
+        for (int j = 0; j < page_nums; j++) {
+            if (this.containsKey(t.tableName + j)) {    // the page is in the buffer
+                ArrayList<Record> records = this.get(t.tableName + j).getRecords();
+                for(int i = 0; i < records.size(); i++){    // find the record which needs to be modified
                     if(records.get(i) == null) break;
                     if(records.get(i).getID() == ID){
                         records.set(i, r);
-                        this.put(t.tableName + i, new Page(records.toArray(new Record[records.size()])));
+                        this.put(t.tableName + j, new Page(records));
                         //System.out.println("Update record: " + record.toString() + " to be: " + r.toString());
                         return;
                     }
                 }
+                if(j == page_nums - 1){  //no record-->insert to the end
+                    if(records.size() == Page.size){  //if the last page is full, create a new page to store the record
+                        ArrayList<Record>  newRecord = new ArrayList<>();
+                        newRecord.add(r);
+                        this.put(t.tableName + (j + 1), new Page(newRecord));
+                        return;
+                    }
+                    records.add(r);
+                    System.out.println("add record");
+                    this.put(t.tableName + j, new Page(records));
+                    return;
+                }
             }
             else{   // load page, then find the record
-                loadPage(t.tableName + i);
-                Record[] recordArray = this.get(t.tableName + i).getRecords();
-                ArrayList<Record> records = new ArrayList<Record>(Arrays.asList(recordArray));
-                for(i = 0; i < records.size(); i++){    // find the record which needs to be modified
+                loadPage(t.tableName + j);
+                ArrayList<Record> records = this.get(t.tableName + j).getRecords();
+//                Record[] recordArray = this.get(t.tableName + j).getRecords();
+//                ArrayList<Record> records = new ArrayList<Record>(Arrays.asList(recordArray));
+                for(int i = 0; i < records.size(); i++){    // find the record which needs to be modified
                     if(records.get(i) == null) break;
                     if(records.get(i).getID() == ID){
                         records.set(i, r);
-                        this.put(t.tableName + i, new Page(records.toArray(new Record[records.size()])));
+                        this.put(t.tableName + j, new Page(records));
                         return;
                     }
-                    if(i == page_nums){  //no record-->insert to the end
-                        if(records.size() == pages.get(0).size){  //if the last page is full, create a new page to store the record
-                            Record[] newRecord = new Record[1];
-                            newRecord[0] = r;
-                            this.put(t.tableName + i + 1, new Page(newRecord));
+                    if(j == page_nums - 1){  //no record-->insert to the end
+                        if(records.size() == Page.size){  //if the last page is full, create a new page to store the record
+                            ArrayList<Record>  newRecord = new ArrayList<>();
+                            newRecord.add(r);
+                            this.put(t.tableName + j + 1, new Page(newRecord));
                             return;
                         }
                         records.add(r);
-                        this.put(t.tableName + i, new Page(records.toArray(new Record[records.size()])));
+                        this.put(t.tableName + j, new Page(records));
                         return;
                     }
                 }

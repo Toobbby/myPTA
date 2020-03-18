@@ -1,16 +1,17 @@
 import java.io.*;
+import java.util.ArrayList;
 
 public class Page{
-	static int size = 1;
-	Record[] records;
+	static int size = 2;
+	ArrayList<Record> records;
 	Page(){}
 
-	Page(Record[] _records){
-		records = _records;
+	Page(ArrayList<Record> _records){
+		this.records = _records;
 	}
 
-	public Record[] getRecords() {
-		return records;
+	public ArrayList<Record> getRecords() {
+		return this.records;
 	}
 
 //	public static Page readFile(String tablename, int page_No){    // read a particular page from file(table)
@@ -42,9 +43,9 @@ public class Page{
 //	}
 
 	public static Page readFile(String tablename, int page_No){    // read a particular page from file
-		Record[] results = new Record[size];
+		ArrayList<Record> results = new ArrayList<>();
 		try {
-			FileInputStream inputStream = new FileInputStream("/Users/fguo/Documents/Github/myPTA/" + tablename + "/" + "page" + page_No + ".txt");
+			FileInputStream inputStream = new FileInputStream("./" + tablename + "/" + "page" + page_No + ".txt");
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 			String line;
 			int line_No = 0;
@@ -57,7 +58,8 @@ public class Page{
 //				System.out.println(str[0]);
 //                System.out.println(str[1]);
 //                System.out.println(str[2]);
-				results[idx] = new Record(Integer.valueOf(str[0]), str[1], str[2], tablename);
+				results.add(new Record(Integer.valueOf(str[0]), str[1], str[2], tablename));
+//				results[idx] = new Record(Integer.valueOf(str[0]), str[1], str[2], tablename);
                 idx++;
 			}
 		} catch (Exception e) {
@@ -67,21 +69,29 @@ public class Page{
 	}
 
 	public void writeFile(String tablename, int page_No){
-		String fileName = "/Users/fguo/Documents/Github/myPTA/" + tablename + "/" + "page" + page_No + ".txt";
+		String fileName = "./" + tablename + "/" + "page" + page_No + ".txt";
+        BufferedWriter out = null;
 		try
 		{
-			BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
-			for(int i = 0; i < this.records.length; i++){
-				out.write(records[i].toString());
+			out = new BufferedWriter(new FileWriter(fileName));
+			for(int i = 0; i < this.records.size(); i++){
+				out.write(this.getRecords().get(i).toString());
 				out.newLine();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		finally {
+            try {
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 	}
 
 	public int getNextOffset(){
-		return records.length * 32;  // sequentially next location to insert new record
+		return records.size() * 32;  // sequentially next location to insert new record
 	}
 }
 

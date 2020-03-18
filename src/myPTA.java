@@ -4,15 +4,15 @@ import java.util.HashMap;
 
 public class myPTA {
     // TODO: read arguments to assign these parameters
-    static int page_size = 2048;
-    static int bufferSize = 3;
+    static int page_size = 2;
+    static int bufferSize = 1;
     static HashMap<String, Table> tables;
     static Buffer buffer;
     public static void main(String[] args) throws Exception {
         // A hashMap to store tables
         tables = new HashMap<>();
-        tables.put("X", new Table("X"));
-        tables.put("Y", new Table("Y"));
+//        tables.put("X", new Table("X"));
+//        tables.put("Y", new Table("Y"));
         // A global Buffer
         buffer = new Buffer(bufferSize);
 
@@ -22,7 +22,7 @@ public class myPTA {
     }
 
     public static void readScript() throws Exception {
-        String pathname = "/Users/fguo/Documents/Github/myPTA/src/script.txt";
+        String pathname = "./src/script.txt";
         try(FileReader reader = new FileReader(pathname);
             BufferedReader br = new BufferedReader(reader)){
             String line;
@@ -79,8 +79,10 @@ public class myPTA {
     private static void write(String tableName, String recordValue) throws Exception {
         if(!tables.containsKey(tableName)){
             tables.put(tableName, new Table(tableName));
-            File dir = new File("/Users/fguo/Documents/Github/myPTA/" + tableName);
+            File dir = new File("./" + tableName);
             dir.mkdirs();
+            Page p = new Page(new ArrayList<Record>());
+            buffer.put(tableName + "0", p);
             System.out.println("The table " + tableName + " does not exist, it is created.");
         }
         Table t = tables.get(tableName);
@@ -107,7 +109,7 @@ public class myPTA {
 
     private static void delete(String tableName){
         tables.remove(tableName);
-        deleteDir(new File("/Users/fguo/Documents/Github/myPTA/" + tableName));
+        deleteDir(new File("./" + tableName));
         System.out.println("Table " + tableName + " has been dropped!");
     }
 
