@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 public class LSMTree {
+    String tableName;
     MemTable memTable;
     int levels;
     int maxSize;
@@ -16,7 +17,8 @@ public class LSMTree {
     ArrayList<Integer> level_size;
     ArrayList<Integer> last_chosen;
     MessageDigest md;
-    public LSMTree(int maxSize, String dir){
+    public LSMTree(String tableName, int maxSize, String dir){
+        this.tableName = tableName;
         memTable=new MemTable();
         this.maxSize=maxSize;
         levels=-1;
