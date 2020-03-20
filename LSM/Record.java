@@ -1,3 +1,5 @@
+
+
 public class Record {
     //ID: 4-byte integer (Primary Key)
     //ClientName: 16-byte long string

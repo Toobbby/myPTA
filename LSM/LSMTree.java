@@ -1,6 +1,10 @@
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -17,9 +21,12 @@ public class LSMTree {
     ArrayList<Integer> level_size;
     ArrayList<Integer> last_chosen;
     MessageDigest md;
-    public LSMTree(String tableName, int maxSize, String dir){
+    LSMBuffer<String, MemTable> buffer;
+
+    public LSMTree(String tableName, int maxSize, String dir, LSMBuffer<String, MemTable> b){
+        buffer=b;
         this.tableName = tableName;
-        memTable=new MemTable();
+        memTable=new MemTable(UUID.randomUUID());
         this.maxSize=maxSize;
         levels=-1;
         fileBaseDir=dir;
@@ -48,11 +55,13 @@ public class LSMTree {
                f.mkdirs();
                String filename = randomFileName();
                String loc=fileBaseDir+"/level0/"+filename;
-               level0.add(new SSTable(loc,memTable.flush()));
+               String uuid=memTable.id.toString();
+               level0.add(new SSTable(loc,memTable.flush(),uuid));
            }else{
                String filename = randomFileName();
                String loc=fileBaseDir+"/level0/"+filename;
-               level0.add(new SSTable(loc,memTable.flush()));
+               String uuid=memTable.id.toString();
+               level0.add(new SSTable(loc,memTable.flush(),uuid));
            }
            if (level0.size()>=4){
                compaction();
@@ -68,7 +77,7 @@ public class LSMTree {
             for(SSTable s: level0){
                 if (id>=s.begin&&id<=s.end) {
                     //could be optimized
-                    MemTable file = new MemTable(s.read());
+                    MemTable file=loadOrGetMemtable(s);
                     res = file.read(id);
                     if (res != null) return res;
                 }
@@ -79,7 +88,7 @@ public class LSMTree {
                 temp.begin=id;
                 SSTable file=level.floor(temp);
                 if (file==null||file.end<id) return null;
-                MemTable table=new MemTable(file.read());
+                MemTable table=loadOrGetMemtable(file);
                 res = table.read(id);
                 if (res != null) return res;
             }
@@ -87,9 +96,19 @@ public class LSMTree {
         return res;
     }
 
+    
+    public MemTable loadOrGetMemtable(SSTable sstable){
+        if (buffer.containsKey(sstable.id.toString())){
+            return buffer.get(sstable.id.toString());
+        }else {
+            MemTable res=new MemTable(sstable.read());
+            buffer.put(sstable.id.toString(),res);
+            return res;
+        }
+    }
     //naive implementation
     //other way is to build a index using area code
-    public ArrayList<Record> readAreaCode(String areaCode){
+    public ArrayList<Record> readAreaCode(LSMBuffer<String,MemTable> buffer,String areaCode){
         ArrayList<Record> res=new ArrayList<>();
         Iterator<Record> i=memTable.iterate();
         Record tempRecord;
@@ -103,7 +122,7 @@ public class LSMTree {
         //loop in level 0
         for(SSTable s: level0){
                 //could be optimized
-                tempMentable = new MemTable(s.read());
+                tempMentable = loadOrGetMemtable(s);
                 i=tempMentable.iterate();
                 while (i.hasNext()){
                     tempRecord=i.next();
@@ -116,7 +135,7 @@ public class LSMTree {
         for (TreeSet<SSTable> level: SStables){
             for(SSTable s: level){
                 //could be optimized
-                tempMentable = new MemTable(s.read());
+                tempMentable = loadOrGetMemtable(s);
                 i=tempMentable.iterate();
                 while (i.hasNext()){
                     tempRecord=i.next();
@@ -169,18 +188,27 @@ public class LSMTree {
                     return o1.begin-o2.begin;
                 }
             }));
+
             last_chosen.add(0);
-            MemTable buffer=new MemTable(chosen.read());
-            String filename = randomFileName();
+            //move chosen to next level
+            String filename=chosen.loc.split("/level"+level+"/")[1];
             String loc=fileBaseDir+"/level"+(level+1)+"/"+filename;
-            SStables.get(level).add(new SSTable(loc,buffer.flush()));
+            try {
+                Files.move(Paths.get(chosen.loc),Paths.get(loc),StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            SStables.get(level).add(chosen);
             level_size.add(chosen.size);
-            chosen.delete();
         }else {
+            buffer.remove(chosen.id.toString());
             //find overlap and merge
             SSTable tempBegin=new SSTable();tempBegin.begin=chosen.begin;
             SSTable tempEnd=new SSTable();tempEnd.begin=chosen.end;
             SortedSet<SSTable> overlapped=SStables.get(level).subSet(tempBegin,tempEnd);
+            for (SSTable s:overlapped){
+                buffer.remove(s.id.toString());
+            }
             toMerge.add(chosen);
             toMerge.addAll(overlapped);
             mergeAndWrite(toMerge,level+1);
@@ -209,10 +237,11 @@ public class LSMTree {
         ArrayList<SSTable> toCompact=new ArrayList<>();
         SSTable chosen=level0.get(3);
         toCompact.add(chosen);level0.remove(3);
-
+        buffer.remove(chosen.id.toString());
         for (int i=2;i>=0;--i){
             SSTable s=level0.get(i);
             if (chosen.overlap(s)){
+                buffer.remove(s.id.toString());
                 toCompact.add(s);level0.remove(s);
             }
         }
@@ -230,6 +259,7 @@ public class LSMTree {
             toCompact.addAll(overlaped);
             ArrayList<SSTable> temp=new ArrayList<>();
             for(SSTable toMerge:overlaped){
+                buffer.remove(toMerge.id.toString());
                 level_size.set(0,level_size.get(0)-toMerge.size);
                 temp.add(toMerge);
             }
@@ -266,7 +296,7 @@ public class LSMTree {
         HashMap<Integer,Record> mergedTuples=new HashMap<>();
         for (int i=filesToMerge.size()-1;i>=0;--i){
             SSTable ss=filesToMerge.get(i);
-            MemTable temp=new MemTable(ss.read());
+            MemTable temp=loadOrGetMemtable(ss);
             mergedTuples.putAll(temp.tuples);
         }
         ArrayList<Integer> keys=new ArrayList<Integer>(mergedTuples.keySet());
@@ -276,14 +306,14 @@ public class LSMTree {
             buffer.add(mergedTuples.get(k));
             if (buffer.size()==maxSize){
                 String loc=fileBaseDir+"/level"+level+"/"+randomFileName();
-                SStables.get(level-1).add(new SSTable(loc,buffer));
+                SStables.get(level-1).add(new SSTable(loc,buffer,UUID.randomUUID().toString()));
                 level_size.set(level-1,level_size.get(level-1)+maxSize);
                 buffer=new ArrayList<>();
             }
         }
         if (!buffer.isEmpty()){
             String loc=fileBaseDir+"/level"+level+"/"+randomFileName();
-            SStables.get(level-1).add(new SSTable(loc,buffer));
+            SStables.get(level-1).add(new SSTable(loc,buffer,UUID.randomUUID().toString()));
             level_size.set(level-1,level_size.get(level-1)+buffer.size());
         }
     }
@@ -293,14 +323,17 @@ public class LSMTree {
         int begin;
         int end;
         int size;
+        UUID id;
         //Since SSTable is immutable, it writes the file when constructing it.
-        public SSTable(String loc,ArrayList<Record> tuples){
+        public SSTable(String loc,ArrayList<Record> tuples,String uuid){
             this.loc=loc;
             begin=tuples.get(0).ID;
             end=tuples.get(tuples.size()-1).ID;
             size=tuples.size();
+            id=UUID.fromString(uuid);
             try {
                 BufferedWriter w=new BufferedWriter(new FileWriter(loc));
+                w.write(uuid);w.write('\n');
                 for (Record r:tuples) {
                     w.write(r.toString());
                     w.write("\n");

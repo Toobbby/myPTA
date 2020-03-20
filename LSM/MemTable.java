@@ -1,3 +1,5 @@
+
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -5,14 +7,17 @@ import java.util.*;
 
 public class MemTable {
     HashMap<Integer,Record> tuples;
-
-    public MemTable(){
+    UUID id;
+    public MemTable(UUID uuid){
         tuples=new HashMap<>();
+        id=uuid;
     }
     public MemTable(BufferedReader r)  {
         tuples=new HashMap<>();
         String line = null;
         try {
+            line=r.readLine();
+            id=UUID.fromString(line);
             while ((line = r.readLine()) != null) {
                 write(new Record(line));
             }

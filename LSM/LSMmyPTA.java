@@ -1,3 +1,4 @@
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,14 +60,14 @@ public class LSMmyPTA {
     }
 
     // Retrieve the record with ID=val in table. If table does not exist, the read is aborted.
-    private static void read(String tableName, int val) {
+    private static void read(String tableName, int val) throws Exception {
 
         if(!tables.containsKey(tableName)){
             System.out.println("The table does not exist, the read is aborted.");
         }
         else{
             LSMTree t = tables.get(tableName);
-            Record r = buffer.readRecord(t, tableName, val);
+            Record r = t.readID(val);
             if(r == null){
                 System.out.println("The table " + tableName + " doesn't have record with ID = " + val);
             }
@@ -79,16 +80,15 @@ public class LSMmyPTA {
 
     private static void write(String tableName, String recordValue) throws Exception {
         if(!tables.containsKey(tableName)){
-            tables.put(tableName, new LSMTree(tableName));  //TODO: pass parameters to LSMTree to create new table
-            File dir = new File("./" + tableName);
+            File dir = new File("./" + tableName+"/");
             dir.mkdirs();
+            tables.put(tableName, new LSMTree(tableName));  //TODO: pass parameters to LSMTree to create new table
             buffer.put(tableName + 1, new MemTable(tableName));
-            buffer.put(tableName + 2, new MemTable(tableName));  //2 memtables, in order to support concurrent flash and write
+            //not add second memtable for now
             System.out.println("The table " + tableName + " does not exist, it is created.");
         }
         LSMTree t = tables.get(tableName);
-        Record r = recordGenerator(tableName, recordValue);
-        buffer.writeRecordInMemtable(t, r);
+        t.write(r);
         System.out.println("Write: " + r.toString() +" to " + tableName + " successfully!");
     }
 
@@ -97,7 +97,7 @@ public class LSMmyPTA {
             System.out.println("The table does not exist, show user with area code is aborted.");
         } else {
             LSMTree t = tables.get(tableName);
-            ArrayList<Record> matchedRecords = buffer.readRecordWithAreaCode(t, tableName, areaCode);
+            ArrayList<Record> matchedRecords = t.readAreaCode(areaCode);
             if (matchedRecords == null) {
                 System.out.println("The table " + tableName + " doesn't have record with area code = " + areaCode);
             } else {
@@ -109,8 +109,9 @@ public class LSMmyPTA {
     }
 
     private static void delete(String tableName){
+        LSMTree t=tables.get(tableName);
+        t.deleteTable();
         tables.remove(tableName);
-        deleteDir(new File("./" + tableName));
         System.out.println("Table " + tableName + " has been dropped!");
     }
 
