@@ -41,32 +41,51 @@ public class LSMTree {
         SStables=new ArrayList<>();
     }
 
+
+    public void flushMemtable(){
+        if (memTable.size()>=maxSize){
+            //need flush to level0
+            if (level0.size()==0){
+                //create first sstable
+                level0=new ArrayList<>();
+                levels=0;
+                File f=new File(fileBaseDir+"/level0");
+                f.mkdirs();
+                String filename = randomFileName();
+                String loc=fileBaseDir+"/level0/"+filename;
+                String uuid=memTable.id.toString();
+                level0.add(new SSTable(loc,memTable.flush(),uuid));
+            }else{
+                String filename = randomFileName();
+                String loc=fileBaseDir+"/level0/"+filename;
+                String uuid=memTable.id.toString();
+                level0.add(new SSTable(loc,memTable.flush(),uuid));
+            }
+            if (level0.size()>=4){
+                compaction();
+            }
+        }
+    }
+
+    public void deleteRecord(int id){
+        Record r=null;
+        try {
+            r=readID(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (r!=null) {
+            memTable.delete(id);
+            //may need to flush
+            flushMemtable();
+        }
+    }
+
+
     public void write(Record t){
         //if Memtable is not full add to Memtable
         memTable.write(t);
-
-        if (memTable.size()>=maxSize){
-            //need flush to level0
-           if (level0.size()==0){
-               //create first sstable
-               level0=new ArrayList<>();
-               levels=0;
-               File f=new File(fileBaseDir+"/level0");
-               f.mkdirs();
-               String filename = randomFileName();
-               String loc=fileBaseDir+"/level0/"+filename;
-               String uuid=memTable.id.toString();
-               level0.add(new SSTable(loc,memTable.flush(),uuid));
-           }else{
-               String filename = randomFileName();
-               String loc=fileBaseDir+"/level0/"+filename;
-               String uuid=memTable.id.toString();
-               level0.add(new SSTable(loc,memTable.flush(),uuid));
-           }
-           if (level0.size()>=4){
-               compaction();
-           }
-        }
+        flushMemtable();
     }
 
 
@@ -93,6 +112,7 @@ public class LSMTree {
                 if (res != null) return res;
             }
         }
+        if (res.Phone.equals("delete"))return null;
         return res;
     }
 
@@ -108,7 +128,7 @@ public class LSMTree {
     }
     //naive implementation
     //other way is to build a index using area code
-    public ArrayList<Record> readAreaCode(LSMBuffer<String,MemTable> buffer,String areaCode){
+    public ArrayList<Record> readAreaCode(String areaCode){
         ArrayList<Record> res=new ArrayList<>();
         Iterator<Record> i=memTable.iterate();
         Record tempRecord;
@@ -233,6 +253,9 @@ public class LSMTree {
             f.delete();
         }
     }
+
+
+
     public void compactLevel0(){
         ArrayList<SSTable> toCompact=new ArrayList<>();
         SSTable chosen=level0.get(3);
@@ -290,20 +313,28 @@ public class LSMTree {
         }
     }
 
-    //merge file in level-1 and level and write to level
+
     public void mergeAndWrite(ArrayList<SSTable> filesToMerge,int level) {
         //filesToMerge need to add to list by time order. ie index 0 is newest value
-        HashMap<Integer,Record> mergedTuples=new HashMap<>();
+        HashMap<Integer,SSTable> mergedTuples=new HashMap<>();
         for (int i=filesToMerge.size()-1;i>=0;--i){
             SSTable ss=filesToMerge.get(i);
             MemTable temp=loadOrGetMemtable(ss);
-            mergedTuples.putAll(temp.tuples);
+            for (Integer integer : temp.tuples.keySet()) {
+                mergedTuples.put(integer,ss);
+            }
         }
         ArrayList<Integer> keys=new ArrayList<Integer>(mergedTuples.keySet());
         Collections.sort(keys);
         ArrayList<Record> buffer=new ArrayList<>();
         for (Integer k:keys){
-            buffer.add(mergedTuples.get(k));
+            SSTable recordLoc=mergedTuples.get(k);
+            MemTable source=loadOrGetMemtable(recordLoc);
+            Record r=source.read(k);
+            if (r.Phone.equals("delete")&&level== SStables.size()){
+                continue;
+            }
+            buffer.add(source.read(k));
             if (buffer.size()==maxSize){
                 String loc=fileBaseDir+"/level"+level+"/"+randomFileName();
                 SStables.get(level-1).add(new SSTable(loc,buffer,UUID.randomUUID().toString()));
@@ -335,7 +366,7 @@ public class LSMTree {
                 BufferedWriter w=new BufferedWriter(new FileWriter(loc));
                 w.write(uuid);w.write('\n');
                 for (Record r:tuples) {
-                    w.write(r.toString());
+                        w.write(r.toString());
                     w.write("\n");
                 }
                 w.close();

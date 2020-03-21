@@ -1,3 +1,4 @@
+
 import java.io.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -22,8 +23,4 @@ public class LSMBuffer<K, V> extends LinkedHashMap<String, MemTable> {
         }
         return false;
     }
-
-
-
-
 }

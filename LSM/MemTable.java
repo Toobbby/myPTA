@@ -37,7 +37,9 @@ public class MemTable {
     public Record read(int id){
         return tuples.getOrDefault(id,null);
     }
-
+    public void delete(int id){
+        tuples.put(id,new Record(id,true));
+    }
     //flush current records and create new memtable
     public ArrayList<Record> flush(){
         StringBuilder s=new StringBuilder();
