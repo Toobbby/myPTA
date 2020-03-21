@@ -1,4 +1,4 @@
-
+package LSM;
 
 public class Record {
     //ID: 4-byte integer (Primary Key)
@@ -60,6 +60,6 @@ public class Record {
 
     @Override
     public String toString(){
-        return ID + ", " + ClientName + ", " + Phone;
+        return "("+ID + ", " + ClientName + ", " + Phone +")";
     }
 }

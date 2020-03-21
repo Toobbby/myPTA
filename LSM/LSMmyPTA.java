@@ -1,3 +1,4 @@
+package LSM;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -5,11 +6,14 @@ import java.util.HashMap;
 
 public class LSMmyPTA {
     // read arguments to assign these parameters
-    static int sstableSize = 2;  //how many records each SSTable can hold (tunable)
-    static int bufferSize = 3;   //how many SSTables could stay in buffer concurrently, do NOT include Memtable (tunable)
+    static int sstableSize;  //how many records each SSTable can hold (tunable)
+    static int bufferSize;   //how many SSTables could stay in buffer concurrently, do NOT include Memtable (tunable)
     static HashMap<String, LSMTree> tables;
     static LSMBuffer buffer;
     public static void main(String[] args) throws Exception {
+        //run with 2 args 1.sstableSize 2.bufferSize
+        sstableSize=Integer.parseInt(args[0]);
+        bufferSize=Integer.parseInt(args[1]);
         // A hashMap to store tables
         tables = new HashMap<>();
 //        tables.put("X", new Table("X"));
@@ -19,7 +23,9 @@ public class LSMmyPTA {
 
         // read script
         readScript();
-
+        for (LSMTree lsmtree:tables.values()){
+            //lsmtree.deleteTable();
+        }
     }
 
     public static void readScript() throws Exception {
@@ -38,7 +44,7 @@ public class LSMmyPTA {
                         write(keywords[1], keywords[2]);
                         break;
                     case "M":
-                        showUserWithAreaCode(keywords[1], Integer.parseInt(keywords[2]));
+                        showUserWithAreaCode(keywords[1], keywords[2]);
                         break;
                     default:
                         delete(keywords[1]);
@@ -82,17 +88,17 @@ public class LSMmyPTA {
         if(!tables.containsKey(tableName)){
             File dir = new File("./" + tableName+"/");
             dir.mkdirs();
-            tables.put(tableName, new LSMTree(tableName));  //TODO: pass parameters to LSMTree to create new table
-            buffer.put(tableName + 1, new MemTable(tableName));
+            tables.put(tableName, new LSMTree(tableName,sstableSize,"./test/"+tableName,buffer));  //TODO: pass parameters to LSMTree to create new table
             //not add second memtable for now
             System.out.println("The table " + tableName + " does not exist, it is created.");
         }
         LSMTree t = tables.get(tableName);
+        Record r=new Record(recordValue);
         t.write(r);
         System.out.println("Write: " + r.toString() +" to " + tableName + " successfully!");
     }
 
-    private static void showUserWithAreaCode(String tableName, int areaCode) {
+    private static void showUserWithAreaCode(String tableName, String areaCode) {
         if (!tables.containsKey(tableName)) {
             System.out.println("The table does not exist, show user with area code is aborted.");
         } else {
@@ -115,13 +121,7 @@ public class LSMmyPTA {
         System.out.println("Table " + tableName + " has been dropped!");
     }
 
-    public static void deleteDir(File file) {
-        if (file.isDirectory()) {
-            for (File f : file.listFiles())
-                deleteDir(f);
-        }
-        file.delete();
-    }
+
 
 
 }

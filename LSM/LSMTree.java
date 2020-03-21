@@ -1,3 +1,4 @@
+package LSM;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -108,7 +109,7 @@ public class LSMTree {
     }
     //naive implementation
     //other way is to build a index using area code
-    public ArrayList<Record> readAreaCode(LSMBuffer<String,MemTable> buffer,String areaCode){
+    public ArrayList<Record> readAreaCode(String areaCode){
         ArrayList<Record> res=new ArrayList<>();
         Iterator<Record> i=memTable.iterate();
         Record tempRecord;
@@ -291,19 +292,50 @@ public class LSMTree {
     }
 
     //merge file in level-1 and level and write to level
+//    public void mergeAndWrite(ArrayList<SSTable> filesToMerge,int level) {
+////        //filesToMerge need to add to list by time order. ie index 0 is newest value
+////        HashMap<Integer,Record> mergedTuples=new HashMap<>();
+////        for (int i=filesToMerge.size()-1;i>=0;--i){
+////            SSTable ss=filesToMerge.get(i);
+////            MemTable temp=loadOrGetMemtable(ss);
+////            mergedTuples.putAll(temp.tuples);
+////        }
+////        ArrayList<Integer> keys=new ArrayList<Integer>(mergedTuples.keySet());
+////        Collections.sort(keys);
+////        ArrayList<Record> buffer=new ArrayList<>();
+////        for (Integer k:keys){
+////            buffer.add(mergedTuples.get(k));
+////            if (buffer.size()==maxSize){
+////                String loc=fileBaseDir+"/level"+level+"/"+randomFileName();
+////                SStables.get(level-1).add(new SSTable(loc,buffer,UUID.randomUUID().toString()));
+////                level_size.set(level-1,level_size.get(level-1)+maxSize);
+////                buffer=new ArrayList<>();
+////            }
+////        }
+////        if (!buffer.isEmpty()){
+////            String loc=fileBaseDir+"/level"+level+"/"+randomFileName();
+////            SStables.get(level-1).add(new SSTable(loc,buffer,UUID.randomUUID().toString()));
+////            level_size.set(level-1,level_size.get(level-1)+buffer.size());
+////        }
+////    }
+
     public void mergeAndWrite(ArrayList<SSTable> filesToMerge,int level) {
         //filesToMerge need to add to list by time order. ie index 0 is newest value
-        HashMap<Integer,Record> mergedTuples=new HashMap<>();
+        HashMap<Integer,SSTable> mergedTuples=new HashMap<>();
         for (int i=filesToMerge.size()-1;i>=0;--i){
             SSTable ss=filesToMerge.get(i);
             MemTable temp=loadOrGetMemtable(ss);
-            mergedTuples.putAll(temp.tuples);
+            for (Integer integer : temp.tuples.keySet()) {
+                mergedTuples.put(integer,ss);
+            }
         }
         ArrayList<Integer> keys=new ArrayList<Integer>(mergedTuples.keySet());
         Collections.sort(keys);
         ArrayList<Record> buffer=new ArrayList<>();
         for (Integer k:keys){
-            buffer.add(mergedTuples.get(k));
+            SSTable recordLoc=mergedTuples.get(k);
+            MemTable source=loadOrGetMemtable(recordLoc);
+            buffer.add(source.read(k));
             if (buffer.size()==maxSize){
                 String loc=fileBaseDir+"/level"+level+"/"+randomFileName();
                 SStables.get(level-1).add(new SSTable(loc,buffer,UUID.randomUUID().toString()));
