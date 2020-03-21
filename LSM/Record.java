@@ -1,20 +1,26 @@
-package LSM;
 
 public class Record {
     //ID: 4-byte integer (Primary Key)
     //ClientName: 16-byte long string
     //Phone: 12-byte long string
     public int ID;
-    public String ClientName;
-    public String Phone;
-    public String tableName;
-
-    public Record(int id, String clientName, String phone, String tableName) throws Exception {
+    public String ClientName="";
+    public String Phone="";
+    public String tableName="";
+    public boolean delete=false;
+    public Record(int id, String clientName, String phone, String tableName) {
         //if(clientName.length() > 16 || phone.length() > 12) throw new Exception("String Length Exceeded!");
         ID = id;
         ClientName = clientName;
         Phone = phone;
-        tableName = tableName;
+        this.tableName = tableName;
+    }
+
+    public Record(int id, boolean d) {
+        //if(clientName.length() > 16 || phone.length() > 12) throw new Exception("String Length Exceeded!");
+        ID = id;
+        delete=d;
+        Phone="delete";
     }
 
     public int getID() {

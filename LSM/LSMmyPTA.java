@@ -1,4 +1,4 @@
-package LSM;
+
 
 import java.io.*;
 import java.util.ArrayList;
@@ -46,6 +46,9 @@ public class LSMmyPTA {
                     case "M":
                         showUserWithAreaCode(keywords[1], keywords[2]);
                         break;
+                    case "E":
+                        erase(keywords[1], Integer.parseInt(keywords[2]));
+                        break;
                     default:
                         delete(keywords[1]);
                         break;
@@ -83,7 +86,15 @@ public class LSMmyPTA {
         }
 
     }
-
+    public static void erase(String tableName, int val) throws Exception{
+        if(!tables.containsKey(tableName)){
+            System.out.println("The table does not exist, the erase is aborted.");
+        }
+        else{
+            LSMTree t = tables.get(tableName);
+            t.deleteRecord(val);
+        }
+    }
     private static void write(String tableName, String recordValue) throws Exception {
         if(!tables.containsKey(tableName)){
             File dir = new File("./" + tableName+"/");
