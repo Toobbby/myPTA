@@ -8,6 +8,7 @@ import java.util.*;
 public class Buffer<K, V> extends LinkedHashMap<String, Page> {
     private int buffer_size;
     private String logPath;
+
     Buffer(int _buffer_size, String logPath) {
         super(16, 0.75f, true);
         this.buffer_size = _buffer_size;
@@ -49,7 +50,7 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
         ArrayList<Page> pages = t.pages;
         for (int i = 0; i < pages.size(); i++) {
             Record r = checkRecordInPage(tableName + i, val, logPath);
-            if(r != null) return r;
+            if (r != null) return r;
         }
         return null;
     }
@@ -68,8 +69,7 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
         // if it is in buffer, find the record directly
         if (this.containsKey(table_pageNo)) {
             return findRecord(this.get(table_pageNo), val);
-        }
-        else{   // load page, then find the record
+        } else {   // load page, then find the record
             loadPage(table_pageNo, logPath);
             return findRecord(this.get(table_pageNo), val);
         }
@@ -77,25 +77,25 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
 
     public ArrayList<Record> checkRecordInPageWithAreaCode(String table_pageNo, int areaCode, String logPath) throws IOException {
         // load page, then find the record ONE BY ONE
-        if(!this.containsKey(table_pageNo)){
+        if (!this.containsKey(table_pageNo)) {
             loadPage(table_pageNo, logPath);
         }
         return findRecordWithAreaCode(this.get(table_pageNo), areaCode);
     }
 
 
-    public Record findRecord(Page p, int val){     // find record with ID=val in a particular page
+    public Record findRecord(Page p, int val) {     // find record with ID=val in a particular page
         ArrayList<Record> records = p.getRecords();
-        if(records == null){
+        if (records == null) {
             return null;
         }
 //        System.out.println(records.length);
 //        System.out.println(records[0].toString());
 //        System.out.println(records[0].ID);
 //        System.out.println(val);
-        for(Record r: records){
-            if(r == null) break;
-            if(r.getID() == val){
+        for (Record r : records) {
+            if (r == null) break;
+            if (r.getID() == val) {
                 return r;
             }
         }
@@ -105,13 +105,13 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
     public ArrayList<Record> findRecordWithAreaCode(Page p, int areaCode) throws IOException {     // find record with areacode in a particular page
         ArrayList<Record> results = new ArrayList<Record>();
         ArrayList<Record> records = p.getRecords();
-        if(records == null){
+        if (records == null) {
             return null;
         }
 
-        for(Record r: records){
-            if(r == null) break;
-            if(Integer.parseInt(r.getPhone().substring(0,3))== areaCode){
+        for (Record r : records) {
+            if (r == null) break;
+            if (Integer.parseInt(r.getPhone().substring(0, 3)) == areaCode) {
                 results.add(r);
                 logWriter("MRead: " + r.toString(), this.logPath);
             }
@@ -128,9 +128,9 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
         for (int j = 0; j < page_nums; j++) {
             if (this.containsKey(t.tableName + j)) {    // the page is in the buffer
                 ArrayList<Record> records = this.get(t.tableName + j).getRecords();
-                for(int i = 0; i < records.size(); i++){    // find the record which needs to be modified
-                    if(records.get(i) == null) break;
-                    if(records.get(i).getID() == ID){
+                for (int i = 0; i < records.size(); i++) {    // find the record which needs to be modified
+                    if (records.get(i) == null) break;
+                    if (records.get(i).getID() == ID) {
                         records.set(i, r);
                         this.put(t.tableName + j, new Page(records));  //refresh the page in buffer
                         //System.out.println("Update record: " + record.toString() + " to be: " + r.toString());
@@ -138,9 +138,9 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
                         return;
                     }
                 }
-                if(j == page_nums - 1){  //no record-->insert to the end
-                    if(records.size() == Page.size){  //if the last page is full, create a new page to store the record
-                        ArrayList<Record>  newRecord = new ArrayList<>();
+                if (j == page_nums - 1) {  //no record-->insert to the end
+                    if (records.size() == Page.size) {  //if the last page is full, create a new page to store the record
+                        ArrayList<Record> newRecord = new ArrayList<>();
                         newRecord.add(r);
                         this.put(t.tableName + (j + 1), new Page(newRecord));
                         logWriter("Create " + "T-" + t.tableName + " P-" + (j + 1), logPath);
@@ -156,23 +156,22 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
                     logWriter("Written: " + r.toString(), logPath);
                     return;
                 }
-            }
-            else{   // load page, then find the record
+            } else {   // load page, then find the record
                 loadPage(t.tableName + j, logPath);
                 ArrayList<Record> records = this.get(t.tableName + j).getRecords();
 //                Record[] recordArray = this.get(t.tableName + j).getRecords();
 //                ArrayList<Record> records = new ArrayList<Record>(Arrays.asList(recordArray));
-                for(int i = 0; i < records.size(); i++){    // find the record which needs to be modified
-                    if(records.get(i) == null) break;
-                    if(records.get(i).getID() == ID){
+                for (int i = 0; i < records.size(); i++) {    // find the record which needs to be modified
+                    if (records.get(i) == null) break;
+                    if (records.get(i).getID() == ID) {
                         records.set(i, r);
                         this.put(t.tableName + j, new Page(records));
                         logWriter("Written: " + r.toString(), logPath);
                         return;
                     }
-                    if(j == page_nums - 1){  //no record-->insert to the end
-                        if(records.size() == Page.size){  //if the last page is full, create a new page to store the record
-                            ArrayList<Record>  newRecord = new ArrayList<>();
+                    if (j == page_nums - 1) {  //no record-->insert to the end
+                        if (records.size() == Page.size) {  //if the last page is full, create a new page to store the record
+                            ArrayList<Record> newRecord = new ArrayList<>();
                             newRecord.add(r);
                             this.put(t.tableName + (j + 1), new Page(newRecord));
                             t.pages.add(new Page(newRecord));
@@ -199,6 +198,35 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
         Page p = Page.readFile(tableName, pageNo);
         this.put(table_pageNo, p);
         logWriter("Swap in  " + "T-" + tableName + " P-" + pageNo, logPath);
+    }
+
+    public boolean eraseRecord(Table t, String tableName, int val, String logPath) throws IOException {
+        ArrayList<Page> pages = t.pages;
+        for (int i = 0; i < pages.size(); i++) {
+            // find the index of page that contains the record with val
+            Record r = checkRecordInPage(tableName + i, val, logPath);
+            if (r != null){
+                erasePageWithVal(t, tableName, i, val);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void erasePageWithVal(Table t, String tableName, int page_no, int val){
+        Page oldPage = this.get(tableName + page_no);
+        ArrayList<Record> records = oldPage.getRecords();
+        for (int i = 0; i < records.size(); i++) {
+            if(records.get(i).getID() == val){
+                records.remove(i);
+                if(i != records.size() - 1){
+                    t.spaces.add(i);
+                }
+                break;
+            }
+        }
+        oldPage.records = records;
+        this.put(tableName + page_no, oldPage);
     }
 
     private static void update(String fileName, int id, String record) {
@@ -252,7 +280,7 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
 
     }
 
-    static void addLast(String fileName, Record r){
+    static void addLast(String fileName, Record r) {
         FileWriter output = null;
         try {
             output = new FileWriter(fileName, true);
@@ -260,9 +288,8 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
-            if(output == null){
+        } finally {
+            if (output == null) {
                 try {
                     output.close();
                 } catch (IOException e) {

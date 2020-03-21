@@ -45,6 +45,8 @@ public class myPTA {
                     case "M":
                         showUserWithAreaCode(keywords[1], Integer.parseInt(keywords[2]), logPath);
                         break;
+                    case "E":
+                        erase(keywords[1], Integer.parseInt(keywords[2]), logPath);
                     default:
                         delete(keywords[1], logPath);
                         break;
@@ -52,6 +54,25 @@ public class myPTA {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void erase(String tableName, int val, String logPath) throws IOException {
+        if(!tables.containsKey(tableName)){
+            System.out.println("The table does not exist, the erase is aborted.");
+            logWriter("The table does not exist, the erase is aborted.", logPath);
+        }
+        else{
+            Table t = tables.get(tableName);
+            boolean flag = buffer.eraseRecord(t, tableName, val, logPath);
+            if(flag){
+                System.out.println("Erased: " + tableName + " " + val);
+                logWriter("Erased: " + tableName + " " + val, logPath);
+            }
+            else{
+                System.out.println("There is no record with ID = " + val + " in Table " + tableName);
+                logWriter("There is no record with ID = " + val + " in Table " + tableName, logPath);
+            }
         }
     }
 
