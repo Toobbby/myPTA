@@ -126,19 +126,23 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
         int ID = r.getID();
         //String filename = "src/" + t.tableName + ".txt";
         for (int j = 0; j < page_nums; j++) {
-            if (this.containsKey(t.tableName + j)) {    // the page is in the buffer
-                ArrayList<Record> records = this.get(t.tableName + j).getRecords();
-                for (int i = 0; i < records.size(); i++) {    // find the record which needs to be modified
-                    if (records.get(i) == null) break;
-                    if (records.get(i).getID() == ID) {
-                        records.set(i, r);
-                        this.put(t.tableName + j, new Page(records));  //refresh the page in buffer
-                        //System.out.println("Update record: " + record.toString() + " to be: " + r.toString());
-                        logWriter("Written: " + r.toString(), logPath);
-                        return;
-                    }
+            if (!this.containsKey(t.tableName + j)) {    // the page is in the buffer
+                loadPage(t.tableName + j, logPath);
+            }
+            ArrayList<Record> records = this.get(t.tableName + j).getRecords();
+            for (int i = 0; i < records.size(); i++) {    // find the record which needs to be modified
+                if (records.get(i) == null) break;
+                if (records.get(i).getID() == ID) {
+                    records.set(i, r);
+                    this.put(t.tableName + j, new Page(records));  //refresh the page in buffer
+                    //System.out.println("Update record: " + record.toString() + " to be: " + r.toString());
+                    logWriter("Written: " + r.toString(), logPath);
+                    return;
                 }
-                if (j == page_nums - 1) {  //no record-->insert to the end
+            }
+            if (j == page_nums - 1) {  //no record--> check freeSpace --> if no freeSpace --> insert to the end
+                //                            --> has freeSpace --> insert to the pop page
+                if (t.freeSpace.isEmpty()) {
                     if (records.size() == Page.size) {  //if the last page is full, create a new page to store the record
                         ArrayList<Record> newRecord = new ArrayList<>();
                         newRecord.add(r);
@@ -153,44 +157,59 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
                     records.add(r);
                     System.out.println("add record");
                     this.put(t.tableName + j, new Page(records));
-                    logWriter("Written: " + r.toString(), logPath);
-                    return;
-                }
-            } else {   // load page, then find the record
-                loadPage(t.tableName + j, logPath);
-                ArrayList<Record> records = this.get(t.tableName + j).getRecords();
-//                Record[] recordArray = this.get(t.tableName + j).getRecords();
-//                ArrayList<Record> records = new ArrayList<Record>(Arrays.asList(recordArray));
-                for (int i = 0; i < records.size(); i++) {    // find the record which needs to be modified
-                    if (records.get(i) == null) break;
-                    if (records.get(i).getID() == ID) {
-                        records.set(i, r);
-                        this.put(t.tableName + j, new Page(records));
-                        logWriter("Written: " + r.toString(), logPath);
-                        return;
+                } else {
+                    int pageNo_tobeinsert = t.freeSpace.pop();
+                    System.out.println(t.tableName + " Page" + pageNo_tobeinsert + " has free space. Insert to this page.");
+                    logWriter(t.tableName + " Page" + pageNo_tobeinsert + " has free space. Insert to this page.", logPath);
+                    if (!this.containsKey(t.tableName + pageNo_tobeinsert)) {
+                        loadPage(t.tableName + pageNo_tobeinsert, logPath);
                     }
-                    if (j == page_nums - 1) {  //no record-->insert to the end
-                        if (records.size() == Page.size) {  //if the last page is full, create a new page to store the record
-                            ArrayList<Record> newRecord = new ArrayList<>();
-                            newRecord.add(r);
-                            this.put(t.tableName + (j + 1), new Page(newRecord));
-                            t.pages.add(new Page(newRecord));
-                            logWriter("Create " + "T-" + t.tableName + " P-" + (j + 1), logPath);
-                            logWriter("Swap in  " + "T-" + t.tableName + " P-" + (j + 1), logPath);
-                            System.out.println("Creating");
-                            logWriter("Written: " + r.toString(), logPath);
-                            return;
-                        }
-                        records.add(r);
-                        this.put(t.tableName + j, new Page(records));
-                        logWriter("Written: " + r.toString(), logPath);
-                        return;
-                    }
+                    Page p = this.get(t.tableName + pageNo_tobeinsert);
+                    ArrayList<Record> records1 = p.getRecords();
+                    records1.add(r);
+                    p.records = records1;
+                    this.put(t.tableName + pageNo_tobeinsert, p);
                 }
-
+                logWriter("Written: " + r.toString(), logPath);
+                return;
             }
         }
     }
+//            else {   // load page, then find the record
+//                loadPage(t.tableName + j, logPath);
+//                ArrayList<Record> records = this.get(t.tableName + j).getRecords();
+////                Record[] recordArray = this.get(t.tableName + j).getRecords();
+////                ArrayList<Record> records = new ArrayList<Record>(Arrays.asList(recordArray));
+//                for (int i = 0; i < records.size(); i++) {    // find the record which needs to be modified
+//                    if (records.get(i) == null) break;
+//                    if (records.get(i).getID() == ID) {
+//                        records.set(i, r);
+//                        this.put(t.tableName + j, new Page(records));
+//                        logWriter("Written: " + r.toString(), logPath);
+//                        return;
+//                    }
+//                    if (j == page_nums - 1) {  //no record-->insert to the end
+//                        if (records.size() == Page.size) {  //if the last page is full, create a new page to store the record
+//                            ArrayList<Record> newRecord = new ArrayList<>();
+//                            newRecord.add(r);
+//                            this.put(t.tableName + (j + 1), new Page(newRecord));
+//                            t.pages.add(new Page(newRecord));
+//                            logWriter("Create " + "T-" + t.tableName + " P-" + (j + 1), logPath);
+//                            logWriter("Swap in  " + "T-" + t.tableName + " P-" + (j + 1), logPath);
+//                            System.out.println("Creating");
+//                            logWriter("Written: " + r.toString(), logPath);
+//                            return;
+//                        }
+//                        records.add(r);
+//                        this.put(t.tableName + j, new Page(records));
+//                        logWriter("Written: " + r.toString(), logPath);
+//                        return;
+//                    }
+//                }
+//
+//            }
+
+
 
     public void loadPage(String table_pageNo, String logPath) throws IOException {
         String tableName = table_pageNo.substring(0, 1);
@@ -220,7 +239,7 @@ public class Buffer<K, V> extends LinkedHashMap<String, Page> {
             if(records.get(i).getID() == val){
                 records.remove(i);
                 if(i != records.size() - 1){
-                    t.spaces.add(i);
+                    t.freeSpace.push(i);
                 }
                 break;
             }
