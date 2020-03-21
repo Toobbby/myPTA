@@ -1,13 +1,11 @@
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 public class Table {
     String tableName;
     ArrayList<Page> pages = new ArrayList<Page>();
     Queue<Tuple> freeSpace;
     Tuple nextInsert;
+    HashSet<Integer> spaces;
     public Table(String tableName){
         this.tableName = tableName;
         Page emptyPage = new Page();
@@ -19,6 +17,7 @@ public class Table {
             }
         };
         freeSpace = new PriorityQueue<Tuple>(comparator);
+        spaces = new HashSet<>();
     }
 
     public void refreshNextInsert(Tuple currentDelete){ //refresh freeSpace after each delete
