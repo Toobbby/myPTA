@@ -146,7 +146,7 @@ public class myPTA {
         } else {
             Table t = tables.get(tableName);
             ArrayList<Record> matchedRecords = buffer.readRecordWithAreaCode(t, tableName, areaCode);
-            if (matchedRecords == null) {
+            if (matchedRecords.size() == 0) {
                 System.out.println("The table " + tableName + " doesn't have record with area code = " + areaCode);
                 logWriter("The table " + tableName + " doesn't have record with area code = " + areaCode, logPath);
             } else {

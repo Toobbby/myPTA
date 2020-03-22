@@ -2,6 +2,7 @@ package LSM;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class LSMmyPTA {
@@ -16,6 +17,14 @@ public class LSMmyPTA {
         bufferSize=Integer.parseInt(args[1]);
         // A hashMap to store tables
         tables = new HashMap<>();
+        File root = new File("./test");
+        File[] tableList = root.listFiles();
+        for (int i = 0; i < tableList.length; i++){  //initialize all existing tables
+            String[] temp = tableList[i].toString().split("/");
+            if(temp[temp.length - 1].length() == 1){
+                tables.put(temp[temp.length - 1], new LSMTree(temp[temp.length - 1], sstableSize,"./test/" + temp[temp.length - 1], buffer));
+            }
+        }
 //        tables.put("X", new Table("X"));
 //        tables.put("Y", new Table("Y"));
         // A global Buffer
@@ -29,7 +38,7 @@ public class LSMmyPTA {
     }
 
     public static void readScript() throws Exception {
-        String pathname = "./src/script.txt";
+        String pathname = "./script.txt";
         try(FileReader reader = new FileReader(pathname);
             BufferedReader br = new BufferedReader(reader)){
             String line;
@@ -115,7 +124,8 @@ public class LSMmyPTA {
         } else {
             LSMTree t = tables.get(tableName);
             ArrayList<Record> matchedRecords = t.readAreaCode(areaCode);
-            if (matchedRecords == null) {
+            System.out.println(matchedRecords);
+            if (matchedRecords.size() == 0) {
                 System.out.println("The table " + tableName + " doesn't have record with area code = " + areaCode);
             } else {
                 for (Record matchedRecord : matchedRecords) {
