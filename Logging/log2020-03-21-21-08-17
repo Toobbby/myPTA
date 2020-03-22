@@ -1,0 +1,149 @@
+
+R X 13
+Swap in  T-X P-0
+The table X doesn't have record with ID = 13
+
+R Y 7
+Swap in  T-Y P-0
+The table Y doesn't have record with ID = 7
+
+W Y (5, John, 412-111-2222)
+Create T-Y P-1
+Swap in  T-Y P-1
+Written: 5, John, 412-111-2222
+
+W Y (4, John, 412-111-2222)
+Written: 4, John, 412-111-2222
+
+W Y (3, John, 412-111-2222)
+Swap out  T-X P-0
+Create T-Y P-2
+Swap in  T-Y P-2
+Written: 3, John, 412-111-2222
+
+W Y (2, John, 412-111-2222)
+Written: 2, John, 412-111-2222
+
+M Y 609
+
+W X (2, Thalia, 412-656-2212)
+Swap out  T-Y P-0
+Swap in  T-X P-0
+Written: 2, Thalia, 412-656-2212
+
+W Y (7, John, 412-111-2222)
+Swap out  T-Y P-1
+Swap in  T-Y P-0
+Swap out  T-Y P-2
+Swap in  T-Y P-1
+Swap out  T-X P-0
+Swap in  T-Y P-2
+Swap out  T-Y P-0
+Create T-Y P-3
+Swap in  T-Y P-3
+Written: 7, John, 412-111-2222
+
+W Y (8, John, 412-111-2222)
+Swap out  T-Y P-1
+Swap in  T-Y P-0
+Swap out  T-Y P-2
+Swap in  T-Y P-1
+Swap out  T-Y P-3
+Swap in  T-Y P-2
+Swap out  T-Y P-0
+Swap in  T-Y P-3
+Written: 8, John, 412-111-2222
+
+W Y (9, John, 412-111-2222)
+Swap out  T-Y P-1
+Swap in  T-Y P-0
+Swap out  T-Y P-2
+Swap in  T-Y P-1
+Swap out  T-Y P-3
+Swap in  T-Y P-2
+Swap out  T-Y P-0
+Swap in  T-Y P-3
+Swap out  T-Y P-1
+Create T-Y P-4
+Swap in  T-Y P-4
+Written: 9, John, 412-111-2222
+
+W Y (10, John, 412-111-2222)
+Swap out  T-Y P-2
+Swap in  T-Y P-0
+Swap out  T-Y P-3
+Swap in  T-Y P-1
+Swap out  T-Y P-4
+Swap in  T-Y P-2
+Swap out  T-Y P-0
+Swap in  T-Y P-3
+Swap out  T-Y P-1
+Swap in  T-Y P-4
+Written: 10, John, 412-111-2222
+
+E Y 5
+Swap out  T-Y P-2
+Swap in  T-Y P-0
+Swap out  T-Y P-3
+Swap in  T-Y P-1
+Erased: Y 5
+
+E Y 4
+Erased: Y 4
+
+E Y 3
+Swap out  T-Y P-4
+Swap in  T-Y P-2
+Erased: Y 3
+
+W Y (11, John, 412-111-2222)
+Swap out  T-Y P-0
+Swap in  T-Y P-3
+Swap out  T-Y P-1
+Swap in  T-Y P-4
+Y Page2 has free space. Insert to this page.
+Written: 11, John, 412-111-2222
+
+W Y (12, John, 412-111-2222)
+Swap out  T-Y P-3
+Swap in  T-Y P-0
+Written: 12, John, 412-111-2222
+
+W Y (13, John, 412-111-2222)
+Written: 13, John, 412-111-2222
+
+W Y (14, John, 412-111-2222)
+Swap out  T-Y P-4
+Swap in  T-Y P-1
+Swap out  T-Y P-0
+Swap in  T-Y P-3
+Swap out  T-Y P-1
+Swap in  T-Y P-4
+Y Page1 has free space. Insert to this page.
+Swap out  T-Y P-2
+Swap in  T-Y P-1
+Written: 14, John, 412-111-2222
+
+M Y 412
+Swap out  T-Y P-3
+Swap in  T-Y P-0
+MRead: 12, John, 412-111-2222
+MRead: 13, John, 412-111-2222
+MRead: 14, John, 412-111-2222
+Swap out  T-Y P-4
+Swap in  T-Y P-2
+MRead: 2, John, 412-111-2222
+MRead: 11, John, 412-111-2222
+Swap out  T-Y P-0
+Swap in  T-Y P-3
+MRead: 7, John, 412-111-2222
+MRead: 8, John, 412-111-2222
+Swap out  T-Y P-1
+Swap in  T-Y P-4
+MRead: 9, John, 412-111-2222
+MRead: 10, John, 412-111-2222
+
+M X 412
+Swap out  T-Y P-2
+Swap in  T-X P-0
+MRead: 2, Thalia, 412-656-2212
