@@ -1,3 +1,4 @@
+package LSM;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -20,23 +21,17 @@ public class LSMTree {
     ArrayList<TreeSet<SSTable>> SStables;
     ArrayList<Integer> level_size;
     ArrayList<Integer> last_chosen;
-    MessageDigest md;
     LSMBuffer<String, MemTable> buffer;
-
+    int number=0;
     public LSMTree(String tableName, int maxSize, String dir, LSMBuffer<String, MemTable> b){
         buffer=b;
         this.tableName = tableName;
-        memTable=new MemTable(UUID.randomUUID());
+        memTable=new MemTable(randomFileName());
         this.maxSize=maxSize;
         levels=-1;
         fileBaseDir=dir;
         level_size=new ArrayList<>();
         last_chosen=new ArrayList<>();
-        try {
-            md=MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
         level0=new ArrayList<>();
         SStables=new ArrayList<>();
     }
@@ -51,15 +46,13 @@ public class LSMTree {
                 levels=0;
                 File f=new File(fileBaseDir+"/level0");
                 f.mkdirs();
-                String filename = randomFileName();
+                String filename=randomFileName();
                 String loc=fileBaseDir+"/level0/"+filename;
-                String uuid=memTable.id.toString();
-                level0.add(new SSTable(loc,memTable.flush(),uuid));
+                level0.add(new SSTable(loc,memTable.flush(),filename));
             }else{
-                String filename = randomFileName();
+                String filename=randomFileName();
                 String loc=fileBaseDir+"/level0/"+filename;
-                String uuid=memTable.id.toString();
-                level0.add(new SSTable(loc,memTable.flush(),uuid));
+                level0.add(new SSTable(loc,memTable.flush(),filename));
             }
             if (level0.size()>=4){
                 compaction();
@@ -169,7 +162,7 @@ public class LSMTree {
     }
 
     public String randomFileName(){
-        return Integer.toHexString(new Random().nextInt(1000000000));
+        return tableName+"-"+number++;
     }
 
 
@@ -336,15 +329,17 @@ public class LSMTree {
             }
             buffer.add(source.read(k));
             if (buffer.size()==maxSize){
-                String loc=fileBaseDir+"/level"+level+"/"+randomFileName();
-                SStables.get(level-1).add(new SSTable(loc,buffer,UUID.randomUUID().toString()));
+                String filename=randomFileName();
+                String loc=fileBaseDir+"/level"+level+"/"+filename;
+                SStables.get(level-1).add(new SSTable(loc,buffer,filename));
                 level_size.set(level-1,level_size.get(level-1)+maxSize);
                 buffer=new ArrayList<>();
             }
         }
         if (!buffer.isEmpty()){
-            String loc=fileBaseDir+"/level"+level+"/"+randomFileName();
-            SStables.get(level-1).add(new SSTable(loc,buffer,UUID.randomUUID().toString()));
+            String filename=randomFileName();
+            String loc=fileBaseDir+"/level"+level+"/"+filename;
+            SStables.get(level-1).add(new SSTable(loc,buffer,filename));
             level_size.set(level-1,level_size.get(level-1)+buffer.size());
         }
     }
@@ -354,14 +349,14 @@ public class LSMTree {
         int begin;
         int end;
         int size;
-        UUID id;
+        String id;
         //Since SSTable is immutable, it writes the file when constructing it.
-        public SSTable(String loc,ArrayList<Record> tuples,String uuid){
+        public SSTable(String loc, ArrayList<Record> tuples, String uuid){
             this.loc=loc;
             begin=tuples.get(0).ID;
             end=tuples.get(tuples.size()-1).ID;
             size=tuples.size();
-            id=UUID.fromString(uuid);
+            id=uuid;
             try {
                 BufferedWriter w=new BufferedWriter(new FileWriter(loc));
                 w.write(uuid);w.write('\n');

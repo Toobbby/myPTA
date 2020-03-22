@@ -1,4 +1,4 @@
-
+package LSM;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,9 +6,9 @@ import java.io.Reader;
 import java.util.*;
 
 public class MemTable {
-    HashMap<Integer,Record> tuples;
-    UUID id;
-    public MemTable(UUID uuid){
+    HashMap<Integer, Record> tuples;
+    String id;
+    public MemTable(String uuid){
         tuples=new HashMap<>();
         id=uuid;
     }
@@ -17,7 +17,7 @@ public class MemTable {
         String line = null;
         try {
             line=r.readLine();
-            id=UUID.fromString(line);
+            id=line;
             while ((line = r.readLine()) != null) {
                 write(new Record(line));
             }
