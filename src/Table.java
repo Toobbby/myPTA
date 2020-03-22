@@ -5,9 +5,9 @@ public class Table {
     ArrayList<Page> pages = new ArrayList<Page>();
     Stack<Integer> freeSpace; // store page_No, efficient if delete many records recently
 //    Tuple nextInsert;
-    public Table(String tableName){
+    public Table(String tableName, int page_Size){
         this.tableName = tableName;
-        Page emptyPage = new Page();
+        Page emptyPage = new Page(page_Size, new ArrayList<Record>());
         pages.add(emptyPage);
         Comparator<Tuple> comparator = new Comparator<Tuple>(){
             @Override

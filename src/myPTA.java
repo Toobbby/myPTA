@@ -6,20 +6,31 @@ import java.util.HashMap;
 
 public class myPTA {
     // TODO: read arguments to assign these parameters
-    static int page_size = 2;
-    static int bufferSize = 3;
+    static int page_size;
+    static int bufferSize;
     static HashMap<String, Table> tables;
     static Buffer buffer;
     public static void main(String[] args) throws Exception {
+        page_size = Integer.parseInt(args[0]);
+        bufferSize = Integer.parseInt(args[1]);
         //logging
         String currentTime = getDate();
         String logPath = "./Logging/" + "log" + currentTime;
         // A hashMap to store tables
         tables = new HashMap<>();
+        File root = new File("./");
+        File[] tableList = root.listFiles();
+        for (int i = 0; i < tableList.length; i++){  //initialize all existing tables
+            String[] temp = tableList[i].toString().split("/");
+            if(temp[temp.length - 1].length() == 1){
+                tables.put(temp[temp.length - 1], new Table(temp[temp.length - 1], page_size));
+            }
+        }
 //        tables.put("X", new Table("X"));
 //        tables.put("Y", new Table("Y"));
+
         // A global Buffer
-        buffer = new Buffer(bufferSize, logPath);
+        buffer = new Buffer(bufferSize, logPath, page_size);
         // read script
         String pathname = "./src/script.txt";
         readScript(pathname, logPath);
@@ -47,8 +58,12 @@ public class myPTA {
                         break;
                     case "E":
                         erase(keywords[1], Integer.parseInt(keywords[2]), logPath);
-                    default:
+                        break;
+                    case "D":
                         delete(keywords[1], logPath);
+                        break;
+                    default:
+                        System.out.println("invalid operation");
                         break;
                 }
             }
@@ -64,7 +79,7 @@ public class myPTA {
         }
         else{
             Table t = tables.get(tableName);
-            boolean flag = buffer.eraseRecord(t, tableName, val, logPath);
+            boolean flag = buffer.eraseRecord(t, tableName, val);
             if(flag){
                 System.out.println("Erased: " + tableName + " " + val);
                 logWriter("Erased: " + tableName + " " + val, logPath);
@@ -94,7 +109,7 @@ public class myPTA {
         }
         else{
             Table t = tables.get(tableName);
-            Record r = buffer.readRecord(t, tableName, val, logPath);
+            Record r = buffer.readRecord(t, tableName, val);
             if(r == null){
                 System.out.println("The table " + tableName + " doesn't have record with ID = " + val);
                 logWriter("The table " + tableName + " doesn't have record with ID = " + val, logPath);
@@ -109,10 +124,10 @@ public class myPTA {
 
     private static void write(String tableName, String recordValue, String logPath) throws Exception {
         if(!tables.containsKey(tableName)){
-            tables.put(tableName, new Table(tableName));
+            tables.put(tableName, new Table(tableName, page_size));
             File dir = new File("./" + tableName);
             dir.mkdirs();
-            Page p = new Page(new ArrayList<Record>());
+            Page p = new Page(page_size, new ArrayList<Record>());
             logWriter("Create " + "T-" + tableName + " P-0", logPath);
             buffer.put(tableName + "0", p);
             logWriter("Swap in  " + "T-" + tableName + " P-0", logPath);
@@ -120,7 +135,7 @@ public class myPTA {
         }
         Table t = tables.get(tableName);
         Record r = recordGenerator(tableName, recordValue);
-        buffer.writeRecordInPage(t, r, logPath);
+        buffer.writeRecordInPage(t, r);
         System.out.println("Write: " + r.toString() +" to " + tableName + " successfully!");
     }
 
@@ -130,7 +145,7 @@ public class myPTA {
             logWriter("The table does not exist, show user with area code is aborted.", logPath);
         } else {
             Table t = tables.get(tableName);
-            ArrayList<Record> matchedRecords = buffer.readRecordWithAreaCode(t, tableName, areaCode, logPath);
+            ArrayList<Record> matchedRecords = buffer.readRecordWithAreaCode(t, tableName, areaCode);
             if (matchedRecords == null) {
                 System.out.println("The table " + tableName + " doesn't have record with area code = " + areaCode);
                 logWriter("The table " + tableName + " doesn't have record with area code = " + areaCode, logPath);

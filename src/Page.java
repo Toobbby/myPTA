@@ -2,11 +2,10 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Page{
-	static int size = 2;
+	int size;
 	ArrayList<Record> records;
-	Page(){}
-
-	Page(ArrayList<Record> _records){
+	Page(int size, ArrayList<Record> _records){
+		this.size = size;
 		this.records = _records;
 	}
 
@@ -14,7 +13,7 @@ public class Page{
 		return this.records;
 	}
 
-	public static Page readFile(String tablename, int page_No){    // read a particular page from file
+	public static Page readFile(String tablename, int page_No, int page_Size){    // read a particular page from file
 		ArrayList<Record> results = new ArrayList<>();
 		try {
 			FileInputStream inputStream = new FileInputStream("./" + tablename + "/" + "page" + page_No + ".txt");
@@ -37,7 +36,7 @@ public class Page{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new Page(results);
+		return new Page(page_Size, results);
 	}
 
 	public void writeFile(String tablename, int page_No){
