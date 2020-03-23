@@ -59,6 +59,7 @@ public class Record {
 
     //need discuss
     public Record(String stringRecord){
+        stringRecord=stringRecord.replaceAll("\\s+","");
         String[] parts=stringRecord.split(",");
         ID=Integer.parseInt(parts[0].substring(1));
         ClientName=parts[1];
