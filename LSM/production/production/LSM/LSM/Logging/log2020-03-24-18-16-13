@@ -1,0 +1,16 @@
+
+R X 13
+The table does not exist, the read is aborted.
+
+R Y 7
+The table Y doesn't have record with ID = 7
+
+W Y (5, John, 412-111-2222)
+Written: (5, John, 412-111-2222)
+
+W Y (4, John, 412-111-2222)
+Written: (4, John, 412-111-2222)
+Swap in  L-0KY-0Y-0
+Swap in  L-0KY-0Y-0
+Swap in  L-0KY-0Y-0
+Swap in  L-0KY-0Y-0
