@@ -33,7 +33,7 @@ public class myPTA {
         buffer = new Buffer(bufferSize, logPath, page_size);
         // read script
 //        String pathname = "./src/script.txt";
-        String pathname = "./src/testcases.txt";
+        String pathname = "./testcases.txt";
         readScript(pathname, logPath);
 
     }
@@ -163,7 +163,7 @@ public class myPTA {
         tables.remove(tableName);
         deleteDir(new File("./" + tableName));
         System.out.println("Table " + tableName + " has been dropped!");
-        logWriter("Deleted: " + tableName, logPath);
+
     }
 
     public static void deleteDir(File file) {
