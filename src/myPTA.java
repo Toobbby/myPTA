@@ -32,7 +32,8 @@ public class myPTA {
         // A global Buffer
         buffer = new Buffer(bufferSize, logPath, page_size);
         // read script
-        String pathname = "./src/script.txt";
+//        String pathname = "./src/script.txt";
+        String pathname = "./src/testcases.txt";
         readScript(pathname, logPath);
 
     }
@@ -116,7 +117,7 @@ public class myPTA {
             }
             else{
                 System.out.println("Read: " + r.toString());
-                logWriter("Read: " + r.toString() + val, logPath);
+                logWriter("Read: " + r.toString(), logPath);
             }
         }
 
