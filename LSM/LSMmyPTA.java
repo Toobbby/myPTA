@@ -23,7 +23,7 @@ public class LSMmyPTA {
         File[] tableList = root.listFiles();
         //logging
         String currentTime = getDate();
-        String logPath = "./Logging/" + "log" + currentTime;
+        String logPath = "./Logging/" + "log" + currentTime +".txt";
         String pathname = "./script.txt";
         // A global Buffer
         buffer = new LSMBuffer(bufferSize);

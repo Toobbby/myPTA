@@ -15,7 +15,7 @@ public class myPTA {
         bufferSize = Integer.parseInt(args[1]);
         //logging
         String currentTime = getDate();
-        String logPath = "./Logging/" + "log" + currentTime;
+        String logPath = "./Logging/" + "log" + currentTime + ".txt";
         // A hashMap to store tables
         tables = new HashMap<>();
         File root = new File("./");
