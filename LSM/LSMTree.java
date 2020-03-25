@@ -52,11 +52,16 @@ public class LSMTree {
                 f.mkdirs();
                 String filename=randomFileName();
                 String loc=fileBaseDir+"/level0/"+filename;
-                level0.add(new SSTable(loc,memTable.flush(),filename));
+                SSTable newSSTable = new SSTable(loc,memTable.flush(),filename);
+                level0.add(newSSTable);
+                logWriter("create  " + "L-0 " + "K " + newSSTable.id.substring(0,2) + newSSTable.begin +" "+ newSSTable.id.substring(0,2) + newSSTable.end, this.logPath);
             }else{
                 String filename=randomFileName();
                 String loc=fileBaseDir+"/level0/"+filename;
-                level0.add(new SSTable(loc,memTable.flush(),filename));
+                SSTable newSSTable = new SSTable(loc,memTable.flush(),filename);
+                level0.add(newSSTable);
+                logWriter("create  " + "L-0 " + "K " + newSSTable.id.substring(0,2) + newSSTable.begin +" "+ newSSTable.id.substring(0,2) + newSSTable.end, this.logPath);
+
             }
             if (level0.size()>=4){
                 compaction();
@@ -122,7 +127,7 @@ public class LSMTree {
         }else {
             MemTable res=new MemTable(sstable.read());
             buffer.put(sstable.id.toString(),res);
-            logWriter("Swap in  " + "L-" + level +"K" + sstable.id.substring(0,2) + sstable.begin + sstable.id.substring(0,2) + sstable.end, this.logPath);
+            logWriter("Swap in  " + "L-" + level +" K " + sstable.id.substring(0,2) + sstable.begin +" "+ sstable.id.substring(0,2) + sstable.end, this.logPath);
             return res;
         }
     }
