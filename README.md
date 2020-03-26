@@ -22,7 +22,7 @@ After running, check the ***logging*** folder. A text file called ***log+current
 Download ***LSMmyPTA.jar*** from repository. Create your own script or use our ***script.txt*** to test the correctness.
 #### Requirements
 > Java 1.8   
-> ***LSMmyPTA.jar***, ***script.txt***, an empty folder called ***Logging*** in the same folder ***F*** (for example).
+> ***LSMmyPTA.jar***, ***script.txt***, an empty folder called ***Logging***  and an empty folder called ***tables*** in the same folder ***F*** (for example).
 #### Running
 Access folder ***F*** in command line, then enter
 '''
