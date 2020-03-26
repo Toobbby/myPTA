@@ -1,9 +1,6 @@
-package LSM;
-
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -20,7 +17,7 @@ public class LSMmyPTA {
         // A hashMap to store tables
         tables = new HashMap<>();
         String tableLoc = "./tables";
- //       deleteDir(tableLoc);  //phase 1, every time running a new script, clear all tables
+        deleteDir(tableLoc);  //phase 1, every time running a new script, clear all tables
 //        File root = new File("./tables");
 //        File[] tableList = root.listFiles();
 
@@ -41,9 +38,9 @@ public class LSMmyPTA {
 
         // read script
         readScript(pathname, logPath);
-        for (LSMTree lsmtree:tables.values()){
-            lsmtree.deleteTable();
-        }
+//        for (LSMTree lsmtree:tables.values()){
+//            lsmtree.deleteTable();
+//        }
 
 
     }
@@ -80,7 +77,7 @@ public class LSMmyPTA {
                 }
             }
             long endTime = System.currentTimeMillis();
-            System.out.println(endTime - startTime);
+            System.out.println("Runtime: "+(endTime - startTime));
             logWriter("Runtime: " + (endTime - startTime), logPath);
 
         } catch (IOException e) {
@@ -113,7 +110,7 @@ public class LSMmyPTA {
             }
             else{
                 System.out.println("Read: " + r.toString());
-                logWriter("Read: " + r.toString() + val, logPath);
+                logWriter("Read: " + r.toString(), logPath);
             }
         }
 
@@ -147,6 +144,7 @@ public class LSMmyPTA {
     private static void showUserWithAreaCode(String tableName, String areaCode, String logPath) throws IOException {
         if (!tables.containsKey(tableName)) {
             System.out.println("The table does not exist, show user with area code is aborted.");
+            logWriter("The table "+tableName+" does not exist, show user with area code is aborted.",logPath);
         } else {
             LSMTree t = tables.get(tableName);
             ArrayList<Record> matchedRecords = t.readAreaCode(areaCode);

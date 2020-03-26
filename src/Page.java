@@ -33,6 +33,7 @@ public class Page{
 //				results[idx] = new Record(Integer.valueOf(str[0]), str[1], str[2], tablename);
                 idx++;
 			}
+			bufferedReader.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

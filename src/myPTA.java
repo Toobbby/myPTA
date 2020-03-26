@@ -42,7 +42,7 @@ public class myPTA {
         try(FileReader reader = new FileReader(pathname);
             BufferedReader br = new BufferedReader(reader)){
             String line;
-          //  long startTime = System.
+            long startTime = System.currentTimeMillis();
             while((line = br.readLine()) != null){
                 logWriter("", logPath);  //empty line to separate each command in log
                 logWriter(line, logPath);
@@ -69,6 +69,9 @@ public class myPTA {
                         break;
                 }
             }
+            long endTime = System.currentTimeMillis();
+            System.out.println(endTime - startTime);
+            logWriter("Runtime: " + (endTime - startTime), logPath);
         } catch (IOException e) {
             e.printStackTrace();
         }

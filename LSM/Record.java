@@ -1,4 +1,3 @@
-package LSM;
 
 public class Record {
     //ID: 4-byte integer (Primary Key)
