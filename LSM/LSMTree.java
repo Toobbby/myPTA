@@ -37,7 +37,7 @@ public class LSMTree {
         last_chosen=new ArrayList<>();
         level0=new ArrayList<>();
         SStables=new ArrayList<>();
-        tableInitialization(fileBaseDir);
+     //   tableInitialization(fileBaseDir);
     }
 
 
@@ -200,7 +200,7 @@ public class LSMTree {
         SSTable temp=new SSTable();
         temp.begin=last_chosen.get(level-1)+1;
         SSTable chosen=SStables.get(level-1).floor(temp);
-        if (chosen==null)chosen=SStables.get(0).first();
+        if (chosen==null)chosen=SStables.get(level - 1).first();
         last_chosen.set(level-1,chosen.end);
         SStables.get(level-1).remove(chosen);
         level_size.set(level-1,level_size.get(level-1)-chosen.size);

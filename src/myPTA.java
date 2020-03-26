@@ -33,7 +33,7 @@ public class myPTA {
         buffer = new Buffer(bufferSize, logPath, page_size);
         // read script
 //        String pathname = "./src/script.txt";
-        String pathname = "./testcases.txt";
+        String pathname = "./script.txt";
         readScript(pathname, logPath);
 
     }
@@ -42,6 +42,7 @@ public class myPTA {
         try(FileReader reader = new FileReader(pathname);
             BufferedReader br = new BufferedReader(reader)){
             String line;
+          //  long startTime = System.
             while((line = br.readLine()) != null){
                 logWriter("", logPath);  //empty line to separate each command in log
                 logWriter(line, logPath);

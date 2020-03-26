@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="myPTA:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5a7f9b66-d4f1-41b1-bab8-2d36cb458b21" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/LSM/LSMmyPTA.java" beforeDir="false" afterPath="$PROJECT_DIR$/LSM/LSMmyPTA.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/production/production/LSM/LSM/LSMmyPTA.class" beforeDir="false" afterPath="$PROJECT_DIR$/LSM/production/production/LSM/LSM/LSMmyPTA.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/production/production/LSM/LSM/tables/Y/level0/Y-2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/production/production/LSM/LSM/tables/Y/level0/Y-8" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/production/production/LSM/LSM/tables/Y/level1/Y-10" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/production/production/LSM/LSM/tables/Y/level1/Y-11" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/production/production/LSM/LSM/tables/Y/level1/Y-12" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/production/production/LSM/LSM/tables/Y/level1/Y-2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/production/production/LSM/LSM/tables/Y/level1/Y-3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/production/production/LSM/LSM/tables/Y/level1/Y-4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/production/production/LSM/LSM/tables/Y/level1/Y-5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/production/production/LSM/LSM/tables/Y/level1/Y-6" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/production/production/LSM/LSM/tables/Y/level1/Y-7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/production/production/LSM/LSM/tables/Y/level1/Y-8" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/production/production/LSM/LSM/tables/Y/level1/Y-9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/production/production/LSM/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/LSM/production/production/LSM/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/production/production/LSM/myPTA.class" beforeDir="false" afterPath="$PROJECT_DIR$/LSM/production/production/LSM/myPTA.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/tables/Y/level0/Y-9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/tables/Y/level1/Y-10" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/tables/Y/level1/Y-11" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/tables/Y/level1/Y-12" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/tables/Y/level1/Y-2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/tables/Y/level1/Y-3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/tables/Y/level1/Y-4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/tables/Y/level1/Y-5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/tables/Y/level1/Y-6" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/tables/Y/level1/Y-7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/tables/Y/level1/Y-8" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSM/tables/Y/level1/Y-9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectConfigurationFiles">
+    <option name="files">
+      <list>
+        <option value="$PROJECT_DIR$/.idea/.gitignore" />
+        <option value="$PROJECT_DIR$/.idea/myPTA.iml" />
+        <option value="$PROJECT_DIR$/.idea/misc.xml" />
+        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
+        <option value="$PROJECT_DIR$/.idea/modules.xml" />
+        <option value="$PROJECT_DIR$/.idea/artifacts/myPTA_jar.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1YuUgoiB0R6MNSvfdTBTYylVPSE" />
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="myPTA" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="myPTA" />
+      <module name="myPTA" />
+      <option name="PROGRAM_PARAMETERS" value="3 4" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.myPTA" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5a7f9b66-d4f1-41b1-bab8-2d36cb458b21" name="Default Changelist" comment="" />
+      <created>1583792086538</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1583792086538</updated>
+      <workItem from="1583792089402" duration="1000000" />
+      <workItem from="1583808269907" duration="3661000" />
+      <workItem from="1583812048170" duration="22982000" />
+      <workItem from="1584466626304" duration="12646000" />
+      <workItem from="1584546233300" duration="16460000" />
+      <workItem from="1584833569080" duration="4751000" />
+      <workItem from="1584893188398" duration="11000" />
+      <workItem from="1584909346332" duration="1258000" />
+      <workItem from="1585082346976" duration="4473000" />
+      <workItem from="1585182052330" duration="694000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

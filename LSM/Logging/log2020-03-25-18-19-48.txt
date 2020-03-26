@@ -1,0 +1,8 @@
+
+R X 13
+The table does not exist, the read is aborted.
+
+R Y 7
+The table does not exist, the read is aborted.
+
+W Y (5, John, 412-111-2222)

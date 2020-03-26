@@ -1,0 +1,992 @@
+
+W X (0, Jack, 412-111-1111)
+Written: (0, Jack, 412-111-1111)
+
+W X (1, Jack, 412-111-1111)
+Written: (1, Jack, 412-111-1111)
+create  L-0 K X-0 X-1
+
+W X (2, Jack, 412-111-1111)
+Written: (2, Jack, 412-111-1111)
+
+W X (3, Jack, 412-111-1111)
+Written: (3, Jack, 412-111-1111)
+create  L-0 K X-2 X-3
+
+W X (4, Jack, 412-111-1111)
+Written: (4, Jack, 412-111-1111)
+
+W X (5, Jack, 412-111-1111)
+Written: (5, Jack, 412-111-1111)
+create  L-0 K X-4 X-5
+
+W X (6, Jack, 412-111-1111)
+Written: (6, Jack, 412-111-1111)
+
+W X (7, Jack, 412-111-1111)
+Written: (7, Jack, 412-111-1111)
+create  L-0 K X-6 X-7
+Swap in  L-0 K X-6 X-7
+
+W X (8, Jack, 412-111-1111)
+Written: (8, Jack, 412-111-1111)
+
+W X (9, Jack, 412-111-1111)
+Written: (9, Jack, 412-111-1111)
+create  L-0 K X-8 X-9
+Swap in  L-0 K X-8 X-9
+
+W X (10, Jack, 412-111-1111)
+Written: (10, Jack, 412-111-1111)
+
+W X (11, Jack, 412-111-1111)
+Written: (11, Jack, 412-111-1111)
+create  L-0 K X-10 X-11
+Swap in  L-0 K X-10 X-11
+
+W X (12, Jack, 412-111-1111)
+Written: (12, Jack, 412-111-1111)
+
+W X (13, Jack, 412-111-1111)
+Written: (13, Jack, 412-111-1111)
+create  L-0 K X-12 X-13
+Swap in  L-0 K X-12 X-13
+
+W X (14, Jack, 412-111-1111)
+Written: (14, Jack, 412-111-1111)
+
+W X (15, Jack, 412-111-1111)
+Written: (15, Jack, 412-111-1111)
+create  L-0 K X-14 X-15
+Swap in  L-0 K X-14 X-15
+
+W X (16, Jack, 412-111-1111)
+Written: (16, Jack, 412-111-1111)
+
+W X (17, Jack, 412-111-1111)
+Written: (17, Jack, 412-111-1111)
+create  L-0 K X-16 X-17
+Swap in  L-0 K X-16 X-17
+
+W X (18, Jack, 412-111-1111)
+Written: (18, Jack, 412-111-1111)
+
+W X (19, Jack, 412-111-1111)
+Written: (19, Jack, 412-111-1111)
+create  L-0 K X-18 X-19
+Swap in  L-0 K X-18 X-19
+
+W X (20, Jack, 412-111-1111)
+Written: (20, Jack, 412-111-1111)
+
+W X (21, Jack, 412-111-1111)
+Written: (21, Jack, 412-111-1111)
+create  L-0 K X-20 X-21
+Swap in  L-0 K X-20 X-21
+
+W X (22, Jack, 412-111-1111)
+Written: (22, Jack, 412-111-1111)
+
+W X (23, Jack, 412-111-1111)
+Written: (23, Jack, 412-111-1111)
+create  L-0 K X-22 X-23
+Swap in  L-0 K X-22 X-23
+
+W X (24, Jack, 412-111-1111)
+Written: (24, Jack, 412-111-1111)
+
+W X (25, Jack, 412-111-1111)
+Written: (25, Jack, 412-111-1111)
+create  L-0 K X-24 X-25
+Swap in  L-0 K X-24 X-25
+
+W X (26, Jack, 412-111-1111)
+Written: (26, Jack, 412-111-1111)
+
+W X (27, Jack, 412-111-1111)
+Written: (27, Jack, 412-111-1111)
+create  L-0 K X-26 X-27
+Swap in  L-0 K X-26 X-27
+Swap in  L-1 K X-8 X-9
+
+W X (28, Jack, 412-111-1111)
+Written: (28, Jack, 412-111-1111)
+
+W X (29, Jack, 412-111-1111)
+Written: (29, Jack, 412-111-1111)
+create  L-0 K X-28 X-29
+Swap in  L-0 K X-28 X-29
+Swap in  L-1 K X-10 X-11
+
+W X (30, Jack, 412-111-1111)
+Written: (30, Jack, 412-111-1111)
+
+W X (31, Jack, 412-111-1111)
+Written: (31, Jack, 412-111-1111)
+create  L-0 K X-30 X-31
+Swap in  L-0 K X-30 X-31
+Swap in  L-1 K X-12 X-13
+
+W X (32, Jack, 412-111-1111)
+Written: (32, Jack, 412-111-1111)
+
+W X (33, Jack, 412-111-1111)
+Written: (33, Jack, 412-111-1111)
+create  L-0 K X-32 X-33
+Swap in  L-0 K X-32 X-33
+Swap in  L-1 K X-14 X-15
+
+W X (34, Jack, 412-111-1111)
+Written: (34, Jack, 412-111-1111)
+
+W X (35, Jack, 412-111-1111)
+Written: (35, Jack, 412-111-1111)
+create  L-0 K X-34 X-35
+Swap in  L-0 K X-34 X-35
+Swap in  L-1 K X-16 X-17
+
+W X (36, Jack, 412-111-1111)
+Written: (36, Jack, 412-111-1111)
+
+W X (37, Jack, 412-111-1111)
+Written: (37, Jack, 412-111-1111)
+create  L-0 K X-36 X-37
+Swap in  L-0 K X-36 X-37
+Swap in  L-1 K X-18 X-19
+
+W X (38, Jack, 412-111-1111)
+Written: (38, Jack, 412-111-1111)
+
+W X (39, Jack, 412-111-1111)
+Written: (39, Jack, 412-111-1111)
+create  L-0 K X-38 X-39
+Swap in  L-0 K X-38 X-39
+Swap in  L-1 K X-20 X-21
+
+W X (40, Jack, 412-111-1111)
+Written: (40, Jack, 412-111-1111)
+
+W X (41, Jack, 412-111-1111)
+Written: (41, Jack, 412-111-1111)
+create  L-0 K X-40 X-41
+Swap in  L-0 K X-40 X-41
+Swap in  L-1 K X-22 X-23
+
+W X (42, Jack, 412-111-1111)
+Written: (42, Jack, 412-111-1111)
+
+W X (43, Jack, 412-111-1111)
+Written: (43, Jack, 412-111-1111)
+create  L-0 K X-42 X-43
+Swap in  L-0 K X-42 X-43
+Swap in  L-1 K X-24 X-25
+
+W X (44, Jack, 412-111-1111)
+Written: (44, Jack, 412-111-1111)
+
+W X (45, Jack, 412-111-1111)
+Written: (45, Jack, 412-111-1111)
+create  L-0 K X-44 X-45
+Swap in  L-0 K X-44 X-45
+Swap in  L-1 K X-26 X-27
+
+W X (46, Jack, 412-111-1111)
+Written: (46, Jack, 412-111-1111)
+
+W X (47, Jack, 412-111-1111)
+Written: (47, Jack, 412-111-1111)
+create  L-0 K X-46 X-47
+Swap in  L-0 K X-46 X-47
+Swap in  L-1 K X-28 X-29
+
+W X (48, Jack, 412-111-1111)
+Written: (48, Jack, 412-111-1111)
+
+W X (49, Jack, 412-111-1111)
+Written: (49, Jack, 412-111-1111)
+create  L-0 K X-48 X-49
+Swap in  L-0 K X-48 X-49
+Swap in  L-1 K X-30 X-31
+
+W X (50, Jack, 412-111-1111)
+Written: (50, Jack, 412-111-1111)
+
+W X (51, Jack, 412-111-1111)
+Written: (51, Jack, 412-111-1111)
+create  L-0 K X-50 X-51
+Swap in  L-0 K X-50 X-51
+Swap in  L-1 K X-32 X-33
+
+W X (52, Jack, 412-111-1111)
+Written: (52, Jack, 412-111-1111)
+
+W X (53, Jack, 412-111-1111)
+Written: (53, Jack, 412-111-1111)
+create  L-0 K X-52 X-53
+Swap in  L-0 K X-52 X-53
+Swap in  L-1 K X-34 X-35
+
+W X (54, Jack, 412-111-1111)
+Written: (54, Jack, 412-111-1111)
+
+W X (55, Jack, 412-111-1111)
+Written: (55, Jack, 412-111-1111)
+create  L-0 K X-54 X-55
+Swap in  L-0 K X-54 X-55
+Swap in  L-1 K X-36 X-37
+
+W X (56, Jack, 412-111-1111)
+Written: (56, Jack, 412-111-1111)
+
+W X (57, Jack, 412-111-1111)
+Written: (57, Jack, 412-111-1111)
+create  L-0 K X-56 X-57
+Swap in  L-0 K X-56 X-57
+Swap in  L-1 K X-38 X-39
+
+W X (58, Jack, 412-111-1111)
+Written: (58, Jack, 412-111-1111)
+
+W X (59, Jack, 412-111-1111)
+Written: (59, Jack, 412-111-1111)
+create  L-0 K X-58 X-59
+Swap in  L-0 K X-58 X-59
+Swap in  L-1 K X-40 X-41
+
+W X (60, Jack, 412-111-1111)
+Written: (60, Jack, 412-111-1111)
+
+W X (61, Jack, 412-111-1111)
+Written: (61, Jack, 412-111-1111)
+create  L-0 K X-60 X-61
+Swap in  L-0 K X-60 X-61
+Swap in  L-1 K X-42 X-43
+
+W X (62, Jack, 412-111-1111)
+Written: (62, Jack, 412-111-1111)
+
+W X (63, Jack, 412-111-1111)
+Written: (63, Jack, 412-111-1111)
+create  L-0 K X-62 X-63
+Swap in  L-0 K X-62 X-63
+Swap in  L-1 K X-44 X-45
+
+W X (64, Jack, 412-111-1111)
+Written: (64, Jack, 412-111-1111)
+
+W X (65, Jack, 412-111-1111)
+Written: (65, Jack, 412-111-1111)
+create  L-0 K X-64 X-65
+Swap in  L-0 K X-64 X-65
+Swap in  L-1 K X-46 X-47
+
+W X (66, Jack, 412-111-1111)
+Written: (66, Jack, 412-111-1111)
+
+W X (67, Jack, 412-111-1111)
+Written: (67, Jack, 412-111-1111)
+create  L-0 K X-66 X-67
+Swap in  L-0 K X-66 X-67
+Swap in  L-1 K X-48 X-49
+
+W X (68, Jack, 412-111-1111)
+Written: (68, Jack, 412-111-1111)
+
+W X (69, Jack, 412-111-1111)
+Written: (69, Jack, 412-111-1111)
+create  L-0 K X-68 X-69
+Swap in  L-0 K X-68 X-69
+Swap in  L-1 K X-50 X-51
+
+W X (70, Jack, 412-111-1111)
+Written: (70, Jack, 412-111-1111)
+
+W X (71, Jack, 412-111-1111)
+Written: (71, Jack, 412-111-1111)
+create  L-0 K X-70 X-71
+Swap in  L-0 K X-70 X-71
+Swap in  L-1 K X-52 X-53
+
+W X (72, Jack, 412-111-1111)
+Written: (72, Jack, 412-111-1111)
+
+W X (73, Jack, 412-111-1111)
+Written: (73, Jack, 412-111-1111)
+create  L-0 K X-72 X-73
+Swap in  L-0 K X-72 X-73
+Swap in  L-1 K X-54 X-55
+
+W X (74, Jack, 412-111-1111)
+Written: (74, Jack, 412-111-1111)
+
+W X (75, Jack, 412-111-1111)
+Written: (75, Jack, 412-111-1111)
+create  L-0 K X-74 X-75
+Swap in  L-0 K X-74 X-75
+Swap in  L-1 K X-56 X-57
+
+W X (76, Jack, 412-111-1111)
+Written: (76, Jack, 412-111-1111)
+
+W X (77, Jack, 412-111-1111)
+Written: (77, Jack, 412-111-1111)
+create  L-0 K X-76 X-77
+Swap in  L-0 K X-76 X-77
+Swap in  L-1 K X-58 X-59
+
+W X (78, Jack, 412-111-1111)
+Written: (78, Jack, 412-111-1111)
+
+W X (79, Jack, 412-111-1111)
+Written: (79, Jack, 412-111-1111)
+create  L-0 K X-78 X-79
+Swap in  L-0 K X-78 X-79
+Swap in  L-1 K X-60 X-61
+
+W X (80, Jack, 412-111-1111)
+Written: (80, Jack, 412-111-1111)
+
+W X (81, Jack, 412-111-1111)
+Written: (81, Jack, 412-111-1111)
+create  L-0 K X-80 X-81
+Swap in  L-0 K X-80 X-81
+Swap in  L-1 K X-62 X-63
+
+W X (82, Jack, 412-111-1111)
+Written: (82, Jack, 412-111-1111)
+
+W X (83, Jack, 412-111-1111)
+Written: (83, Jack, 412-111-1111)
+create  L-0 K X-82 X-83
+Swap in  L-0 K X-82 X-83
+Swap in  L-1 K X-64 X-65
+
+W X (84, Jack, 412-111-1111)
+Written: (84, Jack, 412-111-1111)
+
+W X (85, Jack, 412-111-1111)
+Written: (85, Jack, 412-111-1111)
+create  L-0 K X-84 X-85
+Swap in  L-0 K X-84 X-85
+Swap in  L-1 K X-66 X-67
+
+W X (86, Jack, 412-111-1111)
+Written: (86, Jack, 412-111-1111)
+
+W X (87, Jack, 412-111-1111)
+Written: (87, Jack, 412-111-1111)
+create  L-0 K X-86 X-87
+Swap in  L-0 K X-86 X-87
+Swap in  L-1 K X-68 X-69
+
+W X (88, Jack, 412-111-1111)
+Written: (88, Jack, 412-111-1111)
+
+W X (89, Jack, 412-111-1111)
+Written: (89, Jack, 412-111-1111)
+create  L-0 K X-88 X-89
+Swap in  L-0 K X-88 X-89
+Swap in  L-1 K X-70 X-71
+
+W X (90, Jack, 412-111-1111)
+Written: (90, Jack, 412-111-1111)
+
+W X (91, Jack, 412-111-1111)
+Written: (91, Jack, 412-111-1111)
+create  L-0 K X-90 X-91
+Swap in  L-0 K X-90 X-91
+Swap in  L-1 K X-72 X-73
+
+W X (92, Jack, 412-111-1111)
+Written: (92, Jack, 412-111-1111)
+
+W X (93, Jack, 412-111-1111)
+Written: (93, Jack, 412-111-1111)
+create  L-0 K X-92 X-93
+Swap in  L-0 K X-92 X-93
+Swap in  L-1 K X-74 X-75
+
+W X (94, Jack, 412-111-1111)
+Written: (94, Jack, 412-111-1111)
+
+W X (95, Jack, 412-111-1111)
+Written: (95, Jack, 412-111-1111)
+create  L-0 K X-94 X-95
+Swap in  L-0 K X-94 X-95
+Swap in  L-1 K X-76 X-77
+
+W X (96, Jack, 412-111-1111)
+Written: (96, Jack, 412-111-1111)
+
+W X (97, Jack, 412-111-1111)
+Written: (97, Jack, 412-111-1111)
+create  L-0 K X-96 X-97
+Swap in  L-0 K X-96 X-97
+Swap in  L-1 K X-78 X-79
+
+W X (98, Jack, 412-111-1111)
+Written: (98, Jack, 412-111-1111)
+
+W X (99, Jack, 412-111-1111)
+Written: (99, Jack, 412-111-1111)
+create  L-0 K X-98 X-99
+Swap in  L-0 K X-98 X-99
+Swap in  L-1 K X-80 X-81
+
+W X (100, Jack, 412-111-1111)
+Written: (100, Jack, 412-111-1111)
+
+W X (101, Jack, 412-111-1111)
+Written: (101, Jack, 412-111-1111)
+create  L-0 K X-100 X-101
+Swap in  L-0 K X-100 X-101
+Swap in  L-1 K X-82 X-83
+
+W X (102, Jack, 412-111-1111)
+Written: (102, Jack, 412-111-1111)
+
+W X (103, Jack, 412-111-1111)
+Written: (103, Jack, 412-111-1111)
+create  L-0 K X-102 X-103
+Swap in  L-0 K X-102 X-103
+Swap in  L-1 K X-84 X-85
+
+W X (104, Jack, 412-111-1111)
+Written: (104, Jack, 412-111-1111)
+
+W X (105, Jack, 412-111-1111)
+Written: (105, Jack, 412-111-1111)
+create  L-0 K X-104 X-105
+Swap in  L-0 K X-104 X-105
+Swap in  L-1 K X-86 X-87
+
+W X (106, Jack, 412-111-1111)
+Written: (106, Jack, 412-111-1111)
+
+W X (107, Jack, 412-111-1111)
+Written: (107, Jack, 412-111-1111)
+create  L-0 K X-106 X-107
+Swap in  L-0 K X-106 X-107
+Swap in  L-1 K X-88 X-89
+
+W X (108, Jack, 412-111-1111)
+Written: (108, Jack, 412-111-1111)
+
+W X (109, Jack, 412-111-1111)
+Written: (109, Jack, 412-111-1111)
+create  L-0 K X-108 X-109
+Swap in  L-0 K X-108 X-109
+Swap in  L-1 K X-90 X-91
+
+W X (110, Jack, 412-111-1111)
+Written: (110, Jack, 412-111-1111)
+
+W X (111, Jack, 412-111-1111)
+Written: (111, Jack, 412-111-1111)
+create  L-0 K X-110 X-111
+Swap in  L-0 K X-110 X-111
+Swap in  L-1 K X-92 X-93
+
+W X (112, Jack, 412-111-1111)
+Written: (112, Jack, 412-111-1111)
+
+W X (113, Jack, 412-111-1111)
+Written: (113, Jack, 412-111-1111)
+create  L-0 K X-112 X-113
+Swap in  L-0 K X-112 X-113
+Swap in  L-1 K X-94 X-95
+
+W X (114, Jack, 412-111-1111)
+Written: (114, Jack, 412-111-1111)
+
+W X (115, Jack, 412-111-1111)
+Written: (115, Jack, 412-111-1111)
+create  L-0 K X-114 X-115
+Swap in  L-0 K X-114 X-115
+Swap in  L-1 K X-96 X-97
+
+W X (116, Jack, 412-111-1111)
+Written: (116, Jack, 412-111-1111)
+
+W X (117, Jack, 412-111-1111)
+Written: (117, Jack, 412-111-1111)
+create  L-0 K X-116 X-117
+Swap in  L-0 K X-116 X-117
+Swap in  L-1 K X-98 X-99
+
+W X (118, Jack, 412-111-1111)
+Written: (118, Jack, 412-111-1111)
+
+W X (119, Jack, 412-111-1111)
+Written: (119, Jack, 412-111-1111)
+create  L-0 K X-118 X-119
+Swap in  L-0 K X-118 X-119
+Swap in  L-1 K X-100 X-101
+
+W X (120, Jack, 412-111-1111)
+Written: (120, Jack, 412-111-1111)
+
+W X (121, Jack, 412-111-1111)
+Written: (121, Jack, 412-111-1111)
+create  L-0 K X-120 X-121
+Swap in  L-0 K X-120 X-121
+Swap in  L-1 K X-102 X-103
+
+W X (122, Jack, 412-111-1111)
+Written: (122, Jack, 412-111-1111)
+
+W X (123, Jack, 412-111-1111)
+Written: (123, Jack, 412-111-1111)
+create  L-0 K X-122 X-123
+Swap in  L-0 K X-122 X-123
+Swap in  L-1 K X-104 X-105
+
+W X (124, Jack, 412-111-1111)
+Written: (124, Jack, 412-111-1111)
+
+W X (125, Jack, 412-111-1111)
+Written: (125, Jack, 412-111-1111)
+create  L-0 K X-124 X-125
+Swap in  L-0 K X-124 X-125
+Swap in  L-1 K X-106 X-107
+
+W X (126, Jack, 412-111-1111)
+Written: (126, Jack, 412-111-1111)
+
+W X (127, Jack, 412-111-1111)
+Written: (127, Jack, 412-111-1111)
+create  L-0 K X-126 X-127
+Swap in  L-0 K X-126 X-127
+Swap in  L-1 K X-108 X-109
+
+W X (128, Jack, 412-111-1111)
+Written: (128, Jack, 412-111-1111)
+
+W X (129, Jack, 412-111-1111)
+Written: (129, Jack, 412-111-1111)
+create  L-0 K X-128 X-129
+Swap in  L-0 K X-128 X-129
+Swap in  L-1 K X-110 X-111
+
+W X (130, Jack, 412-111-1111)
+Written: (130, Jack, 412-111-1111)
+
+W X (131, Jack, 412-111-1111)
+Written: (131, Jack, 412-111-1111)
+create  L-0 K X-130 X-131
+Swap in  L-0 K X-130 X-131
+Swap in  L-1 K X-112 X-113
+
+W X (132, Jack, 412-111-1111)
+Written: (132, Jack, 412-111-1111)
+
+W X (133, Jack, 412-111-1111)
+Written: (133, Jack, 412-111-1111)
+create  L-0 K X-132 X-133
+Swap in  L-0 K X-132 X-133
+Swap in  L-1 K X-114 X-115
+
+W X (134, Jack, 412-111-1111)
+Written: (134, Jack, 412-111-1111)
+
+W X (135, Jack, 412-111-1111)
+Written: (135, Jack, 412-111-1111)
+create  L-0 K X-134 X-135
+Swap in  L-0 K X-134 X-135
+Swap in  L-1 K X-116 X-117
+
+W X (136, Jack, 412-111-1111)
+Written: (136, Jack, 412-111-1111)
+
+W X (137, Jack, 412-111-1111)
+Written: (137, Jack, 412-111-1111)
+create  L-0 K X-136 X-137
+Swap in  L-0 K X-136 X-137
+Swap in  L-1 K X-118 X-119
+
+W X (138, Jack, 412-111-1111)
+Written: (138, Jack, 412-111-1111)
+
+W X (139, Jack, 412-111-1111)
+Written: (139, Jack, 412-111-1111)
+create  L-0 K X-138 X-139
+Swap in  L-0 K X-138 X-139
+Swap in  L-1 K X-120 X-121
+
+W X (140, Jack, 412-111-1111)
+Written: (140, Jack, 412-111-1111)
+
+W X (141, Jack, 412-111-1111)
+Written: (141, Jack, 412-111-1111)
+create  L-0 K X-140 X-141
+Swap in  L-0 K X-140 X-141
+Swap in  L-1 K X-122 X-123
+
+W X (142, Jack, 412-111-1111)
+Written: (142, Jack, 412-111-1111)
+
+W X (143, Jack, 412-111-1111)
+Written: (143, Jack, 412-111-1111)
+create  L-0 K X-142 X-143
+Swap in  L-0 K X-142 X-143
+Swap in  L-1 K X-124 X-125
+
+W X (144, Jack, 412-111-1111)
+Written: (144, Jack, 412-111-1111)
+
+W X (145, Jack, 412-111-1111)
+Written: (145, Jack, 412-111-1111)
+create  L-0 K X-144 X-145
+Swap in  L-0 K X-144 X-145
+Swap in  L-1 K X-126 X-127
+
+W X (146, Jack, 412-111-1111)
+Written: (146, Jack, 412-111-1111)
+
+W X (147, Jack, 412-111-1111)
+Written: (147, Jack, 412-111-1111)
+create  L-0 K X-146 X-147
+Swap in  L-0 K X-146 X-147
+Swap in  L-1 K X-128 X-129
+
+W X (148, Jack, 412-111-1111)
+Written: (148, Jack, 412-111-1111)
+
+W X (149, Jack, 412-111-1111)
+Written: (149, Jack, 412-111-1111)
+create  L-0 K X-148 X-149
+Swap in  L-0 K X-148 X-149
+Swap in  L-1 K X-130 X-131
+
+W X (150, Jack, 412-111-1111)
+Written: (150, Jack, 412-111-1111)
+
+W X (151, Jack, 412-111-1111)
+Written: (151, Jack, 412-111-1111)
+create  L-0 K X-150 X-151
+Swap in  L-0 K X-150 X-151
+Swap in  L-1 K X-132 X-133
+
+W X (152, Jack, 412-111-1111)
+Written: (152, Jack, 412-111-1111)
+
+W X (153, Jack, 412-111-1111)
+Written: (153, Jack, 412-111-1111)
+create  L-0 K X-152 X-153
+Swap in  L-0 K X-152 X-153
+Swap in  L-1 K X-134 X-135
+
+W X (154, Jack, 412-111-1111)
+Written: (154, Jack, 412-111-1111)
+
+W X (155, Jack, 412-111-1111)
+Written: (155, Jack, 412-111-1111)
+create  L-0 K X-154 X-155
+Swap in  L-0 K X-154 X-155
+Swap in  L-1 K X-136 X-137
+
+W X (156, Jack, 412-111-1111)
+Written: (156, Jack, 412-111-1111)
+
+W X (157, Jack, 412-111-1111)
+Written: (157, Jack, 412-111-1111)
+create  L-0 K X-156 X-157
+Swap in  L-0 K X-156 X-157
+Swap in  L-1 K X-138 X-139
+
+W X (158, Jack, 412-111-1111)
+Written: (158, Jack, 412-111-1111)
+
+W X (159, Jack, 412-111-1111)
+Written: (159, Jack, 412-111-1111)
+create  L-0 K X-158 X-159
+Swap in  L-0 K X-158 X-159
+Swap in  L-1 K X-140 X-141
+
+W X (160, Jack, 412-111-1111)
+Written: (160, Jack, 412-111-1111)
+
+W X (161, Jack, 412-111-1111)
+Written: (161, Jack, 412-111-1111)
+create  L-0 K X-160 X-161
+Swap in  L-0 K X-160 X-161
+Swap in  L-1 K X-142 X-143
+
+W X (162, Jack, 412-111-1111)
+Written: (162, Jack, 412-111-1111)
+
+W X (163, Jack, 412-111-1111)
+Written: (163, Jack, 412-111-1111)
+create  L-0 K X-162 X-163
+Swap in  L-0 K X-162 X-163
+Swap in  L-1 K X-144 X-145
+
+W X (164, Jack, 412-111-1111)
+Written: (164, Jack, 412-111-1111)
+
+W X (165, Jack, 412-111-1111)
+Written: (165, Jack, 412-111-1111)
+create  L-0 K X-164 X-165
+Swap in  L-0 K X-164 X-165
+Swap in  L-1 K X-146 X-147
+
+W X (166, Jack, 412-111-1111)
+Written: (166, Jack, 412-111-1111)
+
+W X (167, Jack, 412-111-1111)
+Written: (167, Jack, 412-111-1111)
+create  L-0 K X-166 X-167
+Swap in  L-0 K X-166 X-167
+Swap in  L-1 K X-148 X-149
+
+W X (168, Jack, 412-111-1111)
+Written: (168, Jack, 412-111-1111)
+
+W X (169, Jack, 412-111-1111)
+Written: (169, Jack, 412-111-1111)
+create  L-0 K X-168 X-169
+Swap in  L-0 K X-168 X-169
+Swap in  L-1 K X-150 X-151
+
+W X (170, Jack, 412-111-1111)
+Written: (170, Jack, 412-111-1111)
+
+W X (171, Jack, 412-111-1111)
+Written: (171, Jack, 412-111-1111)
+create  L-0 K X-170 X-171
+Swap in  L-0 K X-170 X-171
+Swap in  L-1 K X-152 X-153
+
+W X (172, Jack, 412-111-1111)
+Written: (172, Jack, 412-111-1111)
+
+W X (173, Jack, 412-111-1111)
+Written: (173, Jack, 412-111-1111)
+create  L-0 K X-172 X-173
+Swap in  L-0 K X-172 X-173
+Swap in  L-1 K X-154 X-155
+
+W X (174, Jack, 412-111-1111)
+Written: (174, Jack, 412-111-1111)
+
+W X (175, Jack, 412-111-1111)
+Written: (175, Jack, 412-111-1111)
+create  L-0 K X-174 X-175
+Swap in  L-0 K X-174 X-175
+Swap in  L-1 K X-156 X-157
+
+W X (176, Jack, 412-111-1111)
+Written: (176, Jack, 412-111-1111)
+
+W X (177, Jack, 412-111-1111)
+Written: (177, Jack, 412-111-1111)
+create  L-0 K X-176 X-177
+Swap in  L-0 K X-176 X-177
+Swap in  L-1 K X-158 X-159
+
+W X (178, Jack, 412-111-1111)
+Written: (178, Jack, 412-111-1111)
+
+W X (179, Jack, 412-111-1111)
+Written: (179, Jack, 412-111-1111)
+create  L-0 K X-178 X-179
+Swap in  L-0 K X-178 X-179
+Swap in  L-1 K X-160 X-161
+
+W X (180, Jack, 412-111-1111)
+Written: (180, Jack, 412-111-1111)
+
+W X (181, Jack, 412-111-1111)
+Written: (181, Jack, 412-111-1111)
+create  L-0 K X-180 X-181
+Swap in  L-0 K X-180 X-181
+Swap in  L-1 K X-162 X-163
+
+W X (182, Jack, 412-111-1111)
+Written: (182, Jack, 412-111-1111)
+
+W X (183, Jack, 412-111-1111)
+Written: (183, Jack, 412-111-1111)
+create  L-0 K X-182 X-183
+Swap in  L-0 K X-182 X-183
+Swap in  L-1 K X-164 X-165
+
+W X (184, Jack, 412-111-1111)
+Written: (184, Jack, 412-111-1111)
+
+W X (185, Jack, 412-111-1111)
+Written: (185, Jack, 412-111-1111)
+create  L-0 K X-184 X-185
+Swap in  L-0 K X-184 X-185
+Swap in  L-1 K X-166 X-167
+
+W X (186, Jack, 412-111-1111)
+Written: (186, Jack, 412-111-1111)
+
+W X (187, Jack, 412-111-1111)
+Written: (187, Jack, 412-111-1111)
+create  L-0 K X-186 X-187
+Swap in  L-0 K X-186 X-187
+Swap in  L-1 K X-168 X-169
+
+W X (188, Jack, 412-111-1111)
+Written: (188, Jack, 412-111-1111)
+
+W X (189, Jack, 412-111-1111)
+Written: (189, Jack, 412-111-1111)
+create  L-0 K X-188 X-189
+Swap in  L-0 K X-188 X-189
+Swap in  L-1 K X-170 X-171
+
+W X (190, Jack, 412-111-1111)
+Written: (190, Jack, 412-111-1111)
+
+W X (191, Jack, 412-111-1111)
+Written: (191, Jack, 412-111-1111)
+create  L-0 K X-190 X-191
+Swap in  L-0 K X-190 X-191
+Swap in  L-1 K X-172 X-173
+
+W X (192, Jack, 412-111-1111)
+Written: (192, Jack, 412-111-1111)
+
+W X (193, Jack, 412-111-1111)
+Written: (193, Jack, 412-111-1111)
+create  L-0 K X-192 X-193
+Swap in  L-0 K X-192 X-193
+Swap in  L-1 K X-174 X-175
+
+W X (194, Jack, 412-111-1111)
+Written: (194, Jack, 412-111-1111)
+
+W X (195, Jack, 412-111-1111)
+Written: (195, Jack, 412-111-1111)
+create  L-0 K X-194 X-195
+Swap in  L-0 K X-194 X-195
+Swap in  L-1 K X-176 X-177
+
+W X (196, Jack, 412-111-1111)
+Written: (196, Jack, 412-111-1111)
+
+W X (197, Jack, 412-111-1111)
+Written: (197, Jack, 412-111-1111)
+create  L-0 K X-196 X-197
+Swap in  L-0 K X-196 X-197
+Swap in  L-1 K X-178 X-179
+
+W X (198, Jack, 412-111-1111)
+Written: (198, Jack, 412-111-1111)
+
+W X (199, Jack, 412-111-1111)
+Written: (199, Jack, 412-111-1111)
+create  L-0 K X-198 X-199
+Swap in  L-0 K X-198 X-199
+Swap in  L-1 K X-180 X-181
+
+W X (200, Jack, 412-111-1111)
+Written: (200, Jack, 412-111-1111)
+
+W X (201, Jack, 412-111-1111)
+Written: (201, Jack, 412-111-1111)
+create  L-0 K X-200 X-201
+Swap in  L-0 K X-200 X-201
+Swap in  L-1 K X-182 X-183
+
+W X (202, Jack, 412-111-1111)
+Written: (202, Jack, 412-111-1111)
+
+W X (203, Jack, 412-111-1111)
+Written: (203, Jack, 412-111-1111)
+create  L-0 K X-202 X-203
+Swap in  L-0 K X-202 X-203
+Swap in  L-1 K X-184 X-185
+
+W X (204, Jack, 412-111-1111)
+Written: (204, Jack, 412-111-1111)
+
+W X (205, Jack, 412-111-1111)
+Written: (205, Jack, 412-111-1111)
+create  L-0 K X-204 X-205
+Swap in  L-0 K X-204 X-205
+Swap in  L-1 K X-186 X-187
+
+W X (206, Jack, 412-111-1111)
+Written: (206, Jack, 412-111-1111)
+
+W X (207, Jack, 412-111-1111)
+Written: (207, Jack, 412-111-1111)
+create  L-0 K X-206 X-207
+Swap in  L-0 K X-206 X-207
+Swap in  L-1 K X-188 X-189
+
+W X (208, Jack, 412-111-1111)
+Written: (208, Jack, 412-111-1111)
+
+W X (209, Jack, 412-111-1111)
+Written: (209, Jack, 412-111-1111)
+create  L-0 K X-208 X-209
+Swap in  L-0 K X-208 X-209
+Swap in  L-1 K X-190 X-191
+
+W X (210, Jack, 412-111-1111)
+Written: (210, Jack, 412-111-1111)
+
+W X (211, Jack, 412-111-1111)
+Written: (211, Jack, 412-111-1111)
+create  L-0 K X-210 X-211
+Swap in  L-0 K X-210 X-211
+Swap in  L-1 K X-192 X-193
+
+W X (212, Jack, 412-111-1111)
+Written: (212, Jack, 412-111-1111)
+
+W X (213, Jack, 412-111-1111)
+Written: (213, Jack, 412-111-1111)
+create  L-0 K X-212 X-213
+Swap in  L-0 K X-212 X-213
+Swap in  L-1 K X-194 X-195
+
+W X (214, Jack, 412-111-1111)
+Written: (214, Jack, 412-111-1111)
+
+W X (215, Jack, 412-111-1111)
+Written: (215, Jack, 412-111-1111)
+create  L-0 K X-214 X-215
+Swap in  L-0 K X-214 X-215
+Swap in  L-1 K X-196 X-197
+
+W X (216, Jack, 412-111-1111)
+Written: (216, Jack, 412-111-1111)
+
+W X (217, Jack, 412-111-1111)
+Written: (217, Jack, 412-111-1111)
+create  L-0 K X-216 X-217
+Swap in  L-0 K X-216 X-217
+Swap in  L-1 K X-198 X-199
+
+W X (218, Jack, 412-111-1111)
+Written: (218, Jack, 412-111-1111)
+
+W X (219, Jack, 412-111-1111)
+Written: (219, Jack, 412-111-1111)
+create  L-0 K X-218 X-219
+Swap in  L-0 K X-218 X-219
+Swap in  L-1 K X-200 X-201
+
+W X (220, Jack, 412-111-1111)
+Written: (220, Jack, 412-111-1111)
+
+W X (221, Jack, 412-111-1111)
+Written: (221, Jack, 412-111-1111)
+create  L-0 K X-220 X-221
+Swap in  L-0 K X-220 X-221
+Swap in  L-1 K X-202 X-203
+
+W X (222, Jack, 412-111-1111)
+Written: (222, Jack, 412-111-1111)
+
+W X (223, Jack, 412-111-1111)
+Written: (223, Jack, 412-111-1111)
+create  L-0 K X-222 X-223
+Swap in  L-0 K X-222 X-223
+Swap in  L-1 K X-204 X-205

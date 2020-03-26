@@ -19,27 +19,30 @@ public class LSMmyPTA {
         bufferSize=Integer.parseInt(args[1]);
         // A hashMap to store tables
         tables = new HashMap<>();
-        File root = new File("./tables");
-        File[] tableList = root.listFiles();
+        String tableLoc = "./tables";
+ //       deleteDir(tableLoc);  //phase 1, every time running a new script, clear all tables
+//        File root = new File("./tables");
+//        File[] tableList = root.listFiles();
+
         //logging
         String currentTime = getDate();
         String logPath = "./Logging/" + "log" + currentTime +".txt";
         String pathname = "./script.txt";
         // A global Buffer
         buffer = new LSMBuffer(bufferSize);
-        for (int i = 0; i < tableList.length; i++){  //initialize all existing tables
-            String[] temp = tableList[i].toString().split("/");
-            if(temp[temp.length - 1].length() == 1){
-                tables.put(temp[temp.length - 1], new LSMTree(temp[temp.length - 1], sstableSize,"./tables/" + temp[temp.length - 1], buffer, logPath));
-            }
-        }
+//        for (int i = 0; i < tableList.length; i++){  //initialize all existing tables
+//            String[] temp = tableList[i].toString().split("/");
+//            if(temp[temp.length - 1].length() == 1){
+//                tables.put(temp[temp.length - 1], new LSMTree(temp[temp.length - 1], sstableSize,"./LSM/tables/" + temp[temp.length - 1], buffer, logPath));
+//            }
+//        }
 //        tables.put("X", new Table("X"));
 //        tables.put("Y", new Table("Y"));
 
         // read script
         readScript(pathname, logPath);
         for (LSMTree lsmtree:tables.values()){
-            //lsmtree.deleteTable();
+            lsmtree.deleteTable();
         }
 
 
@@ -49,6 +52,7 @@ public class LSMmyPTA {
         try(FileReader reader = new FileReader(pathname);
             BufferedReader br = new BufferedReader(reader)){
             String line;
+            long startTime = System.currentTimeMillis();
             while((line = br.readLine()) != null){
                 logWriter("", logPath);  //empty line to separate each command in log
                 logWriter(line, logPath);
@@ -67,11 +71,18 @@ public class LSMmyPTA {
                     case "E":
                         erase(keywords[1], Integer.parseInt(keywords[2]), logPath);
                         break;
-                    default:
+                    case "D":
                         delete(keywords[1], logPath);
+                        break;
+                    default:
+                        System.out.println("invalid operation");
                         break;
                 }
             }
+            long endTime = System.currentTimeMillis();
+            System.out.println(endTime - startTime);
+            logWriter("Runtime: " + (endTime - startTime), logPath);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,9 +131,10 @@ public class LSMmyPTA {
     }
     private static void write(String tableName, String recordValue, String logPath) throws Exception {
         if(!tables.containsKey(tableName)){
-            tables.put(tableName, new LSMTree(tableName,sstableSize,"./tables/"+tableName,buffer, logPath));  //TODO: pass parameters to LSMTree to create new table
             File thisTable = new File("./tables/"+tableName);
             thisTable.mkdirs();
+            tables.put(tableName, new LSMTree(tableName,sstableSize,"./tables/"+tableName,buffer, logPath));  //TODO: pass parameters to LSMTree to create new table
+
             //not add second memtable for now
             System.out.println("The table " + tableName + " does not exist, it is created.");
         }
@@ -173,6 +185,28 @@ public class LSMmyPTA {
         bw.newLine();
         bw.close();
         fw.close();
+    }
+
+    public static boolean deleteDir(String path){
+        File file = new File(path);
+        if(!file.exists()){
+            System.err.println("The dir are not exists!");
+            return false;
+        }
+
+        String[] content = file.list();
+        for(String name : content){
+            File temp = new File(path, name);
+            if(temp.isDirectory()){
+                deleteDir(temp.getAbsolutePath());
+                temp.delete();
+            }else{
+                if(!temp.delete()){
+                    System.err.println("Failed to delete " + name);
+                }
+            }
+        }
+        return true;
     }
 
 
