@@ -1,4 +1,3 @@
-package LSM;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -110,7 +109,7 @@ public class LSMTree {
                 SSTable temp=new SSTable();
                 temp.begin=id;
                 SSTable file=level.floor(temp);
-                if (file==null||file.end<id) return null;
+                if (file==null||file.end<id) continue;
                 MemTable table=loadOrGetMemtable(file, i + 1);
                 res = table.read(id);
                 if (res != null) return res;
@@ -188,6 +187,7 @@ public class LSMTree {
         compactLevel0();
         int level=1;
         //check if we need to continue compaction
+        //level is full
         while (level_size.get(level-1)>=maxSize*Math.pow(10,level)){
             compactLevel(level);
             ++level;
@@ -197,10 +197,13 @@ public class LSMTree {
     //compact level and write to level+1
     public void compactLevel(int level) throws IOException {
         //pick one SStable from level
+        if (level==2){
+            System.out.printf("");
+        }
         SSTable temp=new SSTable();
         temp.begin=last_chosen.get(level-1)+1;
         SSTable chosen=SStables.get(level-1).floor(temp);
-        if (chosen==null)chosen=SStables.get(0).first();
+        if (chosen==null)chosen=SStables.get(level-1).first();
         last_chosen.set(level-1,chosen.end);
         SStables.get(level-1).remove(chosen);
         level_size.set(level-1,level_size.get(level-1)-chosen.size);
@@ -220,13 +223,15 @@ public class LSMTree {
 
             last_chosen.add(0);
             //move chosen to next level
-            String filename=chosen.loc.split("/level"+level+"/")[1];
+            String filename="";
+            filename=chosen.loc.split("/level"+level+"/")[1];
             String loc=fileBaseDir+"/level"+(level+1)+"/"+filename;
             try {
                 Files.move(Paths.get(chosen.loc),Paths.get(loc),StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            chosen.loc=loc;
             SStables.get(level).add(chosen);
             level_size.add(chosen.size);
         }else {
