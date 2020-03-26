@@ -3,7 +3,7 @@ myPTA (my Pitt Transaction Agent) is a transactional row store database that eff
 
 ## How to run
 
-### Sequntial Files Strategy
+### Sequential Files Strategy
 Download ***myPTA.jar*** from repository. Create your own script or use our ***script.txt*** to test the correctness.
 #### Requirements
 > Java 1.8   
