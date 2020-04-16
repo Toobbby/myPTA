@@ -78,21 +78,24 @@ public class Scheduler {
                     continue;
                 }
             	// all operations should wait for D/ D should wait for all operations
-				if ((L.Ttype == Type.D || locksOfTable.get(i).Ttype == Type.D) &&
+				else if ((L.Ttype == Type.D || locksOfTable.get(i).Ttype == Type.D) &&
 						!ret.contains(locksOfTable.get(i).TID))
 					ret.add(locksOfTable.get(i).TID);  //Table lock
 
 
             	//			M/D id is null							R D delete areacode is null
-            	if((L.Ttype == Type.M && locksOfTable.get(i).Ttype == Type.E ||
+            	else if((L.Ttype == Type.M && locksOfTable.get(i).Ttype == Type.E ||
 								L.Ttype == Type.E && locksOfTable.get(i).Ttype == Type.M) &&
 						!ret.contains(locksOfTable.get(i).TID))
 						ret.add(locksOfTable.get(i).TID);  //Lock on areaCode
             	//M E/E M
 
-
-
-                if ((((L.ID != null) && L.ID.equals(locksOfTable.get(i).ID)) ||
+                //W W
+                if(L.Ttype == Type.W && locksOfTable.get(i).Ttype == Type.W){
+                    if (L.ID.equals(locksOfTable.get(i).ID))
+                        ret.add(locksOfTable.get(i).TID);
+                }
+                else if ((((L.ID != null) && L.ID.equals(locksOfTable.get(i).ID)) ||
 								(L.AreaCode != null) && L.AreaCode.equals(locksOfTable.get(i).AreaCode)) &&
 						!ret.contains(locksOfTable.get(i).TID))
                 //     R W/ W R	/E W/ W E/ R E/ E R	/ E W / W E	/M W/ W M

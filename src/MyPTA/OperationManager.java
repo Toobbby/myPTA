@@ -41,7 +41,6 @@ public class OperationManager {
             try {
                 scriptTransactionManager[i] = new TransactionManager(scriptFiles[i]);
                 scriptTransactionManager[i].TID = globalTID;
-                ++globalTID;
             } catch (FileNotFoundException e) {
                 System.out.println("File " + scriptFiles[i] + " not found, skipping file.");
             }
@@ -72,7 +71,6 @@ public class OperationManager {
 
             if (!chosenTM.streamIsClosed()) {
                 TransactionManager.Operation t = chosenTM.getTransaction();
-                System.out.println(chosenTM.toString() + ":" + t.getTID());
                 String areaCode = null;
                 if (debugClock % timeOutSheld == 0) {
                     //check for deadlock
