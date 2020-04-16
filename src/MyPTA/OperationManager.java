@@ -115,7 +115,7 @@ public class OperationManager {
                             Record temp = chosenTM.ReadIdFromTempData(Integer.parseInt(chosenTM.getValue()), chosenTM.getTableName());
                             if (temp != null) LSMmyPTA.logWriter("T" + t.getTID() + ": " +"Read: " + temp.toString());
                             //
-                            if (temp == null && !chosenTM.ifDeletetable(chosenTM.getTableName()))
+                            if (temp == null && !chosenTM.ifDeletetable(t.getTableName()))
                                 temp = memoryManager.read(chosenTM.getTableName(), Integer.parseInt(chosenTM.getValue()));
                             if (temp != null) LSMmyPTA.logWriter("T" + t.getTID() + ": " +"Read: " + temp.toString());
                             else LSMmyPTA.logWriter("T" + t.getTID() + ": " +chosenTM.getFullString() + " Failed!");
@@ -275,8 +275,10 @@ public class OperationManager {
                             LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
                             memoryManager.commitToTransaction(chosenTM.getOPBuffer());
                             chosenTM.beforeImageIds.clear();
+                            chosenTM.deleted.clear();
                             scheduler.releaseLock(t.getTID());
                         } else { // read committed
+                            chosenTM.deleted.clear();
                             LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
                             memoryManager.commitToTransaction(chosenTM.getOPBuffer());
                         }
@@ -300,6 +302,7 @@ public class OperationManager {
                         } else { // read committed
                             chosenTM.Abort();
                         }
+                        chosenTM.deleted.clear();
                         processCounter++;
                         totalRespondTime += System.currentTimeMillis()-chosenTM.startTimestamp;
                         break;
@@ -358,11 +361,6 @@ public class OperationManager {
             System.out.print(e);
         }
     }
-
-
-
-
-
 
 
 

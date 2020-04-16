@@ -31,7 +31,7 @@ public class TransactionManager {
     public HashSet<Integer> beforeImageIds = new HashSet<Integer>();
 
     public String beforeImageLocation = "./beforeImage/";
-
+    public HashSet<String> deleted=new HashSet<>();
     public int RCount = 0;
     public int WCount = 0;
     public int MCount = 0;
@@ -219,7 +219,7 @@ public class TransactionManager {
      * @return
      */
     public Record ReadIdFromTempData(int id, String tableName) {
-        if (ifDeletetable(tableName))
+        if (deleted.contains(tableName))
             return null;
         for (int i = 0; i < tempData.size(); i++) {
             if (tempTableIndex.get(i).equals(tableName)) {
@@ -235,7 +235,7 @@ public class TransactionManager {
      * @return
      */
     public ArrayList<Record> ReadAreaFromTempData(String area, String tableName) {
-        if (ifDeletetable(tableName))
+        if (deleted.contains(tableName))
             return null;
         ArrayList<Record> tempReturnResult = new ArrayList<Record>();
         for (int i = 0; i < tempData.size(); i++) {
@@ -256,12 +256,7 @@ public class TransactionManager {
      * @return
      */
     public boolean ifDeletetable(String tableName) {
-        for (Operation op : OPBuffer) {
-            if (op.getCommand() == Command.DELETE_TABLE && op.getTableName() == tableName) {
-                return true;
-            }
-        }
-        return false;
+        return deleted.contains(tableName);
     }
 
     /**
@@ -358,6 +353,12 @@ public class TransactionManager {
      */
     public void addOP() {
         OPBuffer.add(new Operation(command, tableName, value, fullString, lineNumber, TransactionType, TID));
+        if (command==Command.DELETE_TABLE){
+            deleted.add(tableName);
+        }
+        if (command==Command.WRITE){
+            deleted.remove(tableName);
+        }
     }
 
     public void beforeImageWriter(String logContext) throws IOException {
