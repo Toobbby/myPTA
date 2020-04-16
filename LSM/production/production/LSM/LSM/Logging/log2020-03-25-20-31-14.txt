@@ -1,5 +1,0 @@
-
-R X 5
-The table does not exist, the read is aborted.
-
-W X (5, John, 412-111-2222)
