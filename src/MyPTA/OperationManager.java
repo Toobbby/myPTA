@@ -289,14 +289,17 @@ public class OperationManager {
                         if (t.getTransactionType()) { // serializable
                             LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
                             //logic inside, only deal with delete table
-                            memoryManager.commitToTransaction(chosenTM.getOPBuffer());
+                            boolean successfullyCommitted = memoryManager.commitToTransaction(chosenTM.getOPBuffer());
+                            if(!successfullyCommitted) LSMmyPTA.logWriter("T" + t.getTID() + ": " + "failed to delete table at the commit time");
                             chosenTM.beforeImageIds.clear();
                             chosenTM.deleted.clear();
                             scheduler.releaseLock(t.getTID()); //release all locks
                         } else { // read committed
                             chosenTM.deleted.clear();
                             LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
-                            memoryManager.commitToTransaction(chosenTM.getOPBuffer());  //flush all W, E, D on disk
+                            //flush all W, E, D on disk
+                            boolean successfullyCommitted = memoryManager.commitToTransaction(chosenTM.getOPBuffer());
+                            if(!successfullyCommitted) LSMmyPTA.logWriter("T" + t.getTID() + ": " + "failed to delete table at the commit time");
                         }
                         chosenTM.commit();
                         //metrics

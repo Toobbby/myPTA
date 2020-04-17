@@ -115,12 +115,20 @@ public class LSMmyPTA {
         }
     }
 
-    private void delete(String tableName) throws IOException {
+    private boolean delete(String tableName) throws IOException {
         LSMTree t=tables.get(tableName);
-        t.deleteTable();
-        tables.remove(tableName);
-        System.out.println("Table " + tableName + " has been dropped!");
-        logWriter("Deleted: " + tableName);
+        if(t != null) {
+            t.deleteTable();
+            tables.remove(tableName);
+            System.out.println("Table " + tableName + " has been dropped!");
+            logWriter("Deleted: " + tableName);
+            return true;
+        }
+        else{
+            System.out.println("Table " + tableName + " not exists!");
+            logWriter("fail to delete: " + tableName);
+            return false;
+        }
     }
 
     public  static String getDate(){
@@ -163,8 +171,8 @@ public class LSMmyPTA {
 
     public  boolean deleteTable(String tablename) {
         try {
-            delete(tablename);
-            return true;
+            return delete(tablename);
+
         }catch (IOException e){
             return false;
         }
@@ -178,7 +186,8 @@ public class LSMmyPTA {
             {
 
                 case DELETE_TABLE:
-                    deleteTable(op.getTableName());
+                    boolean deleteTableSuccess = deleteTable(op.getTableName());
+                    if(!deleteTableSuccess) return false;
                     break;
                 case WRITE:
                     if(!op.getTransactionType()){  //read committed: write to disk at commit time
