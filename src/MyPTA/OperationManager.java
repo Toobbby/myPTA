@@ -8,10 +8,11 @@ import Scheduler.TransactionManager;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
+
 import Scheduler.Type;
 
 public class OperationManager {
-    static int executingSequencyType = 1;
+    static int concurrentReadMethod = 1;
     static long randomSeed = 0;
     static int nextScriptIndex = 0;
     static int numberOfScript = 0;
@@ -19,20 +20,20 @@ public class OperationManager {
     static int endFileCount = 0;
     static long debugClock = 0;
     static final long timeOutSheld = 10;
-    static int TransactionCommitedCounter = 0;
+    static int TransactionCommittedCounter = 0;
 
     static long totalRespondTime = 0;
-    static int processCounter = 0;
-    static int globalTID = 0;
+    static int transactionCounter = 0;
+    static int globalTID = 0;  //each transaction gets a unique TID
 
-    static  int RCount=0;
-    static int WCount=0;
-    static int MCount=0;
-    static int ECount=0;
-    static int DCount=0;
+    static int RCount = 0;
+    static int WCount = 0;
+    static int MCount = 0;
+    static int ECount = 0;
+    static int DCount = 0;
 
-    public static void runScript(int bufferSizeInBytes, String[] scriptFiles) throws Exception {
-        LSMmyPTA memoryManager = new LSMmyPTA(3, bufferSizeInBytes);  //Initialize data manager
+    public static void runScript(int lsmPageSize, int bufferSize, String[] scriptFiles) throws Exception {
+        LSMmyPTA memoryManager = new LSMmyPTA(lsmPageSize, bufferSize);  //Initialize data manager
         //run all scripts
         TransactionManager[] scriptTransactionManager = new TransactionManager[scriptFiles.length];
         for (int i = 0; i < scriptFiles.length; i++) {
@@ -50,7 +51,7 @@ public class OperationManager {
         Random rand = new Random(randomSeed);
         while (true) {
             //scheduler
-            if (executingSequencyType == 0) {//round robin
+            if (concurrentReadMethod == 0) {//round robin
                 nextScriptIndex++;
                 nextScriptIndex = nextScriptIndex % numberOfScript;
             } else {  //random access
@@ -58,7 +59,7 @@ public class OperationManager {
                 nextScriptIndex = rand.nextInt(numberOfScript);
             }
 
-            Object value = "  ";
+
             TransactionManager chosenTM = scriptTransactionManager[nextScriptIndex];
             do {
                 try {
@@ -75,27 +76,26 @@ public class OperationManager {
                 if (debugClock % timeOutSheld == 0) {
                     //check for deadlock
                     int deadLockedTID = scheduler.DeadLockDetectFree();
-                    if (deadLockedTID != -1)  //there is a deadlock, abort the selected dead Operation
+                    if (deadLockedTID != -1)  //there is a deadlock, abort the selected dead transaction
                     {
-                        boolean assertionCheck = false;
+                        boolean foundDeadVertex = false;
                         for (TransactionManager manager : scriptTransactionManager) {
                             if (manager.getTransaction().getTID() == deadLockedTID) {
-                                assertionCheck = true;  //found the selected dead vertex abort it
-                                LSMmyPTA.logWriter("[T_" + t.getTID() + ", DEADLOCK ABORT]");
+                                foundDeadVertex = true;  //found the selected dead vertex abort it
+                                LSMmyPTA.logWriter("T_" + t.getTID() + " has been aborted due to a deadlock");
                                 manager.DeadLockAbort();
-                                processCounter++;
-                                totalRespondTime += System.currentTimeMillis()-chosenTM.startTimestamp;
-                                LSMmyPTA.logWriter("[T_" + t.getTID() + ", start undo]");
+                                transactionCounter++;
+                                totalRespondTime += System.currentTimeMillis() - chosenTM.startTimestamp;
+                                LSMmyPTA.logWriter("Start undo " + "T_" + t.getTID());
                                 undo(manager, memoryManager);
-                                LSMmyPTA.logWriter("[T_" + t.getTID() + ", end undo]");
-                                //write out to after image
+                                LSMmyPTA.logWriter("End undo " + "T_" + t.getTID());
                                 break;
                             }
                         }
-                        if (!assertionCheck)  //did not found the selected dead vertex
+                        if (!foundDeadVertex)  //did not found the selected dead vertex
                         {
-                            throw new IllegalStateException("Could not find Operation to abort; deadlock still detected.");
-                        }else {
+                            throw new IllegalStateException("Could not find a transaction to abort; deadlock still detected.");
+                        } else {
                             continue;
                         }
                     }
@@ -113,12 +113,12 @@ public class OperationManager {
                             chosenTM.addOP(); //add the Operation to buffer
                             LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
                             Record temp = chosenTM.ReadIdFromTempData(Integer.parseInt(chosenTM.getValue()), chosenTM.getTableName());
-                            if (temp != null) LSMmyPTA.logWriter("T" + t.getTID() + ": " +"Read: " + temp.toString());
+                            if (temp != null) LSMmyPTA.logWriter("T" + t.getTID() + ": " + "Read: " + temp.toString());
                             //
                             if (temp == null && !chosenTM.ifDeletetable(t.getTableName()))
                                 temp = memoryManager.read(chosenTM.getTableName(), Integer.parseInt(chosenTM.getValue()));
-                            if (temp != null) LSMmyPTA.logWriter("T" + t.getTID() + ": " +"Read: " + temp.toString());
-                            else LSMmyPTA.logWriter("T" + t.getTID() + ": " +chosenTM.getFullString() + " Failed!");
+                            if (temp != null) LSMmyPTA.logWriter("T" + t.getTID() + ": " + "Read: " + temp.toString());
+                            else LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString() + " Failed!");
 
                         } else { //read committed
                             if (!scheduler.addTupleLock(Type.R, t.getTID(), chosenTM.getValue(), chosenTM.getTableName(), null))
@@ -133,12 +133,12 @@ public class OperationManager {
                             LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
                             Record temp = chosenTM.ReadIdFromTempData(Integer.parseInt(chosenTM.getValue()), chosenTM.getTableName());
                             if (temp != null) LSMmyPTA.logWriter("T" + t.getTID() + ": " + "Read: " + temp.toString());
-
-                            //
                             if (temp == null && !chosenTM.ifDeletetable(chosenTM.getTableName()))
                                 temp = memoryManager.read(chosenTM.getTableName(), Integer.parseInt(chosenTM.getValue()));
+
                             if (temp != null) LSMmyPTA.logWriter("T" + t.getTID() + ": " + "Read: " + temp.toString());
                             else LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString() + " Failed!");
+                            //read-committed: release lock immediately after execution
                             scheduler.releaseLock(t.getTID());
                         }
                         break;
@@ -152,24 +152,27 @@ public class OperationManager {
                             chosenTM.unblock();
                             chosenTM.addOP();
                             LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
-                            ArrayList<Record> rList = null;
-                            ArrayList<Record> RecordList = null;
-                            // check if previous Operation has already deleted corresponding table in disk
-                            if (!chosenTM.ifDeletetable(chosenTM.getTableName())) {
+                            ArrayList<Record> rList = null;  //store data from memory manager
+                            ArrayList<Record> RecordList = null;  //result record list
+
+                            // check if previous operation has already deleted corresponding table in disk
+                            if (!chosenTM.ifDeletetable(chosenTM.getTableName())) { //table is not deleted
                                 rList = memoryManager.showUserWithAreaCode(chosenTM.getTableName(), areaCode);
                                 RecordList = new ArrayList<>();
                                 for (Record r : rList) {
-                                    // check if previous Operation has erased the record in disk
-                                    if ((!chosenTM.ifIdInTempData(r.getID(), chosenTM.getTableName()))) {
+                                    // check if previous operation has modified this record in disk
+                                    //recall: we will add all corresponding record in temp data in next step
+
+                                    if ((!chosenTM.ifIdInTempData(r.getID(), chosenTM.getTableName()))) {//has not been modified
                                         RecordList.add(r);
                                     }
                                 }
                             }
+
                             ArrayList<Record> transactionRecords = chosenTM.ReadAreaFromTempData(areaCode, chosenTM.getTableName());
                             if (RecordList != null) {
                                 transactionRecords.addAll(RecordList);
                             }
-                            value = transactionRecords.isEmpty() ? null : transactionRecords.toArray(new Record[0]);
                             if (!transactionRecords.isEmpty()) {
                                 for (Record r : transactionRecords) {
                                     LSMmyPTA.logWriter("T" + t.getTID() + ": " + "Mread: " + r.toString());
@@ -177,7 +180,9 @@ public class OperationManager {
                             } else {
                                 LSMmyPTA.logWriter("T" + t.getTID() + ": " + "Mread: no records found with " + areaCode);
                             }
-                        } else {  // read committed
+                        }
+
+                        else {  // read committed
                             areaCode = chosenTM.getValue();
                             if (!scheduler.addTupleLock(Type.M, t.getTID(), null, chosenTM.getTableName(), areaCode)) {
                                 chosenTM.block();
@@ -188,12 +193,12 @@ public class OperationManager {
                             LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
                             ArrayList<Record> rList = null;
                             ArrayList<Record> RecordList = null;
-                            // check if previous Operation has already deleted corresponding table in disk
+                            // check if previous operations has already deleted corresponding table in disk
                             if (!chosenTM.ifDeletetable(chosenTM.getTableName())) {
                                 rList = memoryManager.showUserWithAreaCode(chosenTM.getTableName(), areaCode);
                                 RecordList = new ArrayList<>();
                                 for (Record r : rList) {
-                                    // check if previous Operation has erased the record in disk
+                                    // check if previous Operation has modified the record in disk
                                     if ((!chosenTM.ifIdInTempData(r.getID(), chosenTM.getTableName()))) {
                                         RecordList.add(r);
                                     }
@@ -203,28 +208,38 @@ public class OperationManager {
                             if (RecordList != null) {
                                 transactionRecords.addAll(RecordList);
                             }
-                            value = transactionRecords.isEmpty() ? null : transactionRecords.toArray(new Record[0]);
+                            //read-committed: release lock immediately after execution
                             scheduler.releaseLock(t.getTID());
                         }
                         break;
+
                     case WRITE:
                         Record r = new Record(t.getValue());
                         if (!scheduler.addTupleLock(Type.W, t.getTID(), String.valueOf(r.getID()), chosenTM.getTableName(), r.getAreaCode())) {
                             chosenTM.block();
                             continue;
                         }
+                        //if is able to get a tuple lock
                         chosenTM.unblock();
                         chosenTM.addOP();
                         LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
+                        //W: always write to temp data
                         chosenTM.writeToTempData(Type.W, r.getID(), r, chosenTM.getTransaction().getTableName());
                         if (t.getTransactionType()) { // serializable
-                            if (!chosenTM.beforeImageIds.contains(r.getID())) {
+
+                            //before image
+                            ArrayList<Integer> beforeImageOfTable = chosenTM.beforeImageIds.get(chosenTM.getTableName()) == null ?
+                                    new ArrayList<Integer>():chosenTM.beforeImageIds.get(chosenTM.getTableName());
+                            if (!beforeImageOfTable.contains(r.getID())) {
+                                //if this ID never appears, append the opposite operation to before image
+
                                 Record beforeImage = memoryManager.read(chosenTM.getTableName(), r.getID());
-                                if (beforeImage == null)
+                                if (beforeImage == null)//INSERT, opposite operation is Erase
                                     chosenTM.beforeImageWriter("E " + chosenTM.getTableName() + " " + r.getID());
-                                else
+                                else//MODIFY, opposite operation is Write
                                     chosenTM.beforeImageWriter("W " + chosenTM.getTableName() + " " + beforeImage.toString());
-                                chosenTM.beforeImageIds.add(r.getID());
+                                beforeImageOfTable.add(r.getID());
+                                chosenTM.beforeImageIds.put(chosenTM.getTableName(), beforeImageOfTable);
                             }
                             memoryManager.write(chosenTM.getTableName(), r.toString());
 
@@ -244,11 +259,15 @@ public class OperationManager {
                         LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
                         chosenTM.writeToTempData(Type.E, Integer.parseInt(t.getValue()), null, chosenTM.getTransaction().getTableName());
                         if (t.getTransactionType()) { // serializable
-                            if (!chosenTM.beforeImageIds.contains(recordID)) {
+                            ArrayList<Integer> beforeImageOfTable = chosenTM.beforeImageIds.get(chosenTM.getTableName()) == null?
+                                    new ArrayList<Integer>():chosenTM.beforeImageIds.get(chosenTM.getTableName());
+                            if (!beforeImageOfTable.contains(Integer.parseInt(t.getValue()))) {
+                                //if this ID never appears, append the opposite operation to before image
                                 Record beforeImage = memoryManager.read(chosenTM.getTableName(), recordID);
                                 if (beforeImage != null)
                                     chosenTM.beforeImageWriter("W " + chosenTM.getTableName() + " " + beforeImage.toString());
-                                chosenTM.beforeImageIds.add(recordID);
+                                beforeImageOfTable.add(Integer.parseInt(t.getValue()));
+                                chosenTM.beforeImageIds.put(chosenTM.getTableName(), beforeImageOfTable);
                             }
                             memoryManager.erase(chosenTM.getTableName(), recordID);
                         } else { // read committed
@@ -261,35 +280,33 @@ public class OperationManager {
                             continue;
                         }
                         chosenTM.unblock();
-                        chosenTM.addOP();
+                        chosenTM.addOP(); //mark the table as deleted
                         LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
-                        if (t.getTransactionType()) { // serializable
-                            //put into op buffer
-                        } else { // read committed
-//							result=memoryManager.deleteTable(chosenTM.getTableName());
-                            scheduler.releaseLock(t.getTID());
-                        }
+                        //serializable do nothing else
+                        if (!t.getTransactionType()) scheduler.releaseLock(t.getTID());// READ-COMMITTED release lock
                         break;
-                    case COMMIT:    // need to check commit function in MM
+                    case COMMIT:
                         if (t.getTransactionType()) { // serializable
                             LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
+                            //logic inside, only deal with delete table
                             memoryManager.commitToTransaction(chosenTM.getOPBuffer());
                             chosenTM.beforeImageIds.clear();
                             chosenTM.deleted.clear();
-                            scheduler.releaseLock(t.getTID());
+                            scheduler.releaseLock(t.getTID()); //release all locks
                         } else { // read committed
                             chosenTM.deleted.clear();
                             LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
-                            memoryManager.commitToTransaction(chosenTM.getOPBuffer());
+                            memoryManager.commitToTransaction(chosenTM.getOPBuffer());  //flush all W, E, D on disk
                         }
                         chosenTM.commit();
-                        TransactionCommitedCounter++;
-                        totalRespondTime += System.currentTimeMillis()-chosenTM.startTimestamp;
-                         RCount+=chosenTM.RCount;
-                         WCount+=chosenTM.WCount;
-                          MCount+=chosenTM.MCount;
-                          ECount+=chosenTM.ECount;
-                          DCount+=chosenTM.DCount;
+                        //metrics
+                        TransactionCommittedCounter++;
+                        totalRespondTime += System.currentTimeMillis() - chosenTM.startTimestamp;
+                        RCount += chosenTM.RCount;
+                        WCount += chosenTM.WCount;
+                        MCount += chosenTM.MCount;
+                        ECount += chosenTM.ECount;
+                        DCount += chosenTM.DCount;
                         break;
                     case ABORT:
                         LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
@@ -303,20 +320,20 @@ public class OperationManager {
                             chosenTM.Abort();
                         }
                         chosenTM.deleted.clear();
-                        processCounter++;
-                        totalRespondTime += System.currentTimeMillis()-chosenTM.startTimestamp;
+                        //metrics
+                        transactionCounter++;
+                        totalRespondTime += System.currentTimeMillis() - chosenTM.startTimestamp;
                         break;
                     case BEGIN:
-                        //Nothing
                         ++globalTID;
                         chosenTM.TID = globalTID;
                         LSMmyPTA.logWriter("T" + chosenTM.TID + ": " + chosenTM.getFullString());
-                        chosenTM.startTimestamp=System.currentTimeMillis();
+                        chosenTM.startTimestamp = System.currentTimeMillis();
                         break;
                     default:
                         throw new UnsupportedOperationException("Command not supported");
                 }
-            }else{
+            } else {
 
                 if (fileEndCheck[nextScriptIndex] == 1) {
                     continue;
@@ -325,18 +342,18 @@ public class OperationManager {
                 endFileCount++;
                 System.out.println("Execution on " + scriptFiles[nextScriptIndex] + " is finished!");
                 if (endFileCount == numberOfScript) {
-                    int totalCounter=RCount+WCount+DCount+ECount+MCount;
+                    int totalCounter = RCount + WCount + DCount + ECount + MCount;
                     memoryManager.flush();
-                    System.out.println(TransactionCommitedCounter + " transactions commited");
-                    System.out.println((double) RCount / ((double) totalCounter ) * 100 + " % of operation is read");
-                    System.out.println((double) WCount / ((double) totalCounter ) * 100 + " % of operation is write");
-                    System.out.println((double) MCount / ((double) totalCounter ) * 100 + " % of operation is readAreaCode");
-                    System.out.println((double) ECount / ((double) totalCounter ) * 100 + " % of operation is Erase");
-                    System.out.println((double) DCount / ((double) totalCounter ) * 100 + " % of operation is Delete table");
+                    System.out.println(TransactionCommittedCounter + " transactions committed");
+                    System.out.println((double) RCount / ((double) totalCounter) * 100 + " % of operations is read");
+                    System.out.println((double) WCount / ((double) totalCounter) * 100 + " % of operations is write");
+                    System.out.println((double) MCount / ((double) totalCounter) * 100 + " % of operations is readAreaCode");
+                    System.out.println((double) ECount / ((double) totalCounter) * 100 + " % of operations is Erase");
+                    System.out.println((double) DCount / ((double) totalCounter) * 100 + " % of operations is Delete table");
 
                     System.out.println("Total respond time is " + totalRespondTime);
-                    System.out.println("Total number of process is " + (processCounter+TransactionCommitedCounter));
-                    System.out.println("Average respond time is " + (double)totalRespondTime / (processCounter + TransactionCommitedCounter));
+                    System.out.println("Total number of transactions (including aborted transactions) is " + (transactionCounter + TransactionCommittedCounter));
+                    System.out.println("Average respond time is " + (double) totalRespondTime / (transactionCounter + TransactionCommittedCounter));
                     System.exit(0);
                 }
             }
@@ -344,25 +361,25 @@ public class OperationManager {
     }
 
 
-    public static void undo(TransactionManager chosenTM, LSMmyPTA memoryManager){
+    public static void undo(TransactionManager chosenTM, LSMmyPTA memoryManager) {
         try {
 
             BufferedReader beforeImageReader = new BufferedReader(new FileReader(chosenTM.beforeImageLocation + chosenTM.TID + ".txt"));
             String line = null;
             while ((line = beforeImageReader.readLine()) != null) {
                 String[] split = line.split(" ", 3);
+                //E and W
                 if (split[0].equals("E"))
                     memoryManager.erase(split[1], Integer.parseInt(split[2]));
                 else memoryManager.write(split[1], split[2]);
 
 
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.print(e);
         }
     }
 
 
-
-    }
+}
 

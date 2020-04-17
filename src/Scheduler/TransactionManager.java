@@ -28,7 +28,7 @@ public class TransactionManager {
     private ArrayList<HashMap<Integer, Record>> tempData; // store the updates
     private ArrayList<String> tempTableIndex; //works to find the index of the table in the tempdata
     public long startTimestamp;
-    public HashSet<Integer> beforeImageIds = new HashSet<Integer>();
+    public HashMap<String,ArrayList<Integer>> beforeImageIds = new HashMap<>();
 
     public String beforeImageLocation = "./beforeImage/";
     public HashSet<String> deleted=new HashSet<>();

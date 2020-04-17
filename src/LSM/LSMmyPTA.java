@@ -48,7 +48,7 @@ public class LSMmyPTA {
 
         if(!tables.containsKey(tableName)){
             System.out.println("The table does not exist, the read is aborted.");
-            logWriter("The table does not exist, the read is aborted.");
+            logWriter("MemoryManager: The table does not exist.");
             return null;
         }
         else{
