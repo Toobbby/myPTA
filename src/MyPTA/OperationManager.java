@@ -80,15 +80,15 @@ public class OperationManager {
                     {
                         boolean foundDeadVertex = false;
                         for (TransactionManager manager : scriptTransactionManager) {
-                            if (manager.getTransaction().getTID() == deadLockedTID) {
+                            if (manager.TID == deadLockedTID) {
                                 foundDeadVertex = true;  //found the selected dead vertex abort it
-                                LSMmyPTA.logWriter("T_" + t.getTID() + " has been aborted due to a deadlock");
+                                LSMmyPTA.logWriter("T" + manager.TID + " has been aborted due to a deadlock");
                                 manager.DeadLockAbort();
                                 transactionCounter++;
                                 totalRespondTime += System.currentTimeMillis() - chosenTM.startTimestamp;
-                                LSMmyPTA.logWriter("Start undo " + "T_" + t.getTID());
+                                LSMmyPTA.logWriter("Start undo " + "T" +manager.TID);
                                 undo(manager, memoryManager);
-                                LSMmyPTA.logWriter("End undo " + "T_" + t.getTID());
+                                LSMmyPTA.logWriter("End undo " + "T" + manager.TID);
                                 break;
                             }
                         }
