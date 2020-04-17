@@ -337,7 +337,7 @@ public class TransactionManager {
         return this.file.getName();
     }
 
-    public Operation getTransaction() {
+    public Operation getOperation() {
 
         Operation temp = new Operation(command, tableName, value, fullString, lineNumber, TransactionType, TID);
 
