@@ -228,7 +228,8 @@ public class LSMmyPTA {
     public boolean flush(){
         for (LSMTree tree:tables.values()){
             try {
-                tree.flushMemtable();
+                if(tree.memTable.size()>0)
+                    tree.flushMemtable();
             } catch (IOException e) {
                 e.printStackTrace();
                 return false;
