@@ -1,0 +1,58 @@
+T1: B 1
+T2: B 1
+T1: W X (5,John,412-111-1111)
+MemoryManager: The table does not exist.
+Written: (5, John, 412-111-1111)
+T2: W X (6,Felix,412-222-2222)
+The table X doesn't have record with ID = 6
+Written: (6, Felix, 412-222-2222)
+T2: C
+T1: R X 6
+T1: Read: (6, Felix, 412-222-2222)
+T3: B 1
+T1: C
+T3: M X 412
+T3: Mread: (5, John, 412-111-1111)
+T3: Mread: (6, Felix, 412-222-2222)
+T4: B 1
+T3: R X 5
+T3: Read: (5, John, 412-111-1111)
+T3: C
+T4: W X (5,John,413-111-1111)
+Written: (5, John, 413-111-1111)
+T5: B 1
+T4: W X (7,Yuan,412-333-3333)
+The table X doesn't have record with ID = 7
+Written: (7, Yuan, 412-333-3333)
+create  L-0 K X-5 X-7
+T4: W X (8,Ben,412-444-4444)
+The table X doesn't have record with ID = 8
+Written: (8, Ben, 412-444-4444)
+T4: C
+T5: E X 5
+Swap in  L-0 K X-5 X-7
+Erased: X 5
+T6: B 1
+T5: E X 7
+create  L-0 K X-5 X-8
+Erased: X 7
+T5: C
+T6: R X 5
+Swap in  L-0 K X-5 X-8
+The table X doesn't have record with ID = 5
+T6: R X 5 Failed!
+T7: B 1
+T6: R X 6
+T6: Read: (6, Felix, 412-222-2222)
+T6: R X 7
+The table X doesn't have record with ID = 7
+T6: R X 7 Failed!
+T6: C
+T7: D X
+T8: B 1
+T7: C
+Deleted: X
+T8: R X 6
+MemoryManager: The table does not exist.
+T8: R X 6 Failed!
+T8: C

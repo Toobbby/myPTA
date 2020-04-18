@@ -71,7 +71,7 @@ public class OperationManager {
             } while (chosenTM.isError() && !chosenTM.streamIsClosed());
 
             if (!chosenTM.streamIsClosed()) {
-                TransactionManager.Operation t = chosenTM.getTransaction();
+                TransactionManager.Operation t = chosenTM.getOperation();
                 String areaCode = null;
                 if (debugClock % timeOutSheld == 0) {
                     //check for deadlock
@@ -224,7 +224,7 @@ public class OperationManager {
                         chosenTM.addOP();
                         LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
                         //W: always write to temp data
-                        chosenTM.writeToTempData(Type.W, r.getID(), r, chosenTM.getTransaction().getTableName());
+                        chosenTM.writeToTempData(Type.W, r.getID(), r, chosenTM.getTableName());
                         if (t.getTransactionType()) { // serializable
 
                             //before image
@@ -257,7 +257,7 @@ public class OperationManager {
                         chosenTM.unblock();
                         chosenTM.addOP();
                         LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
-                        chosenTM.writeToTempData(Type.E, Integer.parseInt(t.getValue()), null, chosenTM.getTransaction().getTableName());
+                        chosenTM.writeToTempData(Type.E, Integer.parseInt(t.getValue()), null, chosenTM.getTableName());
                         if (t.getTransactionType()) { // serializable
                             ArrayList<Integer> beforeImageOfTable = chosenTM.beforeImageIds.get(chosenTM.getTableName()) == null?
                                     new ArrayList<Integer>():chosenTM.beforeImageIds.get(chosenTM.getTableName());

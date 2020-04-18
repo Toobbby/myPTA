@@ -73,7 +73,7 @@ public class Scheduler {
                 --i;
                 continue;
             } else {
-                if(L.TID == locksOfTable.get(i).TID){
+                if(L.TID == locksOfTable.get(i).TID){ //a transaction will never block itself
                     --i;
                     continue;
                 }

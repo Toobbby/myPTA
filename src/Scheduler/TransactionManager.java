@@ -97,11 +97,8 @@ public class TransactionManager {
 
         this.lineNumber++;
 
-        String[] split = line.split(" ");
-        if (split.length > 3) {
-            this.error = true;
-            throw new IOException("File is not in the correct format at line " + this.lineNumber + ".");
-        } else if (split.length == 1) {
+        String[] split = line.split(" ", 3);
+        if (split.length == 1) {
             if (split[0].equals("C")) {
                 this.command = Command.COMMIT;
             } else if (split[0].equals("A")) {
@@ -340,7 +337,7 @@ public class TransactionManager {
         return this.file.getName();
     }
 
-    public Operation getTransaction() {
+    public Operation getOperation() {
 
         Operation temp = new Operation(command, tableName, value, fullString, lineNumber, TransactionType, TID);
 
