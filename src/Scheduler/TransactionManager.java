@@ -12,7 +12,7 @@ import LSM.Record;
 public class TransactionManager {
     private final File file;
     private final BufferedReader fileReader;    //The file reader
-    private boolean blockbit;                    // check if it is blocked
+    public boolean blockbit;                    // check if it is blocked
     private Command command;                    //The command of the last read line
     private String tableName;                    //The name of the table specified by the last read line
     private String value;
@@ -234,7 +234,7 @@ public class TransactionManager {
      */
     public ArrayList<Record> ReadAreaFromTempData(String area, String tableName) {
         if (deleted.contains(tableName))
-            return null;
+            return new ArrayList<Record>();
         ArrayList<Record> tempReturnResult = new ArrayList<Record>();
         for (int i = 0; i < tempData.size(); i++) {
             if (tempTableIndex.get(i).equals(tableName)) {
@@ -363,6 +363,7 @@ public class TransactionManager {
     public void beforeImageWriter(String logContext) throws IOException {
         FileWriter fw = new FileWriter(beforeImageLocation + TID + ".txt", true);
         BufferedWriter bw = new BufferedWriter(fw);
+
         bw.write(logContext);
         bw.newLine();
         bw.close();

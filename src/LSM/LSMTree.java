@@ -36,7 +36,7 @@ public class LSMTree {
         last_chosen=new ArrayList<>();
         level0=new ArrayList<>();
         SStables=new ArrayList<>();
-        tableInitialization(fileBaseDir);
+        //tableInitialization(fileBaseDir);
     }
 
 
@@ -505,6 +505,8 @@ public class LSMTree {
         }
         public  BufferedReader read()  {
             try {
+                File file = new File(loc);
+                if(!file.exists()) return null;
                 return new BufferedReader(new FileReader(loc));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

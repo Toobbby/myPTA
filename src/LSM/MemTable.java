@@ -15,6 +15,10 @@ public class MemTable {
         tuples=new HashMap<>();
         String line = null;
         try {
+            if(r == null){
+                tuples = new HashMap<>();
+                return;
+            }
             line=r.readLine();
             id=line;
             while ((line = r.readLine()) != null) {

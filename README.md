@@ -1,37 +1,42 @@
-# myPTA (Phase 1)
+# myPTA (Phase 2)
 myPTA (my Pitt Transaction Agent) is a transactional row store database that efficiently supports concurrent execution of OLTP workloads.
 
 ## How to run
 
-### Sequential Files Strategy
-Download ***myPTA.jar*** from repository. Create your own script or use our ***script.txt*** to test the correctness.
+Download ***myPTA.jar*** from repository. Create your own script or use provided scripts to test the correctness.
 #### Requirements
 > Java 1.8   
-> ***myPTA.jar***, ***script.txt***, an empty folder called ***Logging*** in the same folder ***F*** (for example).
+> ***myPTA.jar***, an folder with scripts (test_folder), an empty folder called ***Logging***,  an empty folder called ***tables*** and an empty folder called ***beforeImage*** in the same folder ***F*** (for example).
 #### Running
 Access folder ***F*** in command line, then enter
 '''
-java -jar myPTA.jar arg1 arg2
+java -jar myPTA.jar arg1 arg2 arg3 arg4
 
 '''
-in which arg1 represents the size of each page (how many records each page could hold) and arg2 represents the size of global buffer (how many pages the buffer could hold).
+in which 
+>arg1: the size of SSTable (how many records each SSTable could hold)
+>arg2: the size of global buffer (how many SSTables the buffer could hold) 
+>arg3: the script reading method. 0 represents round robin; 1 represents random. 
+>arg4: test_folder's name
+
+for example, 
+'''
+java -jar myPTA.jar 5 10 0 benchmark_sl
+
+'''
+
 #### Checking the results
-After running, check the ***logging*** folder. A text file called ***log+currentTime.txt*** has been created. There are also some lines printed out in command line which can help you verify the correctness.
+After running, check the ***logging*** folder. A text file called ***log+currentTime.txt*** has been created. The logging will record all operations of all transactions, also including the interaction with disk. The beforeImage is designed for ***UNDO*** of ***serializable*** isolation. It will record the opposite operation in a individual file for each transaction's ***W*** and ***E*** operations. If the transaction aborts eventually, the before image will be the criteria for system ***UNDO***.      
 
-### LSM Tree Strategy
-Download ***LSMmyPTA.jar*** from repository. Create your own script or use our ***script.txt*** to test the correctness.
-#### Requirements
-> Java 1.8   
-> ***LSMmyPTA.jar***, ***script.txt***, an empty folder called ***Logging***  and an empty folder called ***tables*** in the same folder ***F*** (for example).
-#### Running
-Access folder ***F*** in command line, then enter
-'''
-java -jar LSMmyPTA.jar arg1 arg2
-
-'''
-in which arg1 represents the size of SSTable (how many records each SSTable could hold) and arg2 represents the size of global buffer (how many SSTables the buffer could hold). We assigned each table a Memtable in buffer, so global buffer size does not include Memtable parts.
-#### Checking the results
-After running, check the ***logging*** folder. A text file called ***log+currentTime.txt*** has been created. There are also some lines printed out in command line which can help you verify the correctness.
+The metrics will be print out after all transaction finished.
 
 ### Helper
-If you want to test our system's correctness, you can download script.txt in this repository. It includes test cases for all operation, and anticipate log result for it is in testcase.txt in this repository.
+#### testing the system's correctness
+You can use ***CCTesting*** folder in ***testing***, to test the correctness of locking mechanism. The result is analyzed in the report.
+#### scriptGenerator.java
+This is a script design for generating large scale of data. Simply run it with an empty folder called ***benchmark*** with > arg0: random seed
+> arg1: isolation level: 0->read-committed; 1->serializable
+will help you generate 100 scripts with 1000 operations each.
+
+#### issues
+If you have any issues running the code, please contact [Fangzheng Guo](fag24@pitt.edu).

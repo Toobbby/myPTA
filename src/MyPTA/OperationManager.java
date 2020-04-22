@@ -31,6 +31,7 @@ public class OperationManager {
     static int MCount = 0;
     static int ECount = 0;
     static int DCount = 0;
+    static int blockTimes = 0;
 
     public static void runScript(int lsmPageSize, int bufferSize, String[] scriptFiles) throws Exception {
         LSMmyPTA memoryManager = new LSMmyPTA(lsmPageSize, bufferSize);  //Initialize data manager
@@ -61,21 +62,23 @@ public class OperationManager {
 
 
             TransactionManager chosenTM = scriptTransactionManager[nextScriptIndex];
-            do {
-                try {
-                    ++debugClock;
-                    chosenTM.loadNextLine();
-                } catch (IOException e) {
-                    System.err.println(e.getMessage());
-                }
-            } while (chosenTM.isError() && !chosenTM.streamIsClosed());
-
+            if(!chosenTM.streamIsClosed()) {
+                do {
+                    try {
+                        ++debugClock;
+                        chosenTM.loadNextLine();
+                    } catch (IOException e) {
+                        System.err.println(e.getMessage());
+                    }
+                } while (chosenTM.isError() && !chosenTM.streamIsClosed());
+            }
             if (!chosenTM.streamIsClosed()) {
                 TransactionManager.Operation t = chosenTM.getOperation();
                 String areaCode = null;
                 if (debugClock % timeOutSheld == 0) {
                     //check for deadlock
                     int deadLockedTID = scheduler.DeadLockDetectFree();
+
                     if (deadLockedTID != -1)  //there is a deadlock, abort the selected dead transaction
                     {
                         boolean foundDeadVertex = false;
@@ -98,7 +101,23 @@ public class OperationManager {
                         {
                             throw new IllegalStateException("Could not find a transaction to abort; deadlock still detected.");
                         } else {
-                            continue;
+                            //continue;
+                        }
+                    }
+                    else if (blockTimes > 100){
+                        for(TransactionManager manager: scriptTransactionManager){
+                            if (manager.blockbit == true){
+                                LSMmyPTA.logWriter("T" + manager.TID + " has been aborted due to a deadlock");
+                                manager.DeadLockAbort();
+                                scheduler.releaseLock(manager.TID);
+
+                                transactionCounter++;
+                                totalRespondTime += System.currentTimeMillis() - chosenTM.startTimestamp;
+                                LSMmyPTA.logWriter("Start undo " + "T" +manager.TID);
+                                undo(manager, memoryManager);
+                                LSMmyPTA.logWriter("End undo " + "T" + manager.TID);
+                                break;
+                            }
                         }
                     }
                 }
@@ -108,10 +127,10 @@ public class OperationManager {
                             if (!scheduler.addTupleLock(Type.R, t.getTID(), chosenTM.getValue(), chosenTM.getTableName(), null))
                             //cannot get a tuple lock (currently occupied)
                             {
-                                chosenTM.block(); //block the Operation
+                                blockTimes++;  chosenTM.block(); //block the Operation
                                 continue;
                             }
-                            chosenTM.unblock();
+                            blockTimes = 0; chosenTM.unblock();
                             chosenTM.addOP(); //add the Operation to buffer
                             LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
                             Record temp = chosenTM.ReadIdFromTempData(Integer.parseInt(chosenTM.getValue()), chosenTM.getTableName());
@@ -126,10 +145,10 @@ public class OperationManager {
                             if (!scheduler.addTupleLock(Type.R, t.getTID(), chosenTM.getValue(), chosenTM.getTableName(), null))
                             //cannot get a tuple lock (currently occupied)
                             {
-                                chosenTM.block(); //block the Operation
+                                blockTimes++; //block the Operation
                                 continue;
                             }
-                            chosenTM.unblock();
+                            blockTimes = 0; chosenTM.unblock();
                             chosenTM.addOP(); //add the Operation to buffer
                             //read committed isolation read tempData
                             LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
@@ -148,10 +167,10 @@ public class OperationManager {
                         if (t.getTransactionType()) { // serializable
                             areaCode = chosenTM.getValue();
                             if (!scheduler.addTupleLock(Type.M, t.getTID(), null, chosenTM.getTableName(), areaCode)) {
-                                chosenTM.block();
+                                blockTimes++;  chosenTM.block();
                                 continue;
                             }
-                            chosenTM.unblock();
+                            blockTimes = 0; chosenTM.unblock();
                             chosenTM.addOP();
                             LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
                             ArrayList<Record> rList = null;  //store data from memory manager
@@ -187,10 +206,10 @@ public class OperationManager {
                         else {  // read committed
                             areaCode = chosenTM.getValue();
                             if (!scheduler.addTupleLock(Type.M, t.getTID(), null, chosenTM.getTableName(), areaCode)) {
-                                chosenTM.block();
+                                blockTimes++;  chosenTM.block();
                                 continue;
                             }
-                            chosenTM.unblock();
+                            blockTimes = 0; chosenTM.unblock();
                             chosenTM.addOP();
                             LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
                             ArrayList<Record> rList = null;
@@ -218,11 +237,11 @@ public class OperationManager {
                     case WRITE:
                         Record r = new Record(t.getValue());
                         if (!scheduler.addTupleLock(Type.W, t.getTID(), String.valueOf(r.getID()), chosenTM.getTableName(), r.getAreaCode())) {
-                            chosenTM.block();
+                            blockTimes++;  chosenTM.block();
                             continue;
                         }
                         //if is able to get a tuple lock
-                        chosenTM.unblock();
+                        blockTimes = 0; chosenTM.unblock();
                         chosenTM.addOP();
                         LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
                         //W: always write to temp data
@@ -253,10 +272,10 @@ public class OperationManager {
                     case ERASE:
                         int recordID = Integer.parseInt(t.getValue());
                         if (!scheduler.addTupleLock(Type.E, t.getTID(), t.getValue(), chosenTM.getTableName(), null)) {
-                            chosenTM.block();
+                            blockTimes++;  chosenTM.block();
                             continue;
                         }
-                        chosenTM.unblock();
+                        blockTimes = 0; chosenTM.unblock();
                         chosenTM.addOP();
                         LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
                         chosenTM.writeToTempData(Type.E, Integer.parseInt(t.getValue()), null, chosenTM.getTableName());
@@ -278,10 +297,10 @@ public class OperationManager {
                         break;
                     case DELETE_TABLE:
                         if (!scheduler.addTupleLock(Type.D, t.getTID(), null, chosenTM.getTableName(), null)) {
-                            chosenTM.block();
+                            blockTimes++;  chosenTM.block();
                             continue;
                         }
-                        chosenTM.unblock();
+                        blockTimes = 0; chosenTM.unblock();
                         chosenTM.addOP(); //mark the table as deleted
                         LSMmyPTA.logWriter("T" + t.getTID() + ": " + chosenTM.getFullString());
                         //serializable do nothing else
@@ -359,6 +378,7 @@ public class OperationManager {
                     System.out.println("Total respond time is " + totalRespondTime);
                     System.out.println("Total number of transactions (including aborted transactions) is " + (transactionCounter + TransactionCommittedCounter));
                     System.out.println("Average respond time is " + (double) totalRespondTime / (transactionCounter + TransactionCommittedCounter));
+                    System.out.println("Average respond time for committed transactions is " + (double) totalRespondTime / TransactionCommittedCounter);
                     System.exit(0);
                 }
             }
@@ -368,7 +388,8 @@ public class OperationManager {
 
     public static void undo(TransactionManager chosenTM, LSMmyPTA memoryManager) {
         try {
-
+            File beforeImage = new File(chosenTM.beforeImageLocation + chosenTM.TID + ".txt");
+            if(!beforeImage.exists()) return;
             BufferedReader beforeImageReader = new BufferedReader(new FileReader(chosenTM.beforeImageLocation + chosenTM.TID + ".txt"));
             String line = null;
             while ((line = beforeImageReader.readLine()) != null) {
