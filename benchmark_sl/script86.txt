@@ -1,0 +1,1002 @@
+B 1
+W Z (94, Felix, 883-111-1111)
+M Z 107
+R Z 53
+R Y 8
+E X 42
+M Z 262
+E X 2
+D Z
+M Y 470
+R X 30
+R Z 16
+W Y (47, Felix, 794-111-1111)
+E X 7
+D Z
+E X 92
+W Z (52, Felix, 951-111-1111)
+D Y
+W X (10, Felix, 287-111-1111)
+E Z 12
+R X 3
+R Y 55
+R X 84
+D Z
+R Z 8
+E Y 71
+D Z
+M Y 178
+M X 106
+E X 29
+D Z
+R Z 19
+R X 40
+E X 52
+W X (90, Felix, 261-111-1111)
+M Z 180
+W Z (77, Felix, 326-111-1111)
+D Z
+R X 81
+D Z
+E X 97
+W Y (66, Felix, 264-111-1111)
+M Z 249
+D X
+D X
+W X (2, Felix, 551-111-1111)
+M X 552
+D X
+R Y 98
+M Y 319
+E Z 22
+W X (0, Felix, 230-111-1111)
+D X
+E Z 37
+M Z 483
+W Z (83, Felix, 616-111-1111)
+W Y (59, Felix, 448-111-1111)
+M Y 162
+W Z (67, Felix, 612-111-1111)
+E X 14
+M X 956
+E X 40
+M Z 850
+E Z 64
+R Y 16
+R X 3
+D X
+R X 68
+W Y (53, Felix, 566-111-1111)
+D Z
+W Y (46, Felix, 845-111-1111)
+W Y (37, Felix, 387-111-1111)
+W X (34, Felix, 397-111-1111)
+E Z 5
+E Z 80
+W X (75, Felix, 790-111-1111)
+R Z 62
+M X 772
+M X 733
+D Y
+D Z
+E Y 97
+M Y 459
+W X (42, Felix, 443-111-1111)
+E X 34
+R Y 30
+D X
+D Y
+R Y 66
+W X (70, Felix, 489-111-1111)
+D Z
+E Z 62
+W X (93, Felix, 127-111-1111)
+M Y 545
+W X (43, Felix, 769-111-1111)
+D X
+D Y
+D X
+R X 63
+D X
+R Y 37
+D Y
+W X (21, Felix, 830-111-1111)
+E Z 66
+M Y 878
+E Y 87
+E Y 88
+M X 641
+E Y 48
+D Y
+D X
+E Y 79
+W Z (34, Felix, 826-111-1111)
+W Y (6, Felix, 453-111-1111)
+D Z
+D X
+R X 44
+W Y (14, Felix, 300-111-1111)
+M Z 752
+W Z (53, Felix, 977-111-1111)
+E Z 73
+M Y 706
+W X (33, Felix, 100-111-1111)
+E Z 79
+M Y 518
+E Y 18
+R X 58
+D X
+E Z 27
+E Z 99
+M Y 324
+E X 3
+D Z
+W Z (31, Felix, 650-111-1111)
+W Z (36, Felix, 407-111-1111)
+W Z (40, Felix, 845-111-1111)
+W Z (45, Felix, 833-111-1111)
+W X (50, Felix, 910-111-1111)
+R Z 90
+D X
+W Y (49, Felix, 796-111-1111)
+R X 81
+W Z (81, Felix, 228-111-1111)
+W X (46, Felix, 370-111-1111)
+R X 52
+M Y 378
+W Z (23, Felix, 940-111-1111)
+D X
+D Z
+R X 86
+M Y 830
+W Y (10, Felix, 617-111-1111)
+E Z 83
+M X 989
+R Y 58
+R Y 97
+E Y 38
+D X
+M X 608
+R X 66
+D Y
+R Y 23
+W Y (82, Felix, 771-111-1111)
+M Y 205
+D X
+E Z 32
+D Z
+E X 48
+R Z 12
+E X 64
+M Z 347
+R Y 44
+E X 79
+M Z 885
+W Z (5, Felix, 731-111-1111)
+D Y
+M Z 174
+M Z 636
+M Z 520
+W X (92, Felix, 925-111-1111)
+W Z (45, Felix, 332-111-1111)
+W Y (74, Felix, 325-111-1111)
+E X 53
+R X 63
+D Y
+D Y
+R X 2
+E Y 33
+R X 0
+W Y (63, Felix, 898-111-1111)
+M Z 862
+E Y 12
+M Y 151
+R Z 94
+W Y (85, Felix, 984-111-1111)
+E X 81
+W Z (13, Felix, 680-111-1111)
+D X
+W X (59, Felix, 234-111-1111)
+E Z 68
+R X 81
+R Z 74
+R X 98
+W Y (11, Felix, 721-111-1111)
+M Y 448
+M Z 616
+D X
+R X 46
+D X
+W X (60, Felix, 686-111-1111)
+W Y (42, Felix, 258-111-1111)
+D Y
+E Y 26
+M Y 921
+E X 26
+M X 437
+E X 63
+D Z
+R Z 20
+D X
+W Z (62, Felix, 457-111-1111)
+D Y
+R Y 64
+D X
+W Z (59, Felix, 123-111-1111)
+R X 2
+M Y 323
+D X
+W X (97, Felix, 171-111-1111)
+R Y 32
+W Z (74, Felix, 760-111-1111)
+M Z 325
+R Y 44
+R Z 27
+E X 43
+D Z
+E Z 39
+W Y (19, Felix, 604-111-1111)
+R Z 6
+M Y 491
+M X 156
+W Y (75, Felix, 847-111-1111)
+M Y 737
+W X (6, Felix, 735-111-1111)
+E Y 47
+M Z 797
+R X 56
+E Z 96
+M Y 644
+R Z 92
+R Y 12
+E X 6
+D X
+R Z 13
+E X 33
+M X 782
+D Z
+R Y 73
+M X 132
+W Z (34, Felix, 340-111-1111)
+M X 520
+M Y 900
+M Z 562
+M X 812
+R Z 33
+R X 9
+E X 91
+D Y
+E X 66
+M X 990
+M Z 244
+E X 35
+E Z 17
+R Z 64
+R Y 54
+R Y 91
+D Z
+M Z 238
+E Z 93
+R Y 69
+D X
+W X (90, Felix, 297-111-1111)
+D Z
+R Y 21
+M Y 895
+R Z 87
+E Y 25
+W X (94, Felix, 384-111-1111)
+M Y 514
+R Y 72
+M Z 527
+W Y (53, Felix, 490-111-1111)
+W Y (47, Felix, 356-111-1111)
+E Y 94
+M X 875
+D Y
+R X 40
+M Z 382
+D Y
+R X 67
+D Z
+D Y
+R Y 20
+D X
+D Y
+M Z 721
+W Y (41, Felix, 119-111-1111)
+W X (2, Felix, 742-111-1111)
+R Y 56
+W X (52, Felix, 318-111-1111)
+E Z 33
+D Z
+D X
+M Y 135
+E Y 7
+M X 468
+W Z (61, Felix, 272-111-1111)
+D Z
+E Y 79
+W Y (91, Felix, 833-111-1111)
+E X 34
+R Y 49
+R Y 42
+D Y
+R Y 56
+M X 974
+D X
+W Y (38, Felix, 477-111-1111)
+M Z 406
+D Y
+M Z 947
+W X (10, Felix, 259-111-1111)
+W X (92, Felix, 433-111-1111)
+M Y 133
+R X 68
+E Z 95
+E Z 11
+D Y
+E Z 69
+R X 8
+E X 23
+M Y 374
+E Y 33
+E Y 31
+W Z (0, Felix, 779-111-1111)
+R X 53
+E Z 94
+W Y (66, Felix, 981-111-1111)
+D Z
+M Z 798
+D X
+M X 978
+E X 24
+W Z (90, Felix, 262-111-1111)
+R X 21
+E Z 67
+R Z 36
+D X
+E X 48
+E X 71
+M Y 234
+E Z 58
+W Y (37, Felix, 780-111-1111)
+R Y 87
+W X (77, Felix, 788-111-1111)
+W X (40, Felix, 235-111-1111)
+M X 465
+R Z 60
+E Z 23
+M Z 709
+R Z 40
+R Y 43
+D Z
+E Z 81
+R Z 31
+R Z 74
+W Z (83, Felix, 863-111-1111)
+E X 59
+M Y 616
+M X 303
+R Z 17
+R Y 6
+R X 37
+M X 577
+M Z 662
+E Z 4
+R X 67
+D X
+E X 74
+D X
+M Z 456
+W Z (90, Felix, 846-111-1111)
+W X (89, Felix, 357-111-1111)
+R Z 52
+E Z 53
+E Z 67
+M Y 589
+E X 86
+M X 874
+E Z 72
+E Z 16
+M Y 871
+W Y (20, Felix, 266-111-1111)
+E Y 86
+W X (34, Felix, 251-111-1111)
+R X 50
+E X 56
+R Y 80
+E Y 49
+E Y 0
+E Y 78
+E Z 59
+E Y 90
+E Y 12
+D Z
+E Z 85
+W Z (71, Felix, 143-111-1111)
+E X 7
+E Z 69
+W Y (75, Felix, 727-111-1111)
+E Y 61
+E Y 78
+E Z 87
+D Y
+W Z (16, Felix, 879-111-1111)
+W Z (76, Felix, 103-111-1111)
+M Y 395
+R Y 16
+D Y
+R X 21
+D Z
+M X 570
+M Z 163
+D Y
+D X
+E Y 34
+W Y (71, Felix, 393-111-1111)
+M Y 127
+W Z (98, Felix, 508-111-1111)
+D Z
+R X 1
+M Z 506
+E Z 32
+R X 9
+M Z 502
+E X 37
+R X 94
+D Y
+E Z 51
+E Y 80
+D Y
+D X
+M X 418
+D Y
+E Y 8
+R X 51
+R Z 41
+W Z (62, Felix, 739-111-1111)
+R Z 1
+R X 47
+W X (4, Felix, 870-111-1111)
+M Z 268
+E Y 40
+E Y 79
+E X 42
+M X 487
+M X 661
+D Z
+M Z 352
+D Z
+D Y
+M Y 278
+M X 307
+E X 7
+E X 36
+E X 57
+W Y (63, Felix, 382-111-1111)
+D X
+W Z (11, Felix, 422-111-1111)
+M Z 603
+R Y 3
+D X
+E Y 63
+W Z (65, Felix, 569-111-1111)
+D Y
+E Y 84
+M Y 535
+M Y 823
+R X 10
+E X 43
+R Z 76
+R Y 19
+R X 15
+W Z (88, Felix, 588-111-1111)
+R X 15
+W Z (75, Felix, 118-111-1111)
+W X (82, Felix, 555-111-1111)
+R Y 14
+R Z 83
+R Z 43
+M X 791
+D Y
+D X
+W X (71, Felix, 355-111-1111)
+E X 60
+W Z (8, Felix, 746-111-1111)
+D Z
+D Z
+W X (83, Felix, 319-111-1111)
+M X 972
+D Y
+R Y 64
+D Y
+W Z (11, Felix, 433-111-1111)
+M X 893
+R Z 89
+M X 855
+M Y 212
+M Y 388
+M X 577
+W X (7, Felix, 959-111-1111)
+M Y 559
+E X 87
+D X
+M Y 507
+D Y
+D Y
+M Z 514
+M X 246
+W X (85, Felix, 418-111-1111)
+W X (64, Felix, 719-111-1111)
+D Z
+R X 59
+E X 65
+M X 891
+R X 67
+E X 53
+M Y 909
+D Y
+M Z 179
+M X 254
+R Y 56
+W Z (41, Felix, 615-111-1111)
+R Y 76
+D X
+R Y 97
+M Z 897
+W Z (8, Felix, 690-111-1111)
+R X 54
+E Y 23
+M X 106
+W X (72, Felix, 253-111-1111)
+R X 12
+W Z (63, Felix, 641-111-1111)
+E X 0
+R Z 69
+W Y (50, Felix, 126-111-1111)
+R X 86
+D Z
+R Y 23
+D Z
+D Y
+D Y
+W Z (41, Felix, 920-111-1111)
+D Y
+M Z 585
+R Z 71
+D Z
+D Y
+R Z 28
+D X
+W X (20, Felix, 178-111-1111)
+E Z 28
+M X 509
+D Z
+D Y
+R Y 55
+E Y 95
+D Y
+W Z (88, Felix, 811-111-1111)
+W X (23, Felix, 950-111-1111)
+R Z 28
+E Y 11
+R X 41
+R Z 70
+M Y 827
+R X 99
+R Y 76
+W Z (8, Felix, 358-111-1111)
+E Z 90
+M Y 158
+D X
+D Y
+R Z 59
+R Y 43
+M Z 749
+R Y 81
+D Y
+D Z
+E X 58
+M Y 989
+R Z 15
+M Z 232
+W Y (70, Felix, 699-111-1111)
+M X 412
+M X 252
+M X 384
+E X 53
+R Y 19
+D X
+R Y 8
+W Y (94, Felix, 596-111-1111)
+E Y 40
+E Y 93
+D Y
+M Y 653
+W Y (6, Felix, 132-111-1111)
+E Y 5
+E X 52
+W Z (11, Felix, 103-111-1111)
+D X
+R X 69
+D Z
+M Z 605
+E X 53
+D Z
+M X 611
+E Y 44
+E X 81
+E Z 39
+W Z (14, Felix, 917-111-1111)
+R Z 25
+E X 19
+D Z
+E X 68
+W Y (57, Felix, 361-111-1111)
+R Y 96
+M X 736
+M Y 697
+E Z 69
+R Z 40
+R Z 57
+W Y (89, Felix, 188-111-1111)
+R Y 12
+W Y (95, Felix, 119-111-1111)
+D Y
+E X 15
+W Y (37, Felix, 384-111-1111)
+W Y (48, Felix, 202-111-1111)
+E Y 1
+W X (71, Felix, 138-111-1111)
+M X 705
+M Z 985
+E Z 38
+E X 62
+W X (59, Felix, 385-111-1111)
+D Y
+W Y (72, Felix, 664-111-1111)
+D Y
+M Z 573
+W Z (14, Felix, 902-111-1111)
+W X (4, Felix, 793-111-1111)
+M Y 350
+R X 76
+E Y 4
+R Y 74
+R X 75
+W Y (56, Felix, 655-111-1111)
+W X (71, Felix, 763-111-1111)
+R Z 98
+M Z 540
+M Z 990
+E X 92
+W Z (55, Felix, 284-111-1111)
+W Y (77, Felix, 218-111-1111)
+E Z 62
+E X 20
+M Z 938
+W Y (38, Felix, 170-111-1111)
+W X (89, Felix, 941-111-1111)
+E X 91
+E X 99
+W Z (40, Felix, 507-111-1111)
+M Z 742
+W Z (78, Felix, 838-111-1111)
+R Z 17
+W Y (58, Felix, 365-111-1111)
+W X (29, Felix, 355-111-1111)
+R Z 80
+D X
+E Y 91
+R Z 81
+W X (43, Felix, 669-111-1111)
+M Z 803
+R Z 43
+E Z 71
+M X 290
+E Y 72
+D Z
+M X 225
+W X (76, Felix, 258-111-1111)
+E X 91
+W Y (31, Felix, 873-111-1111)
+W Z (0, Felix, 133-111-1111)
+R X 68
+W X (34, Felix, 468-111-1111)
+D X
+W X (8, Felix, 499-111-1111)
+W Y (70, Felix, 959-111-1111)
+E Z 87
+M Y 641
+D X
+M X 967
+W X (14, Felix, 426-111-1111)
+E Y 61
+E Y 0
+D Y
+E Z 31
+E Y 78
+R Z 70
+M Y 869
+D Z
+D Y
+E X 89
+R X 29
+R Y 64
+W Z (27, Felix, 703-111-1111)
+W Y (99, Felix, 600-111-1111)
+D X
+E X 63
+D Y
+W Y (40, Felix, 383-111-1111)
+E X 75
+D Z
+E X 23
+M Y 184
+W X (49, Felix, 249-111-1111)
+M Y 686
+M Y 729
+D Y
+M Y 545
+D Z
+D Y
+W X (64, Felix, 828-111-1111)
+E X 0
+R Y 32
+R X 47
+M Z 477
+M X 174
+E Z 42
+M X 207
+W Y (13, Felix, 691-111-1111)
+W Z (49, Felix, 315-111-1111)
+D Z
+D Y
+R X 21
+R Y 64
+W Z (2, Felix, 680-111-1111)
+D X
+R Y 0
+W X (8, Felix, 991-111-1111)
+D Y
+E Y 77
+W Z (64, Felix, 143-111-1111)
+M Z 320
+M Y 460
+W X (97, Felix, 777-111-1111)
+W Z (96, Felix, 130-111-1111)
+D Y
+D X
+E Y 94
+D X
+M Y 322
+D Y
+E X 34
+R Z 75
+M Z 226
+R Z 10
+R X 11
+D Z
+W X (89, Felix, 900-111-1111)
+M Y 878
+W Z (57, Felix, 756-111-1111)
+D Z
+E Z 44
+E Z 33
+M Y 800
+M Z 282
+W Z (81, Felix, 655-111-1111)
+M Y 184
+W Z (42, Felix, 473-111-1111)
+R Z 97
+W Y (94, Felix, 877-111-1111)
+E Y 21
+W Z (29, Felix, 402-111-1111)
+W Y (1, Felix, 719-111-1111)
+M Y 188
+R Y 19
+W Z (15, Felix, 668-111-1111)
+R Y 56
+E X 67
+R Y 82
+E Y 1
+E Y 28
+D Y
+R Z 19
+E X 94
+M Y 523
+M X 612
+W X (84, Felix, 673-111-1111)
+R Z 49
+W X (89, Felix, 548-111-1111)
+W Z (52, Felix, 746-111-1111)
+R X 37
+W Z (0, Felix, 821-111-1111)
+D X
+D X
+M Y 126
+M Y 839
+M Y 640
+D Z
+E X 32
+E Z 90
+D X
+W Z (7, Felix, 436-111-1111)
+M Y 646
+R X 10
+D X
+D Z
+E Z 39
+M Z 477
+E Z 31
+E Z 89
+W Z (34, Felix, 449-111-1111)
+W X (20, Felix, 488-111-1111)
+W X (56, Felix, 223-111-1111)
+R Z 21
+W Z (22, Felix, 807-111-1111)
+M X 518
+M Z 477
+W Y (25, Felix, 132-111-1111)
+M X 851
+E Y 22
+R Z 66
+D Y
+D Z
+M Z 214
+E Z 16
+D Z
+D Y
+W Y (13, Felix, 209-111-1111)
+M X 983
+W X (52, Felix, 568-111-1111)
+D Z
+M Z 276
+M Y 755
+R Y 32
+R X 82
+D Z
+M X 184
+W X (73, Felix, 704-111-1111)
+E Y 70
+W X (84, Felix, 313-111-1111)
+D X
+R Y 45
+D Y
+D Z
+E Y 29
+M Y 555
+R Y 71
+R Z 78
+D X
+E X 97
+D Y
+D X
+R Y 35
+W Y (89, Felix, 274-111-1111)
+R Z 42
+W Y (6, Felix, 199-111-1111)
+W Z (13, Felix, 913-111-1111)
+R Y 91
+W Y (37, Felix, 939-111-1111)
+R Y 73
+W X (77, Felix, 921-111-1111)
+R Z 37
+M X 728
+E Z 66
+R X 6
+M Z 944
+E Y 57
+M X 171
+D X
+R Y 71
+M Y 422
+M Y 600
+W Y (93, Felix, 770-111-1111)
+W Z (4, Felix, 201-111-1111)
+M X 320
+E X 52
+D Y
+E Z 87
+E Z 33
+R X 75
+W Y (78, Felix, 181-111-1111)
+D Y
+M X 894
+E Y 39
+W Z (59, Felix, 493-111-1111)
+R Z 88
+D X
+R X 71
+D X
+W Z (43, Felix, 645-111-1111)
+M Z 431
+E Y 13
+W Z (15, Felix, 276-111-1111)
+W X (85, Felix, 443-111-1111)
+M X 942
+W Z (67, Felix, 443-111-1111)
+E Y 49
+E Y 80
+R X 9
+R Z 87
+D Z
+W Z (85, Felix, 608-111-1111)
+W Z (14, Felix, 610-111-1111)
+E Y 97
+R X 98
+D X
+M X 663
+E Z 54
+M X 684
+E Z 32
+W Z (76, Felix, 204-111-1111)
+M Z 511
+E Y 90
+D Z
+M Y 449
+E Y 3
+D X
+M X 439
+W Y (3, Felix, 509-111-1111)
+W Y (66, Felix, 702-111-1111)
+D Y
+D X
+E Z 11
+R X 35
+W X (36, Felix, 465-111-1111)
+R Y 24
+M Z 243
+D Z
+E X 4
+E X 4
+R Z 39
+E Y 59
+M X 315
+W X (76, Felix, 625-111-1111)
+E Y 67
+R Z 36
+E X 79
+M Z 246
+R Y 62
+E Z 67
+R Y 37
+W X (11, Felix, 772-111-1111)
+E Z 74
+D X
+R Y 84
+D Z
+D Y
+E Z 83
+R Z 83
+E Y 23
+E Y 15
+R Y 22
+W Z (78, Felix, 395-111-1111)
+M Y 821
+M X 382
+D X
+D X
+M Z 844
+W Y (32, Felix, 900-111-1111)
+E X 49
+M Z 557
+R X 20
+W Y (25, Felix, 809-111-1111)
+M Z 662
+D Z
+M Z 989
+M Z 179
+E X 30
+R X 56
+D X
+W Z (85, Felix, 827-111-1111)
+W X (76, Felix, 614-111-1111)
+D X
+R X 16
+M Z 699
+M X 983
+D Z
+M Y 941
+C

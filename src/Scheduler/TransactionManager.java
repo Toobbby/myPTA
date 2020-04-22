@@ -145,6 +145,7 @@ public class TransactionManager {
                     ECount++;
                     break;
                 default:
+                    System.out.println(split[0]);
                     this.error = true;
                     throw new IOException("File is not in the correct format " + this.lineNumber + ".");
             }
@@ -237,8 +238,9 @@ public class TransactionManager {
         ArrayList<Record> tempReturnResult = new ArrayList<Record>();
         for (int i = 0; i < tempData.size(); i++) {
             if (tempTableIndex.get(i).equals(tableName)) {
+                //if(tempData.get(i).entrySet() == null) return tempReturnResult;
                 for (Map.Entry<Integer, Record> entry : tempData.get(i).entrySet()) {
-                    if (entry.getValue().getAreaCode().equals(area)) {
+                    if (entry.getValue() != null && entry.getValue().getAreaCode().equals(area)) {
                         tempReturnResult.add(entry.getValue());
                     }
                 }
