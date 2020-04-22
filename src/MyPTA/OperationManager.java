@@ -84,6 +84,8 @@ public class OperationManager {
                                 foundDeadVertex = true;  //found the selected dead vertex abort it
                                 LSMmyPTA.logWriter("T" + manager.TID + " has been aborted due to a deadlock");
                                 manager.DeadLockAbort();
+                                scheduler.releaseLock(manager.TID);
+
                                 transactionCounter++;
                                 totalRespondTime += System.currentTimeMillis() - chosenTM.startTimestamp;
                                 LSMmyPTA.logWriter("Start undo " + "T" +manager.TID);

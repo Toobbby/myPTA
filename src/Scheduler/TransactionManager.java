@@ -62,7 +62,7 @@ public class TransactionManager {
         this.lineNumber = 0;
         this.streamIsClosed = false;
         this.error = false;
-        this.TransactionType = false;
+        //this.TransactionType = false;
         this.OPBuffer = new ArrayList<Operation>();
         this.tempData = new ArrayList<HashMap<Integer, Record>>();
         this.tempTableIndex = new ArrayList<String>();
